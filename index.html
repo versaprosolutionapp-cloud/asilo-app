@@ -1,332 +1,557 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VersaPro Solution TX LLC — Multi-Sector Business Solutions in Texas</title>
-  <meta name="description" content="VersaPro Solution TX LLC is a Texas-based multi-sector company offering transportation, AI & cybersecurity consulting, artisan baking, and construction services. Based in Austin, TX." />
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"LocalBusiness","name":"VersaPro Solution TX LLC","url":"https://versaprosolutiontx.com","email":"info@versaprosolutiontx.com","telephone":"+12102939732","address":{"@type":"PostalAddress","streetAddress":"5900 Balcones Dr., #31021","addressLocality":"Austin","addressRegion":"TX","postalCode":"78731","addressCountry":"US"},"areaServed":["Austin, TX","Houston, TX","San Antonio, TX","Texas"]}
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <style>
-    :root{--bg:#f5f7fa;--surface:#ffffff;--ink:#0f1923;--ink-soft:#4a5568;--accent:#0052cc;--accent-2:#0a1628;--on-accent:#ffffff;--on-cta:#f0f4ff;--line:#dde3ed}
-    *{margin:0;padding:0;box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{font-family:'Jost',sans-serif;font-weight:300;color:var(--ink);background:var(--bg);line-height:1.6;overflow-x:hidden}
-    h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:400;letter-spacing:-0.01em;line-height:1.15}
-    .container{max-width:1200px;margin:0 auto;padding:0 2rem}
-    .lang-toggle{display:flex;align-items:center;gap:6px}
-    .lang-btn{background:none;border:1px solid var(--line);padding:3px 10px;cursor:pointer;font-family:'Jost',sans-serif;font-size:0.75rem;letter-spacing:0.1em;color:var(--ink-soft);transition:all 0.2s;border-radius:2px}
-    .lang-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem 2rem;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid transparent;transition:all 0.3s ease}
-    nav.scrolled{border-bottom-color:var(--line)}
-    nav .nav-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
-    .logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:500;letter-spacing:0.02em;color:var(--ink);text-decoration:none}
-    .logo span{color:var(--accent)}
-    .nav-right{display:flex;align-items:center;gap:2rem}
-    .nav-links{display:flex;gap:2rem;list-style:none}
-    .nav-links a{color:var(--ink);text-decoration:none;font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;transition:color 0.2s}
-    .nav-links a:hover{color:var(--accent)}
-    .menu-toggle{display:none;background:none;border:none;cursor:pointer;font-size:1.5rem;color:var(--ink)}
-    .hero{min-height:100vh;display:flex;align-items:center;padding:8rem 0 4rem;background:linear-gradient(135deg,#f5f7fa 0%,#e8eef8 100%)}
-    .hero-content{max-width:900px}
-    .hero-eyebrow{font-size:0.75rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:2rem;opacity:0;animation:fadeUp 0.8s ease 0.2s forwards}
-    .hero h1{font-size:clamp(2.75rem,7vw,6rem);margin-bottom:2rem;opacity:0;animation:fadeUp 0.8s ease 0.4s forwards}
-    .hero h1 em{font-style:italic;color:var(--accent)}
-    .hero p{font-size:1.2rem;color:var(--ink-soft);max-width:560px;margin-bottom:3rem;opacity:0;animation:fadeUp 0.8s ease 0.6s forwards}
-    .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fadeUp 0.8s ease 0.8s forwards}
-    .btn{display:inline-block;padding:1rem 2.5rem;background:var(--accent-2);color:var(--on-cta);text-decoration:none;font-size:0.875rem;letter-spacing:0.12em;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.3s ease}
-    .btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,0.15)}
-    .btn-outline{background:transparent;color:var(--ink);border:1px solid var(--ink)}
-    .btn-accent{background:var(--accent);color:var(--on-accent)}
-    .about-strip{background:var(--accent-2);color:var(--on-cta);padding:5rem 0}
-    .about-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
-    .about-strip h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:1.25rem}
-    .about-strip h2 em{font-style:italic;color:var(--accent)}
-    .about-strip p{opacity:0.8;font-size:1rem;line-height:1.8}
-    .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
-    .stat-item{text-align:center}
-    .stat-num{font-family:'Cormorant Garamond',serif;font-size:3rem;color:var(--accent);display:block}
-    .stat-label{font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;opacity:0.65}
-    section{padding:6rem 0}
-    .section-header{text-align:center;margin-bottom:4rem}
-    .section-eyebrow{font-size:0.75rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
-    .section-header h2{font-size:clamp(2.25rem,5vw,3.5rem)}
-    .divisions-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem}
-    .division-card{background:var(--surface);padding:2.5rem 2rem;border:1px solid var(--line);transition:all 0.4s ease;position:relative;overflow:hidden}
-    .division-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 0.4s ease}
-    .division-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,0.07)}
-    .division-card:hover::before{transform:scaleX(1)}
-    .division-card.coming-soon{opacity:0.6}
-    .coming-badge{position:absolute;top:1rem;right:1rem;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;background:var(--line);color:var(--ink-soft);padding:3px 10px;border-radius:20px}
-    .div-icon{font-size:2rem;margin-bottom:1.25rem;display:block}
-    .division-card h3{font-size:1.6rem;margin-bottom:0.75rem}
-    .division-card .dba{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:0.75rem;display:block}
-    .division-card p{color:var(--ink-soft);font-size:0.92rem;line-height:1.7}
-    .gallery{background:var(--surface)}
-    .gallery-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:80px;gap:1rem}
-    .gallery-item{overflow:hidden;position:relative}
-    .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease}
-    .gallery-item:hover img{transform:scale(1.05)}
-    .gallery-item:nth-child(1){grid-column:1/7;grid-row:span 5}
-    .gallery-item:nth-child(2){grid-column:7/13;grid-row:span 3}
-    .gallery-item:nth-child(3){grid-column:7/10;grid-row:span 2}
-    .gallery-item:nth-child(4){grid-column:10/13;grid-row:span 2}
-    .testimonial{text-align:center;max-width:800px;margin:0 auto;padding:6rem 2rem}
-    .testimonial blockquote{font-family:'Cormorant Garamond',serif;font-size:clamp(1.75rem,4vw,2.75rem);font-style:italic;line-height:1.3;margin-bottom:2rem}
-    .testimonial cite{font-size:0.875rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink-soft)}
-    .testimonial cite span{color:var(--accent);display:block;margin-top:0.25rem;font-size:0.75rem}
-    .cta{background:var(--accent-2);color:var(--on-cta);text-align:center;padding:8rem 0}
-    .cta h2{font-size:clamp(2.5rem,6vw,4.5rem);margin-bottom:1.5rem}
-    .cta h2 em{font-style:italic;color:var(--accent)}
-    .cta p{font-size:1.125rem;max-width:540px;margin:0 auto 3rem;opacity:0.85}
-    .cta .btn{background:var(--accent);color:var(--on-accent)}
-    footer{background:var(--accent-2);color:var(--on-cta);padding:4rem 0 2rem;border-top:1px solid rgba(255,255,255,0.08)}
-    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
-    footer h4{font-family:'Cormorant Garamond',serif;font-size:1.2rem;margin-bottom:1.25rem}
-    footer ul{list-style:none}
-    footer ul li{margin-bottom:0.5rem}
-    footer a{color:rgba(255,255,255,0.65);text-decoration:none;font-size:0.88rem;transition:color 0.2s}
-    footer a:hover{color:var(--accent)}
-    .footer-brand .logo{color:var(--on-cta);margin-bottom:1rem;display:inline-block}
-    .footer-brand p{color:rgba(255,255,255,0.55);max-width:300px;font-size:0.88rem}
-    .footer-bottom{padding-top:2rem;border-top:1px solid rgba(255,255,255,0.08);text-align:center;color:rgba(255,255,255,0.4);font-size:0.78rem}
-    .reveal{opacity:0;transform:translateY(40px);transition:opacity 0.8s ease,transform 0.8s ease}
-    .reveal.visible{opacity:1;transform:translateY(0)}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-    @media(max-width:768px){
-      .container{padding:0 1.25rem}
-      nav{padding:1rem 1.25rem}
-      .nav-links{position:fixed;top:0;right:-100%;width:70%;height:100vh;background:var(--bg);flex-direction:column;justify-content:center;align-items:center;gap:2rem;transition:right 0.3s ease}
-      .nav-links.open{right:0}
-      .menu-toggle{display:block;z-index:101}
-      .hero{padding:6rem 0 3rem;min-height:auto;background:var(--bg)}
-      section{padding:4rem 0}
-      .about-inner{grid-template-columns:1fr;gap:2rem}
-      .gallery-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:160px}
-      .gallery-item:nth-child(n){grid-column:span 1;grid-row:span 1}
-      .footer-grid{grid-template-columns:1fr;gap:2rem}
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulacro de Audiencia de Asilo | VersaPro Solution TX</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0D1B2A;--navy-light:#1A2F47;--gold:#C9A84C;--gold-light:#E8C97A;--cream:#F8F4ED;--white:#FFFFFF;--text:#1A1A2E;--text-muted:#6B7280;--success:#2D6A4F;--success-bg:#D8F3DC;--border:#D4C9B5;--shadow:0 4px 24px rgba(13,27,42,0.12)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh}
+.screen{display:none;min-height:100vh}
+.screen.active{display:block}
+#screen-landing{background:var(--navy);position:relative;overflow:hidden}
+.landing-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(201,168,76,0.08) 0%,transparent 60%)}
+.landing-inner{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:60px 24px 80px}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);color:#E8C97A;font-size:12px;font-weight:500;letter-spacing:1.5px;padding:6px 16px;border-radius:100px;margin-bottom:32px;text-transform:uppercase}
+.landing-title{font-family:'Playfair Display',serif;font-size:clamp(32px,6vw,52px);font-weight:700;color:#fff;line-height:1.15;margin-bottom:20px}
+.landing-title span{color:var(--gold)}
+.landing-sub{font-size:17px;color:rgba(255,255,255,0.7);line-height:1.7;margin-bottom:40px}
+.features{display:grid;gap:16px;margin-bottom:48px}
+.feature{display:flex;align-items:flex-start;gap:16px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:18px 20px}
+.feature-icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.feature-title{font-size:15px;font-weight:600;color:#fff;margin-bottom:4px}
+.feature-desc{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.5}
+.price-box{background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(201,168,76,0.05));border:1px solid rgba(201,168,76,0.4);border-radius:16px;padding:28px;text-align:center;margin-bottom:24px}
+.price-amount{font-family:'Playfair Display',serif;font-size:56px;font-weight:700;color:var(--gold);line-height:1}
+.price-label{font-size:13px;color:rgba(255,255,255,0.5);margin-top:6px;letter-spacing:0.5px}
+.price-includes{font-size:13px;color:rgba(255,255,255,0.65);margin-top:14px;line-height:1.8}
+.btn-paypal{width:100%;padding:18px;border-radius:12px;border:none;cursor:pointer;background:#FFC439;color:#1A1A2E;font-size:16px;font-weight:700;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;transition:all 0.2s;box-shadow:0 4px 16px rgba(255,196,57,0.3)}
+.btn-paypal:hover{background:#FFD166;transform:translateY(-1px)}
+.demo-link{text-align:center;margin-top:16px}
+.demo-link button{background:none;border:none;color:rgba(255,255,255,0.4);font-size:13px;cursor:pointer;text-decoration:underline;font-family:'DM Sans',sans-serif}
+.demo-link button:hover{color:rgba(255,255,255,0.7)}
+.testimonial{margin-top:48px;padding:24px;border-left:3px solid var(--gold);background:rgba(255,255,255,0.03)}
+.testimonial-text{font-size:14px;color:rgba(255,255,255,0.65);line-height:1.7;font-style:italic;margin-bottom:12px}
+.testimonial-author{font-size:12px;color:var(--gold);font-weight:500}
+.disclaimer{font-size:11px;color:rgba(255,255,255,0.3);text-align:center;margin-top:32px;line-height:1.6}
+#screen-upload{background:var(--cream)}
+.upload-inner{max-width:620px;margin:0 auto;padding:48px 24px}
+.step-badge{display:inline-flex;align-items:center;gap:6px;background:var(--navy);color:var(--gold);font-size:11px;font-weight:600;letter-spacing:1px;padding:5px 14px;border-radius:100px;text-transform:uppercase;margin-bottom:16px}
+.step-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--navy);margin-bottom:8px}
+.step-sub{font-size:14px;color:var(--text-muted);line-height:1.6;margin-bottom:24px}
+.upload-card{background:#fff;border:1.5px dashed var(--border);border-radius:16px;padding:32px;text-align:center;margin-bottom:16px;cursor:pointer;transition:all 0.2s;position:relative}
+.upload-card:hover{border-color:var(--navy)}
+.upload-card.has-files{border-color:var(--success);border-style:solid;background:var(--success-bg)}
+.upload-card input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-icon{font-size:36px;margin-bottom:12px}
+.upload-title{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:6px}
+.upload-hint{font-size:13px;color:var(--text-muted)}
+.file-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--success);padding:4px 0}
+.info-box{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:12px;padding:16px;margin-bottom:24px}
+.info-box p{font-size:13px;color:#1D4ED8;line-height:1.6}
+.info-warn{background:#FFF7F0;border:1px solid #FDBA74}
+.info-warn p{color:#C2410C}
+.btn-primary{width:100%;padding:16px;border-radius:12px;border:none;cursor:pointer;background:var(--navy);color:#fff;font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-primary:hover:not(:disabled){background:var(--navy-light);transform:translateY(-1px)}
+.btn-primary:disabled{opacity:0.5;cursor:not-allowed}
+.btn-secondary{width:100%;padding:14px;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--text);font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:12px;transition:all 0.2s}
+.btn-secondary:hover{border-color:var(--navy);color:var(--navy)}
+#screen-processing{background:var(--navy);display:flex;align-items:center;justify-content:center}
+.processing-inner{text-align:center;padding:48px 24px;max-width:480px}
+.processing-spinner{width:64px;height:64px;border:3px solid rgba(201,168,76,0.2);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 32px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.processing-title{font-family:'Playfair Display',serif;font-size:26px;color:#fff;margin-bottom:12px}
+.proc-step{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+.proc-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.2);flex-shrink:0;transition:all 0.5s}
+.proc-dot.done{background:var(--gold)}
+.proc-dot.active{background:var(--gold);animation:pulse-dot 1s infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}
+.proc-text{font-size:14px;color:rgba(255,255,255,0.6)}
+.proc-text.active{color:#fff;font-weight:500}
+.proc-text.done{color:rgba(255,255,255,0.4);text-decoration:line-through}
+#screen-result{background:var(--cream)}
+.result-inner{max-width:620px;margin:0 auto;padding:48px 24px}
+.result-success{background:#fff;border-radius:20px;padding:32px;text-align:center;margin-bottom:24px;box-shadow:var(--shadow);border-top:4px solid var(--gold)}
+.result-icon{font-size:48px;margin-bottom:16px}
+.result-title{font-family:'Playfair Display',serif;font-size:24px;color:var(--navy);margin-bottom:8px}
+.result-sub{font-size:14px;color:var(--text-muted);line-height:1.6}
+.action-card{background:#fff;border-radius:16px;padding:24px;border:1.5px solid var(--border);box-shadow:var(--shadow);margin-bottom:16px}
+.action-num{font-size:11px;font-weight:700;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.action-title{font-size:16px;font-weight:600;color:var(--navy);margin-bottom:6px}
+.action-desc{font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:16px}
+.btn-download{width:100%;padding:13px;border-radius:10px;border:none;cursor:pointer;background:var(--navy);color:#fff;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-download:hover{background:var(--navy-light)}
+.btn-gold{width:100%;padding:13px;border-radius:10px;border:none;cursor:pointer;background:var(--gold);color:var(--navy);font-size:14px;font-weight:700;font-family:'DM Sans',sans-serif;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-gold:hover{background:var(--gold-light)}
+.correction-upload{background:#fff;border-radius:12px;padding:20px;border:1.5px dashed var(--border);margin-bottom:12px;text-align:center;position:relative;cursor:pointer;transition:all 0.2s}
+.correction-upload:hover{border-color:var(--gold)}
+.correction-upload.has-file{border-color:var(--success);border-style:solid;background:var(--success-bg)}
+.correction-upload input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+#screen-practice{background:var(--cream)}
+.practice-inner{max-width:620px;margin:0 auto;padding:32px 24px}
+.practice-header{background:var(--navy);border-radius:16px;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.practice-header h2{font-family:'Playfair Display',serif;font-size:18px;color:#fff;margin-bottom:2px}
+.practice-header p{font-size:12px;color:rgba(255,255,255,0.5)}
+.progress-pills{display:flex;gap:4px;flex-wrap:wrap}
+.pill{width:20px;height:6px;border-radius:3px;background:rgba(255,255,255,0.15);transition:all 0.3s}
+.pill.done{background:var(--gold)}
+.pill.current{background:rgba(201,168,76,0.6)}
+.phase-tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:0.8px;padding:4px 12px;border-radius:100px;margin-bottom:8px;text-transform:uppercase}
+.tag-juez{background:#DBEAFE;color:#1E40AF}
+.tag-gobierno{background:#FEE2E2;color:#991B1B}
+.tag-credibilidad{background:#FEF3C7;color:#92400E}
+.tag-abogado{background:#D1FAE5;color:#065F46}
+.question-card{background:#fff;border-radius:16px;padding:24px;box-shadow:var(--shadow);margin-bottom:16px}
+.question-text{font-size:16px;font-weight:500;color:var(--navy);line-height:1.6;margin-bottom:16px;font-style:italic}
+.listen-btn{display:flex;align-items:center;gap:8px;background:#EFF6FF;border:1px solid #BFDBFE;color:#1D4ED8;font-size:13px;font-weight:500;padding:7px 14px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-bottom:16px;transition:all 0.2s}
+.listen-btn:hover{background:#DBEAFE}
+.strategy-box{background:#FFFBEB;border:1px solid #FDE68A;border-radius:12px;padding:14px 16px;margin-bottom:16px}
+.strategy-label{font-size:11px;font-weight:700;color:#92400E;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:6px}
+.strategy-text{font-size:13px;color:#78350F;line-height:1.6}
+.mic-zone{text-align:center;padding:20px;background:#fff;border-radius:16px;box-shadow:var(--shadow);margin-bottom:16px}
+.mic-button{width:72px;height:72px;border-radius:50%;border:2.5px solid var(--border);background:#fff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:28px;transition:all 0.25s;box-shadow:var(--shadow);margin-bottom:12px}
+.mic-button.recording{background:#FEE2E2;border-color:#EF4444;animation:pulse-ring 1.2s infinite}
+.mic-button.analyzing{background:#EFF6FF;border-color:#3B82F6}
+@keyframes pulse-ring{0%{box-shadow:0 0 0 0 rgba(239,68,68,0.4)}70%{box-shadow:0 0 0 16px rgba(239,68,68,0)}100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}}
+.mic-label{font-size:13px;color:var(--text-muted)}
+.mic-timer{font-size:12px;color:#EF4444;margin-top:4px;font-weight:600}
+.transcript-box{background:#F8FAFC;border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin:12px 0;font-size:13px;color:var(--text);line-height:1.6;min-height:48px;display:none}
+.feedback-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.fb-card{border-radius:12px;padding:14px;display:none}
+.fb-bien{background:#D8F3DC;border:1px solid #95D5B2}
+.fb-mejorar{background:#FFF7F0;border:1px solid #FDBA74}
+.fb-label{font-size:11px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;margin-bottom:8px}
+.fb-bien .fb-label{color:var(--success)}
+.fb-mejorar .fb-label{color:#C2410C}
+.fb-text{font-size:12px;line-height:1.6;white-space:pre-line}
+.fb-bien .fb-text{color:#1B4332}
+.fb-mejorar .fb-text{color:#7C2D12}
+.nav-btns{display:flex;gap:10px}
+.btn-nav{flex:1;padding:12px;border-radius:10px;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;border:1.5px solid var(--border);background:#fff;color:var(--text);transition:all 0.2s}
+.btn-nav:hover{border-color:var(--navy);color:var(--navy)}
+.btn-nav.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+.btn-nav.primary:hover{background:var(--navy-light)}
+.btn-nav.repeat{background:transparent;border-color:var(--border);font-size:13px;flex:0 0 auto;padding:12px 16px}
+.loading-overlay{position:fixed;inset:0;background:var(--navy);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:20px}
+.loading-overlay p{color:rgba(255,255,255,0.7);font-size:14px}
+@media(max-width:500px){.feedback-grid{grid-template-columns:1fr}.nav-btns{flex-wrap:wrap}}
+</style>
 </head>
 <body>
 
-<nav id="nav">
-  <div class="nav-inner">
-    <a href="#" class="logo">VersaPro <span>TX</span></a>
-    <div class="nav-right">
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#divisions" data-en="Divisions" data-es="Divisiones">Divisions</a></li>
-        <li><a href="#about" data-en="About Us" data-es="Nosotros">About Us</a></li>
-        <li><a href="#contact" data-en="Contact" data-es="Contacto">Contact</a></li>
-      </ul>
-      <div class="lang-toggle">
-        <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
-        <button class="lang-btn" id="btnES" onclick="setLang('es')">ES</button>
-      </div>
-      <button class="menu-toggle" id="menuToggle" aria-label="Menu">&#9776;</button>
-    </div>
-  </div>
-</nav>
+<!-- LANDING -->
+<div id="screen-landing" class="screen active">
+<div class="landing-bg"></div>
+<div class="landing-inner">
+<div class="badge">🇺🇸 Preparación de Asilo · EEUU</div>
+<h1 class="landing-title">Practica tu audiencia de asilo <span>con inteligencia artificial</span></h1>
+<p class="landing-sub">Sube tu historia y declaraciones. Recibe un simulacro personalizado con preguntas reales, estrategias legales y práctica oral — listo en minutos.</p>
+<div class="features">
+<div class="feature"><div class="feature-icon">📄</div><div><div class="feature-title">Personalizado a tu caso</div><div class="feature-desc">La IA lee tu historia y declaraciones de testigos y genera preguntas basadas en tus propios hechos.</div></div></div>
+<div class="feature"><div class="feature-icon">🎙️</div><div><div class="feature-title">Práctica oral real</div><div class="feature-desc">El oficial pregunta en voz alta. Tú respondes hablando. La app evalúa tu respuesta al instante.</div></div></div>
+<div class="feature"><div class="feature-icon">♾️</div><div><div class="feature-title">Sin límites de práctica</div><div class="feature-desc">Practica cuantas veces necesites. Corrige errores y regenera el documento sin costo adicional.</div></div></div>
+<div class="feature"><div class="feature-icon">⚖️</div><div><div class="feature-title">Estrategia legal incluida</div><div class="feature-desc">Cada pregunta incluye estrategia recomendada, respuesta modelo y elementos clave del derecho de asilo (INA § 208).</div></div></div>
+</div>
+<div class="price-box">
+<div class="price-amount">$50</div>
+<div class="price-label">PAGO ÚNICO · SIN SUSCRIPCIÓN</div>
+<div class="price-includes">✓ Documento Word personalizado descargable<br>✓ Simulacro oral con 12+ preguntas reales<br>✓ Correcciones ilimitadas · Práctica ilimitada</div>
+</div>
+<button class="btn-paypal" onclick="iniciarPago()">
+<span style="font-weight:800;font-style:italic"><span style="color:#003087">Pay</span><span style="color:#009cde">Pal</span></span>
+Pagar $50 con PayPal — Acceso inmediato
+</button>
+<div class="demo-link"><button onclick="showScreen('screen-upload')">Ver demostración gratuita →</button></div>
+<div class="testimonial">
+<div class="testimonial-text">"Practiqué más de 30 veces antes de mi audiencia. El juez me preguntó exactamente las mismas cosas. Me aprobaron el asilo."</div>
+<div class="testimonial-author">— M.R., venezolana, aprobada en Texas · 2024</div>
+</div>
+<p class="disclaimer">Herramienta de preparación educativa. No reemplaza la asesoría de un abogado de inmigración certificado. VersaPro Solution TX.</p>
+</div>
+</div>
 
-<header class="hero">
-  <div class="container">
-    <div class="hero-content">
-      <div class="hero-eyebrow">Austin, Texas &middot; Est. 2025</div>
-      <h1>One company, <em>multiple solutions,</em> one Texas.</h1>
-      <p id="hero-desc">VersaPro Solution TX LLC is a multi-sector Texas company built to deliver professional services across transportation, technology, construction, and more.</p>
-      <div class="hero-btns">
-        <a href="#contact" class="btn btn-accent" data-en="Get in Touch" data-es="Cont&aacute;ctanos">Get in Touch</a>
-        <a href="#divisions" class="btn btn-outline" data-en="Our Divisions" data-es="Nuestras Divisiones">Our Divisions</a>
-      </div>
-    </div>
-  </div>
-</header>
+<!-- UPLOAD -->
+<div id="screen-upload" class="screen">
+<div class="upload-inner">
+<div class="step-badge">✓ Paso 1 de 2</div>
+<h2 class="step-title">Sube tus documentos</h2>
+<p class="step-sub">Sube tu historia de caso y las declaraciones de tus testigos. La IA los analizará y generará tu simulacro personalizado.</p>
+<div class="info-box"><p><strong>¿Qué documentos necesitas?</strong><br>Tu historia principal + declaraciones de testigos. Formatos: Word (.docx) o PDF. Puedes subir varios archivos.</p></div>
+<div class="upload-card" id="uploadCard">
+<input type="file" id="fileInput" multiple accept=".docx,.pdf" onchange="handleFiles(this)">
+<div class="upload-icon">📁</div>
+<div class="upload-title">Haz clic para seleccionar tus archivos</div>
+<div class="upload-hint">O arrastra y suelta aquí · .docx o .pdf</div>
+<div id="fileList" style="margin-top:12px;text-align:left"></div>
+</div>
+<div class="info-box info-warn"><p><strong>Importante:</strong> Después de recibir tu Word, revísalo con tus declaraciones originales. Si hay errores, corrígelos y sube el Word corregido para regenerar.</p></div>
+<button class="btn-primary" id="btnGenerar" onclick="generarDocumento()" disabled>⚡ Generar mi simulacro personalizado</button>
+<button class="btn-secondary" onclick="showScreen('screen-landing')">← Volver</button>
+</div>
+</div>
 
-<section id="about" class="about-strip">
-  <div class="container">
-    <div class="about-inner">
-      <div class="reveal">
-        <h2>Built for growth. <em>Rooted in Texas.</em></h2>
-        <p id="about-desc">VersaPro Solution TX LLC was founded with a clear vision: to build a versatile, professional, and trustworthy business group serving individuals and companies across Texas. We are a family-operated company — a father and son team — combining hands-on experience with technical knowledge to deliver real results.</p>
-      </div>
-      <div class="about-stats reveal">
-        <div class="stat-item"><span class="stat-num">TX</span><span class="stat-label" data-en="State of Operations" data-es="Estado de Operaciones">State of Operations</span></div>
-        <div class="stat-item"><span class="stat-num">4+</span><span class="stat-label" data-en="Business Divisions" data-es="Divisiones">Business Divisions</span></div>
-        <div class="stat-item"><span class="stat-num">LLC</span><span class="stat-label" data-en="Formally Registered" data-es="Registrada Formalmente">Formally Registered</span></div>
-        <div class="stat-item"><span class="stat-num">24/7</span><span class="stat-label" data-en="Transport Active" data-es="Transporte Activo">Transport Active</span></div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- PROCESSING -->
+<div id="screen-processing" class="screen">
+<div class="processing-inner">
+<div class="processing-spinner"></div>
+<h2 class="processing-title">Analizando tu caso...</h2>
+<p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:32px">Aproximadamente 30–60 segundos</p>
+<div id="procSteps">
+<div class="proc-step"><div class="proc-dot active" id="dot0"></div><div class="proc-text active" id="step0">Leyendo tus documentos...</div></div>
+<div class="proc-step"><div class="proc-dot" id="dot1"></div><div class="proc-text" id="step1">Identificando hechos clave del caso...</div></div>
+<div class="proc-step"><div class="proc-dot" id="dot2"></div><div class="proc-text" id="step2">Generando preguntas por fase...</div></div>
+<div class="proc-step"><div class="proc-dot" id="dot3"></div><div class="proc-text" id="step3">Preparando estrategias legales...</div></div>
+<div class="proc-step"><div class="proc-dot" id="dot4"></div><div class="proc-text" id="step4">Creando documento Word...</div></div>
+</div>
+</div>
+</div>
 
-<section id="divisions">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-eyebrow" data-en="What we offer" data-es="Lo que ofrecemos">What we offer</div>
-      <h2 data-en="Our Business Divisions" data-es="Nuestras Divisiones">Our Business Divisions</h2>
-    </div>
-    <div class="divisions-grid">
+<!-- RESULT -->
+<div id="screen-result" class="screen">
+<div class="result-inner">
+<div class="result-success">
+<div class="result-icon">✅</div>
+<h2 class="result-title">¡Tu simulacro está listo!</h2>
+<p class="result-sub">Tu documento Word personalizado y práctica oral están listos. Sigue los pasos a continuación.</p>
+</div>
+<div class="action-card">
+<div class="action-num">Paso 1</div>
+<div class="action-title">📄 Descarga y revisa tu documento Word</div>
+<div class="action-desc">Lee todas las preguntas y respuestas. Compáralas con tus declaraciones originales. Si hay errores, corrígelos en el Word.</div>
+<button class="btn-download" id="btnDescargar" onclick="descargarWord()">⬇ Descargar documento Word</button>
+</div>
+<div class="action-card">
+<div class="action-num">Paso 2 — Solo si hay errores</div>
+<div class="action-title">🔄 Sube el Word corregido</div>
+<div class="action-desc">Si encontraste errores, corrígelos y sube el Word aquí. La app borrará el anterior y generará uno nuevo.</div>
+<div class="correction-upload" id="corrUpload">
+<input type="file" id="corrFile" accept=".docx" onchange="handleCorrection(this)">
+<div style="font-size:24px;margin-bottom:8px">📤</div>
+<div style="font-size:14px;font-weight:600;color:var(--navy)">Subir Word corregido</div>
+<div style="font-size:12px;color:var(--text-muted);margin-top:4px">Solo archivos .docx</div>
+</div>
+<button class="btn-download" id="btnRegenerar" onclick="regenerar()" disabled style="opacity:0.4">🔄 Regenerar con correcciones</button>
+</div>
+<div class="action-card">
+<div class="action-num">Paso 3</div>
+<div class="action-title">🎙️ Practica tu audiencia oral</div>
+<div class="action-desc">Simula la audiencia completa con voz. Practica cuantas veces necesites.</div>
+<button class="btn-gold" onclick="irAPractica()">▶ Iniciar simulacro oral</button>
+</div>
+</div>
+</div>
 
-      <div class="division-card reveal">
-        <span class="div-icon">&#128663;</span>
-        <span class="dba">VersaPro Transport</span>
-        <h3 data-en="Transportation" data-es="Transporte">Transportation</h3>
-        <p data-en="Professional transportation services across Texas. From rideshare to premium black car service — reliable, safe, and on time." data-es="Servicios de transporte profesional en Texas. Desde rideshare hasta servicio premium de auto — confiable, seguro y puntual.">Professional transportation services across Texas. From rideshare to premium black car service — reliable, safe, and on time.</p>
-      </div>
-
-      <div class="division-card reveal">
-        <span class="div-icon">&#129302;</span>
-        <span class="dba">VersaPro Tech Consulting</span>
-        <h3 data-en="AI &amp; Cybersecurity" data-es="IA y Ciberseguridad">AI &amp; Cybersecurity</h3>
-        <p data-en="Consulting in artificial intelligence and cybersecurity. We help businesses protect their data and leverage technology to grow." data-es="Consultor&iacute;a en inteligencia artificial y ciberseguridad. Ayudamos a proteger datos y aprovechar la tecnolog&iacute;a para crecer.">Consulting in artificial intelligence and cybersecurity. We help businesses protect their data and leverage technology to grow.</p>
-      </div>
-
-      <div class="division-card coming-soon reveal">
-        <span class="coming-badge" data-en="Coming Soon" data-es="Pr&oacute;ximamente">Coming Soon</span>
-        <span class="div-icon">&#127838;</span>
-        <span class="dba">VersaPro Artisan</span>
-        <h3 data-en="Artisan Baking" data-es="Panader&iacute;a Artesanal">Artisan Baking</h3>
-        <p data-en="Handcrafted artisan bread and baked goods made with tradition and passion. Coming soon to the Austin area." data-es="Pan artesanal y productos horneados elaborados con tradici&oacute;n y pasi&oacute;n. Pr&oacute;ximamente en el &aacute;rea de Austin.">Handcrafted artisan bread and baked goods made with tradition and passion. Coming soon to the Austin area.</p>
-      </div>
-
-      <div class="division-card coming-soon reveal">
-        <span class="coming-badge" data-en="Coming Soon" data-es="Pr&oacute;ximamente">Coming Soon</span>
-        <span class="div-icon">&#127959;</span>
-        <span class="dba">VersaPro Build</span>
-        <h3 data-en="Construction &amp; Design" data-es="Construcci&oacute;n y Dise&ntilde;o">Construction &amp; Design</h3>
-        <p data-en="Construction and interior design services for residential and commercial projects in Texas. Quality, detail, and vision." data-es="Servicios de construcci&oacute;n y dise&ntilde;o de interiores para proyectos residenciales y comerciales en Texas.">Construction and interior design services for residential and commercial projects in Texas. Quality, detail, and vision.</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<section id="gallery" class="gallery">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-eyebrow" data-en="Our market" data-es="Nuestro mercado">Our market</div>
-      <h2 data-en="Texas — where we operate" data-es="Texas &mdash; donde operamos">Texas &mdash; where we operate</h2>
-    </div>
-    <div class="gallery-grid">
-      <div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=900&q=80" alt="Austin Texas skyline" /></div>
-      <div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=700&q=80" alt="Professional business office" /></div>
-      <div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&q=80" alt="Technology and cybersecurity" /></div>
-      <div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=500&q=80" alt="Transportation services" /></div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="testimonial reveal">
-    <blockquote id="quote">"Building a multi-sector company from the ground up takes vision, discipline, and the right team. VersaPro is that vision."</blockquote>
-    <cite>VersaPro Solution TX LLC<span id="cite-sub">Austin, Texas &middot; Family-Operated Business</span></cite>
-  </div>
-</section>
-
-<section id="contact" class="cta">
-  <div class="container">
-    <h2 id="cta-h">Ready to work <em>together?</em></h2>
-    <p id="cta-p">Whether you need transportation, consulting, or want to explore a business partnership — we're here. Reach out and let's talk.</p>
-    <a href="mailto:info@versaprosolutiontx.com" class="btn" id="cta-btn">Send us an Email</a>
-  </div>
-</section>
-
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="#" class="logo">VersaPro <span>TX</span></a>
-        <p id="footer-desc">A Texas multi-sector LLC committed to delivering professional services with integrity, efficiency, and long-term vision.</p>
-      </div>
-      <div>
-        <h4 data-en="Contact" data-es="Contacto">Contact</h4>
-        <ul>
-          <li><a href="mailto:info@versaprosolutiontx.com">info@versaprosolutiontx.com</a></li>
-          <li><a href="tel:+12102939732">+1 (210) 293-9732</a></li>
-          <li style="color:rgba(255,255,255,0.5);font-size:0.82rem;line-height:1.6">5900 Balcones Dr., #31021<br>Austin, TX 78731</li>
-        </ul>
-      </div>
-      <div>
-        <h4 data-en="Divisions" data-es="Divisiones">Divisions</h4>
-        <ul>
-          <li><a href="#divisions">VersaPro Transport</a></li>
-          <li><a href="#divisions">VersaPro Tech</a></li>
-          <li><a href="#divisions" style="opacity:0.45" data-en="VersaPro Artisan (soon)" data-es="VersaPro Artisan (pronto)">VersaPro Artisan (soon)</a></li>
-          <li><a href="#divisions" style="opacity:0.45" data-en="VersaPro Build (soon)" data-es="VersaPro Build (pronto)">VersaPro Build (soon)</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4 data-en="Hours" data-es="Horario">Hours</h4>
-        <ul>
-          <li style="color:rgba(255,255,255,0.55);font-size:0.85rem" data-en="Mon&ndash;Fri: 9 AM &ndash; 6 PM" data-es="Lun&ndash;Vie: 9 AM &ndash; 6 PM">Mon&ndash;Fri: 9 AM &ndash; 6 PM</li>
-          <li style="color:rgba(255,255,255,0.55);font-size:0.85rem" data-en="Transportation: 24/7" data-es="Transporte: 24/7">Transportation: 24/7</li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      &copy; <span id="year"></span> VersaPro Solution TX LLC. <span data-en="All rights reserved." data-es="Todos los derechos reservados.">All rights reserved.</span>
-      &nbsp;&middot;&nbsp; Austin, Texas
-    </div>
-  </div>
-</footer>
+<!-- PRACTICE -->
+<div id="screen-practice" class="screen">
+<div class="practice-inner">
+<div class="practice-header">
+<div><h2>Simulacro de Audiencia</h2><p id="pracLabel">Pregunta 1 de 12</p></div>
+<div class="progress-pills" id="pills"></div>
+</div>
+<div class="question-card">
+<div class="phase-tag" id="phaseTag">Fase</div>
+<div style="font-size:12px;color:var(--text-muted);margin-bottom:12px" id="phaseTitle"></div>
+<div class="question-text" id="qText"></div>
+<button class="listen-btn" onclick="leerPregunta()">🔊 Escuchar en voz alta</button>
+<div class="strategy-box">
+<div class="strategy-label">💡 Estrategia</div>
+<div class="strategy-text" id="stratText"></div>
+</div>
+</div>
+<div class="mic-zone">
+<button class="mic-button" id="micBtn" onclick="toggleMic()">🎙️</button>
+<div class="mic-label" id="micLabel">Toca el micrófono y responde en voz alta</div>
+<div class="mic-timer" id="micTimer"></div>
+<div class="transcript-box" id="transcript"></div>
+</div>
+<div class="feedback-grid">
+<div class="fb-card fb-bien" id="fbBien"><div class="fb-label">✓ Cubriste bien</div><div class="fb-text" id="fbBienText"></div></div>
+<div class="fb-card fb-mejorar" id="fbMejorar"><div class="fb-label">⚠ Agrega esto</div><div class="fb-text" id="fbMejorarText"></div></div>
+</div>
+<div class="nav-btns">
+<button class="btn-nav" id="btnPrev" onclick="prevQ()">← Anterior</button>
+<button class="btn-nav primary" id="btnNext" onclick="nextQ()">Siguiente →</button>
+<button class="btn-nav repeat" onclick="repetirQ()">↺ Repetir</button>
+</div>
+</div>
+</div>
 
 <script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
-  const toggle = document.getElementById('menuToggle');
-  const links = document.getElementById('navLinks');
-  toggle.addEventListener('click', () => links.classList.toggle('open'));
-  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
-  }, {threshold:0.12});
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+const PAYPAL_EMAIL = 'versaprosolutionapp@gmail.com';
+const PAYPAL_PRICE = '50.00';
 
-  const translations = {
-    en: {
-      'hero-h': 'One company, <em>multiple solutions,</em> one Texas.',
-      'hero-desc': 'VersaPro Solution TX LLC is a multi-sector Texas company built to deliver professional services across transportation, technology, construction, and more.',
-      'about-h': 'Built for growth. <em>Rooted in Texas.</em>',
-      'about-desc': 'VersaPro Solution TX LLC was founded with a clear vision: to build a versatile, professional, and trustworthy business group serving individuals and companies across Texas. We are a family-operated company — a father and son team — combining hands-on experience with technical knowledge to deliver real results.',
-      'quote': '"Building a multi-sector company from the ground up takes vision, discipline, and the right team. VersaPro is that vision."',
-      'cite-sub': 'Austin, Texas · Family-Operated Business',
-      'cta-h': 'Ready to work <em>together?</em>',
-      'cta-p': "Whether you need transportation, consulting, or want to explore a business partnership — we're here. Reach out and let's talk.",
-      'cta-btn': 'Send us an Email',
-      'footer-desc': 'A Texas multi-sector LLC committed to delivering professional services with integrity, efficiency, and long-term vision.'
-    },
-    es: {
-      'hero-h': 'Una empresa, <em>múltiples soluciones,</em> un Texas.',
-      'hero-desc': 'VersaPro Solution TX LLC es una empresa multisectorial en Texas diseñada para brindar servicios profesionales en transporte, tecnología, construcción y más.',
-      'about-h': 'Construida para crecer. <em>Arraigada en Texas.</em>',
-      'about-desc': 'VersaPro Solution TX LLC fue fundada con una visión clara: construir un grupo empresarial versátil, profesional y confiable que sirva a personas y empresas en todo Texas. Somos una empresa familiar — un equipo de padre e hijo — que combina experiencia práctica con conocimiento técnico para generar resultados reales.',
-      'quote': '"Construir una empresa multisectorial desde cero requiere visión, disciplina y el equipo correcto. VersaPro es esa visión."',
-      'cite-sub': 'Austin, Texas · Empresa Familiar',
-      'cta-h': '¿Listos para trabajar <em>juntos?</em>',
-      'cta-p': 'Ya sea que necesites transporte, consultoría o quieras explorar una alianza comercial — estamos aquí. Escríbenos y hablemos.',
-      'cta-btn': 'Envíanos un Correo',
-      'footer-desc': 'Una LLC multisectorial en Texas comprometida con brindar servicios profesionales con integridad, eficiencia y visión a largo plazo.'
+let currentQ = 0;
+let respuestas = [];
+let grabando = false;
+let recognition = null;
+let timerInterval = null;
+let timerSec = 0;
+let generatedQuestions = [];
+let wordBlob = null;
+let uploadedFiles = [];
+let correctionFile = null;
+let respuestaActual = '';
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function iniciarPago() {
+  const desc = encodeURIComponent('Simulacro Audiencia Asilo - VersaPro Solution TX');
+  const returnUrl = encodeURIComponent(window.location.href + '?paid=1');
+  const url = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${PAYPAL_EMAIL}&amount=${PAYPAL_PRICE}&currency_code=USD&item_name=${desc}&return=${returnUrl}&no_shipping=1`;
+  window.open(url, '_blank');
+  setTimeout(() => {
+    if(confirm('¿Completaste el pago en PayPal? Haz clic en OK para continuar.')) {
+      showScreen('screen-upload');
     }
-  };
+  }, 3000);
+}
 
-  function setLang(lang) {
-    document.getElementById('btnEN').classList.toggle('active', lang==='en');
-    document.getElementById('btnES').classList.toggle('active', lang==='es');
-    const t = translations[lang];
-    Object.keys(t).forEach(id => {
-      const el = document.getElementById(id);
-      if(el) el.innerHTML = t[id];
-    });
-    document.querySelectorAll('[data-en]').forEach(el => {
-      const txt = el.getAttribute('data-'+lang);
-      if(txt) el.innerHTML = txt;
-    });
+function handleFiles(input) {
+  uploadedFiles = Array.from(input.files);
+  const card = document.getElementById('uploadCard');
+  const list = document.getElementById('fileList');
+  if (uploadedFiles.length > 0) {
+    card.classList.add('has-files');
+    list.innerHTML = uploadedFiles.map(f => `<div class="file-item">✓ ${f.name}</div>`).join('');
+    document.getElementById('btnGenerar').disabled = false;
   }
+}
+
+async function generarDocumento() {
+  showScreen('screen-processing');
+  animarPasos();
+  try {
+    const textos = await leerArchivos(uploadedFiles);
+    const preguntas = await llamarClaudeAPI(textos, false);
+    generatedQuestions = preguntas;
+    wordBlob = await generarWord(preguntas);
+    setTimeout(() => showScreen('screen-result'), 500);
+  } catch(e) {
+    console.error(e);
+    alert('Error al procesar los documentos. Verifica tu conexión e intenta de nuevo.');
+    showScreen('screen-upload');
+  }
+}
+
+async function leerArchivos(files) {
+  const textos = [];
+  for (const file of files) {
+    if (file.name.endsWith('.docx')) {
+      const arrayBuffer = await file.arrayBuffer();
+      const result = await window.mammoth.extractRawText({arrayBuffer});
+      textos.push(`=== ${file.name} ===\n${result.value}`);
+    } else if (file.name.endsWith('.pdf')) {
+      textos.push(`=== ${file.name} ===\n[Archivo PDF: ${file.name}]`);
+    }
+  }
+  return textos.join('\n\n');
+}
+
+async function llamarClaudeAPI(textoDocumentos, esCorreccion) {
+  const prompt = esCorreccion
+    ? `Eres un experto en derecho de asilo de EEUU (INA § 208). El cliente ha corregido el documento Word con sus preguntas y respuestas. Lee el documento corregido y regenera el JSON con las correcciones aplicadas.\n\nDOCUMENTO CORREGIDO:\n${textoDocumentos}\n\nGenera exactamente el mismo formato JSON pero con las correcciones del cliente aplicadas.`
+    : `Eres un experto en derecho de asilo de EEUU (INA § 208) especializado en casos venezolanos por persecución política.\n\nAnaliza estos documentos del caso y genera 12 preguntas de práctica para la audiencia de asilo, distribuidas en 4 fases.\n\nDOCUMENTOS DEL CASO:\n${textoDocumentos}\n\nGenera SOLO un JSON válido con este formato exacto, sin texto adicional:\n{"preguntas":[{"fase":"Juez de Inmigración","faseTag":"tag-juez","titulo":"Apertura e identidad","texto":"pregunta aquí","estrategia":"estrategia aquí","claves":["clave1","clave2","clave3","clave4"]}]}\n\nFases: 3 preguntas con "tag-juez", 4 con "tag-gobierno", 3 con "tag-credibilidad", 2 con "tag-abogado". Usa los hechos específicos del caso.`;
+
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json', 'x-api-key': window.ANTHROPIC_KEY, 'anthropic-version': '2023-06-01'},
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 4000,
+      messages: [{role: 'user', content: prompt}]
+    })
+  });
+  const data = await response.json();
+  const text = data.content[0].text;
+  const clean = text.replace(/```json|```/g, '').trim();
+  const parsed = JSON.parse(clean);
+  return parsed.preguntas;
+}
+
+async function generarWord(preguntas) {
+  // Simple Word generation via HTML blob
+  let html = `<html><head><meta charset="UTF-8"><style>body{font-family:Arial;margin:40px}h1{color:#1F3864;font-size:22pt;margin-bottom:8px}h2{color:#1F3864;font-size:14pt;background:#D6E4F7;padding:8px;margin-top:20px}.pregunta{font-style:italic;font-size:12pt;margin:10px 0}.estrategia{background:#FFF8E1;padding:10px;margin:8px 0;font-size:11pt}.respuesta{background:#E8F5E9;padding:10px;margin:8px 0;font-size:11pt}.claves{background:#E3F2FD;padding:10px;margin:8px 0}.label{font-weight:bold;font-size:10pt;text-transform:uppercase;margin-bottom:4px}.linea{border-bottom:1px solid #ccc;margin:8px 0}</style></head><body>`;
+  html += `<h1>PREPARACIÓN PARA AUDIENCIA DE ASILO</h1><p>Documento generado automáticamente · ${new Date().toLocaleDateString('es-US')}</p><hr>`;
+  preguntas.forEach((p, i) => {
+    html += `<h2>Pregunta ${i+1} — ${p.fase}: ${p.titulo}</h2>`;
+    html += `<div class="pregunta">"${p.texto}"</div>`;
+    html += `<div class="estrategia"><div class="label">💡 Estrategia</div>${p.estrategia}</div>`;
+    if (p.claves) {
+      html += `<div class="claves"><div class="label">Elementos clave a cubrir</div><ul>${p.claves.map(c=>`<li>${c}</li>`).join('')}</ul></div>`;
+    }
+    html += `<div><div class="label">Mi respuesta (para practicar):</div><div class="linea"></div><div class="linea"></div><div class="linea"></div></div>`;
+  });
+  html += `<p style="margin-top:40px;font-size:10pt;color:#888">Esta herramienta es de preparación educativa. No reemplaza la asesoría de un abogado de inmigración certificado. VersaPro Solution TX.</p></body></html>`;
+  return new Blob([html], {type: 'application/vnd.ms-word'});
+}
+
+function descargarWord() {
+  if (!wordBlob) { alert('El documento aún no está listo.'); return; }
+  const url = URL.createObjectURL(wordBlob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'Preparacion_Audiencia_Asilo.doc';
+  a.click(); URL.revokeObjectURL(url);
+}
+
+function handleCorrection(input) {
+  correctionFile = input.files[0];
+  if (correctionFile) {
+    document.getElementById('corrUpload').classList.add('has-file');
+    document.getElementById('corrUpload').querySelector('div:nth-child(2)').textContent = '✓ ' + correctionFile.name;
+    const btn = document.getElementById('btnRegenerar');
+    btn.disabled = false; btn.style.opacity = '1';
+  }
+}
+
+async function regenerar() {
+  showScreen('screen-processing');
+  document.getElementById('step0').textContent = 'Leyendo correcciones del Word...';
+  document.getElementById('step2').textContent = 'Regenerando preguntas corregidas...';
+  animarPasos();
+  try {
+    const arrayBuffer = await correctionFile.arrayBuffer();
+    const result = await window.mammoth.extractRawText({arrayBuffer});
+    const preguntas = await llamarClaudeAPI(result.value, true);
+    generatedQuestions = preguntas;
+    wordBlob = await generarWord(preguntas);
+    setTimeout(() => showScreen('screen-result'), 500);
+  } catch(e) {
+    console.error(e);
+    alert('Error al procesar las correcciones.');
+    showScreen('screen-result');
+  }
+}
+
+function animarPasos() {
+  const delays = [0, 1200, 2800, 4200, 5500];
+  delays.forEach((delay, i) => {
+    setTimeout(() => {
+      if (i > 0) { document.getElementById(`dot${i-1}`).className='proc-dot done'; document.getElementById(`step${i-1}`).className='proc-text done'; }
+      document.getElementById(`dot${i}`).className='proc-dot active';
+      document.getElementById(`step${i}`).className='proc-text active';
+    }, delay);
+  });
+  setTimeout(() => {
+    document.getElementById('dot4').className='proc-dot done';
+    document.getElementById('step4').className='proc-text done';
+  }, 6500);
+}
+
+function irAPractica() {
+  if (!generatedQuestions.length) { alert('Primero genera tu simulacro subiendo tus documentos.'); return; }
+  respuestas = generatedQuestions.map(() => ({transcripcion:'',evaluado:false,bien:'',mejorar:''}));
+  currentQ = 0;
+  initPills();
+  mostrarPregunta();
+  showScreen('screen-practice');
+}
+
+function initPills() {
+  document.getElementById('pills').innerHTML = generatedQuestions.map((_,i)=>`<div class="pill" id="pill${i}"></div>`).join('');
+  actualizarPills();
+}
+
+function actualizarPills() {
+  generatedQuestions.forEach((_,i)=>{
+    const p = document.getElementById(`pill${i}`);
+    if(!p) return;
+    p.className = 'pill'+(i===currentQ?' current':respuestas[i]?.evaluado?' done':'');
+  });
+}
+
+function mostrarPregunta() {
+  const p = generatedQuestions[currentQ];
+  const tag = document.getElementById('phaseTag');
+  tag.textContent = p.fase; tag.className = 'phase-tag '+p.faseTag;
+  document.getElementById('phaseTitle').textContent = p.titulo;
+  document.getElementById('qText').textContent = '❝ '+p.texto+' ❞';
+  document.getElementById('stratText').textContent = p.estrategia;
+  document.getElementById('pracLabel').textContent = `Pregunta ${currentQ+1} de ${generatedQuestions.length}`;
+  document.getElementById('micBtn').className = 'mic-button';
+  document.getElementById('micBtn').textContent = '🎙️';
+  document.getElementById('micLabel').textContent = 'Toca el micrófono y responde en voz alta';
+  document.getElementById('micTimer').textContent = '';
+  const tr = document.getElementById('transcript');
+  tr.style.display='none'; tr.textContent='';
+  document.getElementById('fbBien').style.display='none';
+  document.getElementById('fbMejorar').style.display='none';
+  if(respuestas[currentQ]?.evaluado){tr.style.display='block';tr.textContent=respuestas[currentQ].transcripcion;mostrarFeedback(respuestas[currentQ].bien,respuestas[currentQ].mejorar);}
+  document.getElementById('btnPrev').style.visibility=currentQ===0?'hidden':'visible';
+  document.getElementById('btnNext').textContent=currentQ===generatedQuestions.length-1?'Ver resultados →':'Siguiente →';
+  actualizarPills();
+}
+
+function leerPregunta(){
+  if(window.speechSynthesis.speaking)window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(generatedQuestions[currentQ].texto);
+  u.lang='es-US';u.rate=0.88;window.speechSynthesis.speak(u);
+}
+
+function toggleMic(){if(grabando)detenerGrabacion();else iniciarGrabacion();}
+
+function iniciarGrabacion(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){alert('Usa Google Chrome para el reconocimiento de voz.');return;}
+  recognition=new SR();recognition.lang='es-US';recognition.continuous=true;recognition.interimResults=true;
+  respuestaActual='';
+  recognition.onresult=(e)=>{let txt='';for(let i=0;i<e.results.length;i++)txt+=e.results[i][0].transcript;respuestaActual=txt;const tr=document.getElementById('transcript');tr.style.display='block';tr.textContent=txt;};
+  recognition.onerror=()=>detenerGrabacion();
+  recognition.onend=()=>{if(grabando)recognition.start();};
+  recognition.start();grabando=true;
+  document.getElementById('micBtn').className='mic-button recording';
+  document.getElementById('micBtn').textContent='⏹️';
+  document.getElementById('micLabel').textContent='Grabando... toca para detener';
+  timerSec=0;timerInterval=setInterval(()=>{timerSec++;document.getElementById('micTimer').textContent=timerSec+'s';},1000);
+}
+
+function detenerGrabacion(){
+  grabando=false;if(recognition)recognition.stop();clearInterval(timerInterval);
+  document.getElementById('micBtn').className='mic-button analyzing';
+  document.getElementById('micBtn').textContent='⏳';
+  document.getElementById('micLabel').textContent='Analizando tu respuesta...';
+  document.getElementById('micTimer').textContent='';
+  setTimeout(()=>evaluarRespuesta(respuestaActual),700);
+}
+
+function evaluarRespuesta(texto){
+  const p=generatedQuestions[currentQ];
+  const resp=texto.toLowerCase();
+  let bien=[],mejorar=[];
+  p.claves.forEach(c=>{
+    const words=c.split(' ').filter(w=>w.length>3);
+    const found=words.some(w=>resp.includes(w.toLowerCase()));
+    if(found)bien.push('✓ '+c);else mejorar.push('• '+c);
+  });
+  if(texto.length<20){mejorar=p.claves.map(c=>'• '+c);bien=[];}
+  const b=bien.length?bien.join('\n'):'Sigue practicando — da más detalles específicos.';
+  const m=mejorar.length?mejorar.join('\n'):'¡Excelente! Cubriste todos los puntos.';
+  respuestas[currentQ]={transcripcion:texto||'(sin respuesta)',evaluado:true,bien:b,mejorar:m};
+  document.getElementById('micBtn').className='mic-button';
+  document.getElementById('micBtn').textContent='🎙️';
+  document.getElementById('micLabel').textContent='Practica de nuevo o continúa';
+  mostrarFeedback(b,m);actualizarPills();
+}
+
+function mostrarFeedback(bien,mejorar){
+  document.getElementById('fbBienText').textContent=bien;
+  document.getElementById('fbMejorarText').textContent=mejorar;
+  document.getElementById('fbBien').style.display='block';
+  document.getElementById('fbMejorar').style.display='block';
+}
+
+function prevQ(){if(currentQ>0){currentQ--;mostrarPregunta();}}
+function nextQ(){if(currentQ<generatedQuestions.length-1){currentQ++;mostrarPregunta();}else{showScreen('screen-result');}}
+function repetirQ(){respuestas[currentQ]={transcripcion:'',evaluado:false,bien:'',mejorar:''};mostrarPregunta();}
+
+if(window.location.search.includes('paid=1'))showScreen('screen-upload');
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 </body>
 </html>
