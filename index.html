@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VersaPro Solution TX LLC — Multi-Sector Business Solutions in Texas</title>
+  <meta name="description" content="VersaPro Solution TX LLC is a Texas-based multi-sector company offering transportation, AI & cybersecurity consulting, artisan baking, and construction services. Based in Austin, TX." />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"LocalBusiness","name":"VersaPro Solution TX LLC","url":"https://versaprosolutiontx.com","email":"info@versaprosolutiontx.com","telephone":"+12102939732","address":{"@type":"PostalAddress","streetAddress":"5900 Balcones Dr., #31021","addressLocality":"Austin","addressRegion":"TX","postalCode":"78731","addressCountry":"US"},"areaServed":["Austin, TX","Houston, TX","San Antonio, TX","Texas"]}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#f5f7fa;--surface:#ffffff;--ink:#0f1923;--ink-soft:#4a5568;--accent:#0052cc;--accent-2:#0a1628;--on-accent:#ffffff;--on-cta:#f0f4ff;--line:#dde3ed}
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:'Jost',sans-serif;font-weight:300;color:var(--ink);background:var(--bg);line-height:1.6;overflow-x:hidden}
+    h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:400;letter-spacing:-0.01em;line-height:1.15}
+    .container{max-width:1200px;margin:0 auto;padding:0 2rem}
+    .lang-toggle{display:flex;align-items:center;gap:6px}
+    .lang-btn{background:none;border:1px solid var(--line);padding:3px 10px;cursor:pointer;font-family:'Jost',sans-serif;font-size:0.75rem;letter-spacing:0.1em;color:var(--ink-soft);transition:all 0.2s;border-radius:2px}
+    .lang-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem 2rem;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid transparent;transition:all 0.3s ease}
+    nav.scrolled{border-bottom-color:var(--line)}
+    nav .nav-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+    .logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:500;letter-spacing:0.02em;color:var(--ink);text-decoration:none}
+    .logo span{color:var(--accent)}
+    .nav-right{display:flex;align-items:center;gap:2rem}
+    .nav-links{display:flex;gap:2rem;list-style:none}
+    .nav-links a{color:var(--ink);text-decoration:none;font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;transition:color 0.2s}
+    .nav-links a:hover{color:var(--accent)}
+    .menu-toggle{display:none;background:none;border:none;cursor:pointer;font-size:1.5rem;color:var(--ink)}
+    .hero{min-height:100vh;display:flex;align-items:center;padding:8rem 0 4rem;background:linear-gradient(135deg,#f5f7fa 0%,#e8eef8 100%)}
+    .hero-content{max-width:900px}
+    .hero-eyebrow{font-size:0.75rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:2rem;opacity:0;animation:fadeUp 0.8s ease 0.2s forwards}
+    .hero h1{font-size:clamp(2.75rem,7vw,6rem);margin-bottom:2rem;opacity:0;animation:fadeUp 0.8s ease 0.4s forwards}
+    .hero h1 em{font-style:italic;color:var(--accent)}
+    .hero p{font-size:1.2rem;color:var(--ink-soft);max-width:560px;margin-bottom:3rem;opacity:0;animation:fadeUp 0.8s ease 0.6s forwards}
+    .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fadeUp 0.8s ease 0.8s forwards}
+    .btn{display:inline-block;padding:1rem 2.5rem;background:var(--accent-2);color:var(--on-cta);text-decoration:none;font-size:0.875rem;letter-spacing:0.12em;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.3s ease}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,0.15)}
+    .btn-outline{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+    .btn-accent{background:var(--accent);color:var(--on-accent)}
+    .about-strip{background:var(--accent-2);color:var(--on-cta);padding:5rem 0}
+    .about-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+    .about-strip h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:1.25rem}
+    .about-strip h2 em{font-style:italic;color:var(--accent)}
+    .about-strip p{opacity:0.8;font-size:1rem;line-height:1.8}
+    .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+    .stat-item{text-align:center}
+    .stat-num{font-family:'Cormorant Garamond',serif;font-size:3rem;color:var(--accent);display:block}
+    .stat-label{font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;opacity:0.65}
+    section{padding:6rem 0}
+    .section-header{text-align:center;margin-bottom:4rem}
+    .section-eyebrow{font-size:0.75rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
+    .section-header h2{font-size:clamp(2.25rem,5vw,3.5rem)}
+    .divisions-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem}
+    .division-card{background:var(--surface);padding:2.5rem 2rem;border:1px solid var(--line);transition:all 0.4s ease;position:relative;overflow:hidden}
+    .division-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 0.4s ease}
+    .division-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,0.07)}
+    .division-card:hover::before{transform:scaleX(1)}
+    .division-card.coming-soon{opacity:0.6}
+    .coming-badge{position:absolute;top:1rem;right:1rem;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;background:var(--line);color:var(--ink-soft);padding:3px 10px;border-radius:20px}
+    .div-icon{font-size:2rem;margin-bottom:1.25rem;display:block}
+    .division-card h3{font-size:1.6rem;margin-bottom:0.75rem}
+    .division-card .dba{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:0.75rem;display:block}
+    .division-card p{color:var(--ink-soft);font-size:0.92rem;line-height:1.7}
+    .gallery{background:var(--surface)}
+    .gallery-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:80px;gap:1rem}
+    .gallery-item{overflow:hidden;position:relative}
+    .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease}
+    .gallery-item:hover img{transform:scale(1.05)}
+    .gallery-item:nth-child(1){grid-column:1/7;grid-row:span 5}
+    .gallery-item:nth-child(2){grid-column:7/13;grid-row:span 3}
+    .gallery-item:nth-child(3){grid-column:7/10;grid-row:span 2}
+    .gallery-item:nth-child(4){grid-column:10/13;grid-row:span 2}
+    .testimonial{text-align:center;max-width:800px;margin:0 auto;padding:6rem 2rem}
+    .testimonial blockquote{font-family:'Cormorant Garamond',serif;font-size:clamp(1.75rem,4vw,2.75rem);font-style:italic;line-height:1.3;margin-bottom:2rem}
+    .testimonial cite{font-size:0.875rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink-soft)}
+    .testimonial cite span{color:var(--accent);display:block;margin-top:0.25rem;font-size:0.75rem}
+    .cta{background:var(--accent-2);color:var(--on-cta);text-align:center;padding:8rem 0}
+    .cta h2{font-size:clamp(2.5rem,6vw,4.5rem);margin-bottom:1.5rem}
+    .cta h2 em{font-style:italic;color:var(--accent)}
+    .cta p{font-size:1.125rem;max-width:540px;margin:0 auto 3rem;opacity:0.85}
+    .cta .btn{background:var(--accent);color:var(--on-accent)}
+    footer{background:var(--accent-2);color:var(--on-cta);padding:4rem 0 2rem;border-top:1px solid rgba(255,255,255,0.08)}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+    footer h4{font-family:'Cormorant Garamond',serif;font-size:1.2rem;margin-bottom:1.25rem}
+    footer ul{list-style:none}
+    footer ul li{margin-bottom:0.5rem}
+    footer a{color:rgba(255,255,255,0.65);text-decoration:none;font-size:0.88rem;transition:color 0.2s}
+    footer a:hover{color:var(--accent)}
+    .footer-brand .logo{color:var(--on-cta);margin-bottom:1rem;display:inline-block}
+    .footer-brand p{color:rgba(255,255,255,0.55);max-width:300px;font-size:0.88rem}
+    .footer-bottom{padding-top:2rem;border-top:1px solid rgba(255,255,255,0.08);text-align:center;color:rgba(255,255,255,0.4);font-size:0.78rem}
+    .reveal{opacity:0;transform:translateY(40px);transition:opacity 0.8s ease,transform 0.8s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:768px){
+      .container{padding:0 1.25rem}
+      nav{padding:1rem 1.25rem}
+      .nav-links{position:fixed;top:0;right:-100%;width:70%;height:100vh;background:var(--bg);flex-direction:column;justify-content:center;align-items:center;gap:2rem;transition:right 0.3s ease}
+      .nav-links.open{right:0}
+      .menu-toggle{display:block;z-index:101}
+      .hero{padding:6rem 0 3rem;min-height:auto;background:var(--bg)}
+      section{padding:4rem 0}
+      .about-inner{grid-template-columns:1fr;gap:2rem}
+      .gallery-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:160px}
+      .gallery-item:nth-child(n){grid-column:span 1;grid-row:span 1}
+      .footer-grid{grid-template-columns:1fr;gap:2rem}
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">VersaPro <span>TX</span></a>
+    <div class="nav-right">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#divisions" data-en="Divisions" data-es="Divisiones">Divisions</a></li>
+        <li><a href="#about" data-en="About Us" data-es="Nosotros">About Us</a></li>
+        <li><a href="#contact" data-en="Contact" data-es="Contacto">Contact</a></li>
+      </ul>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="btnES" onclick="setLang('es')">ES</button>
+      </div>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">&#9776;</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Austin, Texas &middot; Est. 2025</div>
+      <h1>One company, <em>multiple solutions,</em> one Texas.</h1>
+      <p id="hero-desc">VersaPro Solution TX LLC is a multi-sector Texas company built to deliver professional services across transportation, technology, construction, and more.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn btn-accent" data-en="Get in Touch" data-es="Cont&aacute;ctanos">Get in Touch</a>
+        <a href="#divisions" class="btn btn-outline" data-en="Our Divisions" data-es="Nuestras Divisiones">Our Divisions</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="about" class="about-strip">
+  <div class="container">
+    <div class="about-inner">
+      <div class="reveal">
+        <h2>Built for growth. <em>Rooted in Texas.</em></h2>
+        <p id="about-desc">VersaPro Solution TX LLC was founded with a clear vision: to build a versatile, professional, and trustworthy business group serving individuals and companies across Texas. We are a family-operated company — a father and son team — combining hands-on experience with technical knowledge to deliver real results.</p>
+      </div>
+      <div class="about-stats reveal">
+        <div class="stat-item"><span class="stat-num">TX</span><span class="stat-label" data-en="State of Operations" data-es="Estado de Operaciones">State of Operations</span></div>
+        <div class="stat-item"><span class="stat-num">4+</span><span class="stat-label" data-en="Business Divisions" data-es="Divisiones">Business Divisions</span></div>
+        <div class="stat-item"><span class="stat-num">LLC</span><span class="stat-label" data-en="Formally Registered" data-es="Registrada Formalmente">Formally Registered</span></div>
+        <div class="stat-item"><span class="stat-num">24/7</span><span class="stat-label" data-en="Transport Active" data-es="Transporte Activo">Transport Active</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="divisions">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow" data-en="What we offer" data-es="Lo que ofrecemos">What we offer</div>
+      <h2 data-en="Our Business Divisions" data-es="Nuestras Divisiones">Our Business Divisions</h2>
+    </div>
+    <div class="divisions-grid">
+
+      <div class="division-card reveal">
+        <span class="div-icon">&#128663;</span>
+        <span class="dba">VersaPro Transport</span>
+        <h3 data-en="Transportation" data-es="Transporte">Transportation</h3>
+        <p data-en="Professional transportation services across Texas. From rideshare to premium black car service — reliable, safe, and on time." data-es="Servicios de transporte profesional en Texas. Desde rideshare hasta servicio premium de auto — confiable, seguro y puntual.">Professional transportation services across Texas. From rideshare to premium black car service — reliable, safe, and on time.</p>
+      </div>
+
+      <div class="division-card reveal">
+        <span class="div-icon">&#129302;</span>
+        <span class="dba">VersaPro Tech Consulting</span>
+        <h3 data-en="AI &amp; Cybersecurity" data-es="IA y Ciberseguridad">AI &amp; Cybersecurity</h3>
+        <p data-en="Consulting in artificial intelligence and cybersecurity. We help businesses protect their data and leverage technology to grow." data-es="Consultor&iacute;a en inteligencia artificial y ciberseguridad. Ayudamos a proteger datos y aprovechar la tecnolog&iacute;a para crecer.">Consulting in artificial intelligence and cybersecurity. We help businesses protect their data and leverage technology to grow.</p>
+      </div>
+
+      <div class="division-card coming-soon reveal">
+        <span class="coming-badge" data-en="Coming Soon" data-es="Pr&oacute;ximamente">Coming Soon</span>
+        <span class="div-icon">&#127838;</span>
+        <span class="dba">VersaPro Artisan</span>
+        <h3 data-en="Artisan Baking" data-es="Panader&iacute;a Artesanal">Artisan Baking</h3>
+        <p data-en="Handcrafted artisan bread and baked goods made with tradition and passion. Coming soon to the Austin area." data-es="Pan artesanal y productos horneados elaborados con tradici&oacute;n y pasi&oacute;n. Pr&oacute;ximamente en el &aacute;rea de Austin.">Handcrafted artisan bread and baked goods made with tradition and passion. Coming soon to the Austin area.</p>
+      </div>
+
+      <div class="division-card coming-soon reveal">
+        <span class="coming-badge" data-en="Coming Soon" data-es="Pr&oacute;ximamente">Coming Soon</span>
+        <span class="div-icon">&#127959;</span>
+        <span class="dba">VersaPro Build</span>
+        <h3 data-en="Construction &amp; Design" data-es="Construcci&oacute;n y Dise&ntilde;o">Construction &amp; Design</h3>
+        <p data-en="Construction and interior design services for residential and commercial projects in Texas. Quality, detail, and vision." data-es="Servicios de construcci&oacute;n y dise&ntilde;o de interiores para proyectos residenciales y comerciales en Texas.">Construction and interior design services for residential and commercial projects in Texas. Quality, detail, and vision.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="gallery" class="gallery">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow" data-en="Our market" data-es="Nuestro mercado">Our market</div>
+      <h2 data-en="Texas — where we operate" data-es="Texas &mdash; donde operamos">Texas &mdash; where we operate</h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=900&q=80" alt="Austin Texas skyline" /></div>
+      <div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=700&q=80" alt="Professional business office" /></div>
+      <div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&q=80" alt="Technology and cybersecurity" /></div>
+      <div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=500&q=80" alt="Transportation services" /></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="testimonial reveal">
+    <blockquote id="quote">"Building a multi-sector company from the ground up takes vision, discipline, and the right team. VersaPro is that vision."</blockquote>
+    <cite>VersaPro Solution TX LLC<span id="cite-sub">Austin, Texas &middot; Family-Operated Business</span></cite>
+  </div>
+</section>
+
+<section id="contact" class="cta">
+  <div class="container">
+    <h2 id="cta-h">Ready to work <em>together?</em></h2>
+    <p id="cta-p">Whether you need transportation, consulting, or want to explore a business partnership — we're here. Reach out and let's talk.</p>
+    <a href="mailto:info@versaprosolutiontx.com" class="btn" id="cta-btn">Send us an Email</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo">VersaPro <span>TX</span></a>
+        <p id="footer-desc">A Texas multi-sector LLC committed to delivering professional services with integrity, efficiency, and long-term vision.</p>
+      </div>
+      <div>
+        <h4 data-en="Contact" data-es="Contacto">Contact</h4>
+        <ul>
+          <li><a href="mailto:info@versaprosolutiontx.com">info@versaprosolutiontx.com</a></li>
+          <li><a href="tel:+12102939732">+1 (210) 293-9732</a></li>
+          <li style="color:rgba(255,255,255,0.5);font-size:0.82rem;line-height:1.6">5900 Balcones Dr., #31021<br>Austin, TX 78731</li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-en="Divisions" data-es="Divisiones">Divisions</h4>
+        <ul>
+          <li><a href="#divisions">VersaPro Transport</a></li>
+          <li><a href="#divisions">VersaPro Tech</a></li>
+          <li><a href="#divisions" style="opacity:0.45" data-en="VersaPro Artisan (soon)" data-es="VersaPro Artisan (pronto)">VersaPro Artisan (soon)</a></li>
+          <li><a href="#divisions" style="opacity:0.45" data-en="VersaPro Build (soon)" data-es="VersaPro Build (pronto)">VersaPro Build (soon)</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-en="Hours" data-es="Horario">Hours</h4>
+        <ul>
+          <li style="color:rgba(255,255,255,0.55);font-size:0.85rem" data-en="Mon&ndash;Fri: 9 AM &ndash; 6 PM" data-es="Lun&ndash;Vie: 9 AM &ndash; 6 PM">Mon&ndash;Fri: 9 AM &ndash; 6 PM</li>
+          <li style="color:rgba(255,255,255,0.55);font-size:0.85rem" data-en="Transportation: 24/7" data-es="Transporte: 24/7">Transportation: 24/7</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; <span id="year"></span> VersaPro Solution TX LLC. <span data-en="All rights reserved." data-es="Todos los derechos reservados.">All rights reserved.</span>
+      &nbsp;&middot;&nbsp; Austin, Texas
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
+  const toggle = document.getElementById('menuToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  const translations = {
+    en: {
+      'hero-h': 'One company, <em>multiple solutions,</em> one Texas.',
+      'hero-desc': 'VersaPro Solution TX LLC is a multi-sector Texas company built to deliver professional services across transportation, technology, construction, and more.',
+      'about-h': 'Built for growth. <em>Rooted in Texas.</em>',
+      'about-desc': 'VersaPro Solution TX LLC was founded with a clear vision: to build a versatile, professional, and trustworthy business group serving individuals and companies across Texas. We are a family-operated company — a father and son team — combining hands-on experience with technical knowledge to deliver real results.',
+      'quote': '"Building a multi-sector company from the ground up takes vision, discipline, and the right team. VersaPro is that vision."',
+      'cite-sub': 'Austin, Texas · Family-Operated Business',
+      'cta-h': 'Ready to work <em>together?</em>',
+      'cta-p': "Whether you need transportation, consulting, or want to explore a business partnership — we're here. Reach out and let's talk.",
+      'cta-btn': 'Send us an Email',
+      'footer-desc': 'A Texas multi-sector LLC committed to delivering professional services with integrity, efficiency, and long-term vision.'
+    },
+    es: {
+      'hero-h': 'Una empresa, <em>múltiples soluciones,</em> un Texas.',
+      'hero-desc': 'VersaPro Solution TX LLC es una empresa multisectorial en Texas diseñada para brindar servicios profesionales en transporte, tecnología, construcción y más.',
+      'about-h': 'Construida para crecer. <em>Arraigada en Texas.</em>',
+      'about-desc': 'VersaPro Solution TX LLC fue fundada con una visión clara: construir un grupo empresarial versátil, profesional y confiable que sirva a personas y empresas en todo Texas. Somos una empresa familiar — un equipo de padre e hijo — que combina experiencia práctica con conocimiento técnico para generar resultados reales.',
+      'quote': '"Construir una empresa multisectorial desde cero requiere visión, disciplina y el equipo correcto. VersaPro es esa visión."',
+      'cite-sub': 'Austin, Texas · Empresa Familiar',
+      'cta-h': '¿Listos para trabajar <em>juntos?</em>',
+      'cta-p': 'Ya sea que necesites transporte, consultoría o quieras explorar una alianza comercial — estamos aquí. Escríbenos y hablemos.',
+      'cta-btn': 'Envíanos un Correo',
+      'footer-desc': 'Una LLC multisectorial en Texas comprometida con brindar servicios profesionales con integridad, eficiencia y visión a largo plazo.'
+    }
+  };
+
+  function setLang(lang) {
+    document.getElementById('btnEN').classList.toggle('active', lang==='en');
+    document.getElementById('btnES').classList.toggle('active', lang==='es');
+    const t = translations[lang];
+    Object.keys(t).forEach(id => {
+      const el = document.getElementById(id);
+      if(el) el.innerHTML = t[id];
+    });
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const txt = el.getAttribute('data-'+lang);
+      if(txt) el.innerHTML = txt;
+    });
+  }
+</script>
+</body>
+</html>
