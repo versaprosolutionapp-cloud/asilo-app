@@ -172,7 +172,7 @@ Pagar $50 con PayPal — Acceso inmediato
 <div class="upload-icon">📁</div>
 <div class="upload-title">Haz clic para seleccionar tu archivo</div>
 <div class="upload-hint">O arrastra y suelta aquí · .docx o .pdf</div>
-<div id="fileList" style="margin-top:8px;text-align:left"></div>
+<div id="fileList" style="margin-top:12px;text-align:left"></div>
 </div>
 <div class="info-box info-warn"><p><strong>Importante:</strong> Después de recibir tu Word, revísalo con tu declaración original. Si hay errores, corrígelos y sube el Word corregido para regenerar.</p></div>
 <button class="btn-primary" id="btnGenerar" onclick="generarDocumento()" disabled>⚡ Generar mi simulacro personalizado</button>
@@ -358,7 +358,7 @@ async function generarDocumento() {
 async function llamarAPI(texto, esCorreccion) {
   var promptTexto = esCorreccion
     ? 'Eres experto en asilo EEUU. El cliente corrigió el documento. Lee las correcciones y regenera el JSON con el mismo formato pero con las correcciones aplicadas.\n\nDOCUMENTO CORREGIDO:\n' + texto + '\n\nRegresa SOLO el JSON, sin texto adicional.'
-    : 'Eres experto abogado de inmigracion en EEUU especializado en asilo (INA 208). Analiza esta declaracion y genera 4 preguntas de practica para la audiencia de asilo. Preguntas dirigidas al solicitante. Usa nombres y fechas reales del documento. Respuesta modelo completa en cada pregunta. IMPORTANTE: Responde UNICAMENTE con JSON valido sin backticks.\n\nDOCUMENTO:\n' + texto + '\n\n{"preguntas":[{"texto":"pregunta","estrategia":"estrategia","respuesta":"respuesta modelo completa","claves":["clave1","clave2"]}]}'
+    : 'Eres experto abogado de inmigracion en EEUU especializado en asilo (INA 208). Analiza esta declaracion y genera 8 preguntas de practica para la audiencia de asilo. Preguntas dirigidas al solicitante. Usa nombres y fechas reales del documento. Respuesta modelo completa en cada pregunta. IMPORTANTE: Responde UNICAMENTE con JSON valido sin backticks.\n\nDOCUMENTO:\n' + texto + '\n\n{"preguntas":[{"texto":"pregunta","estrategia":"estrategia","respuesta":"respuesta modelo completa","claves":["clave1","clave2"]}]}'
 
   var response = await fetch('/api/chat', {
     method: 'POST',
@@ -393,7 +393,7 @@ function generarWord(preguntas) {
   html += '<p>Documento generado · ' + new Date().toLocaleDateString('es-US') + '</p><hr>';
   
   preguntas.forEach(function(p, i) {
-    html += '<h2>Pregunta ' + (i+1) + ' — ' + p.fase + ': ' + p.titulo + '</h2>';
+    html += '<h2>Pregunta ' + (i+1) + ' — ' + 'Pregunta ' + (currentQ + 1)
     html += '<div class="pregunta">"' + p.texto + '"</div>';
     if (p.estrategia) {
       html += '<div class="estrategia"><div class="label">Estrategia</div>' + p.estrategia + '</div>';
