@@ -193,7 +193,7 @@ Pagar $50 con PayPal — Acceso inmediato
 </div>
 
 <!-- PROCESSING -->
-<div id="screen-processing" class="screen" style="display:none!important">
+<div id="screen-processing" class="screen">
 <div class="processing-inner">
 <div class="processing-spinner"></div>
 <h2 class="processing-title">Analizando tu caso...</h2>
@@ -356,7 +356,7 @@ async function leerArchivos(files) {
 async function llamarClaudeAPI(textoDocumentos, esCorreccion) {
   const prompt = esCorreccion
     ? `Eres un experto en derecho de asilo de EEUU (INA § 208). El cliente ha corregido el documento Word con sus preguntas y respuestas. Lee el documento corregido y regenera el JSON con las correcciones aplicadas.\n\nDOCUMENTO CORREGIDO:\n${textoDocumentos}\n\nGenera exactamente el mismo formato JSON pero con las correcciones del cliente aplicadas.`
-    : `Eres un experto abogado en derecho de asilo de EEUU (INA § 208) especializado en casos venezolanos por persecución política.\n\nTu tarea es preparar AL SOLICITANTE DE ASILO para su audiencia ante el Juez de Inmigración. Las preguntas van dirigidas AL SOLICITANTE PRINCIPAL, no a los testigos. Los testigos son personas de apoyo que corroboran la historia del solicitante.\n\nAnaliza la historia principal del solicitante (USCIS) y las declaraciones de sus testigos de apoyo para entender el caso completo.\n\nDOCUMENTOS DEL CASO:\n${textoDocumentos}\n\nGenera 12 preguntas que el Juez de Inmigración, el Abogado del Gobierno y el Abogado del Solicitante le harán AL SOLICITANTE durante la audiencia. Usa nombres reales de testigos, fechas y lugares específicos del expediente. Incluye preguntas difíciles que intenten desacreditar la historia del solicitante.\n\nGenera SOLO un JSON válido con este formato exacto, sin texto adicional:\n{"preguntas":[{"fase":"Juez de Inmigración","faseTag":"tag-juez","titulo":"Apertura e identidad","texto":"pregunta dirigida AL SOLICITANTE aquí","estrategia":"estrategia para que el solicitante responda bien","claves":["elemento clave 1","elemento clave 2","elemento clave 3","elemento clave 4"]}]}\n\nFases: 3 preguntas con "tag-juez", 4 con "tag-gobierno", 3 con "tag-credibilidad", 2 con "tag-abogado". IMPORTANTE: Todas las preguntas van dirigidas AL SOLICITANTE DE ASILO, no a los testigos.`;
+    : `Eres un experto en derecho de asilo de EEUU (INA § 208) especializado en casos venezolanos por persecución política.\n\nAnaliza estos documentos del caso y genera 12 preguntas de práctica para la audiencia de asilo, distribuidas en 4 fases.\n\nDOCUMENTOS DEL CASO:\n${textoDocumentos}\n\nGenera SOLO un JSON válido con este formato exacto, sin texto adicional:\n{"preguntas":[{"fase":"Juez de Inmigración","faseTag":"tag-juez","titulo":"Apertura e identidad","texto":"pregunta aquí","estrategia":"estrategia aquí","claves":["clave1","clave2","clave3","clave4"]}]}\n\nFases: 3 preguntas con "tag-juez", 4 con "tag-gobierno", 3 con "tag-credibilidad", 2 con "tag-abogado". Usa los hechos específicos del caso.`;
 
   const response = await fetch('/api/chat', {
     method: 'POST',
@@ -382,6 +382,12 @@ async function generarWord(preguntas) {
     html += `<h2>Pregunta ${i+1} — ${p.fase}: ${p.titulo}</h2>`;
     html += `<div class="pregunta">"${p.texto}"</div>`;
     html += `<div class="estrategia"><div class="label">💡 Estrategia</div>${p.estrategia}</div>`;
+    if (p.estrategia) {
+      html += `<div class="estrategia"><div class="label">💡 Estrategia</div>${p.estrategia}</div>`;
+    }
+    if (p.respuesta) {
+      html += `<div class="respuesta"><div class="label">✅ Respuesta Modelo</div>${p.respuesta}</div>`;
+    }
     if (p.claves) {
       html += `<div class="claves"><div class="label">Elementos clave a cubrir</div><ul>${p.claves.map(c=>`<li>${c}</li>`).join('')}</ul></div>`;
     }
