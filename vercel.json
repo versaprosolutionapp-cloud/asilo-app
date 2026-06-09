@@ -1,6 +1,3 @@
-Perfecto. Ahora necesito actualizar el `vercel.json` para aumentar el timeout. Ve a GitHub → **vercel.json** → lápiz para editar → reemplaza todo con:
-
-```json
 {
   "functions": {
     "api/chat.js": {
