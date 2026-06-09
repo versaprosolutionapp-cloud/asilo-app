@@ -145,7 +145,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 <div class="price-box">
 <div class="price-amount">$50</div>
 <div class="price-label">PAGO ÚNICO · SIN SUSCRIPCIÓN</div>
-<div class="price-includes">✓ Documento Word personalizado descargable<br>✓ Simulacro oral con 6+ preguntas reales<br>✓ Correcciones ilimitadas · Práctica ilimitada</div>
+<div class="price-includes">✓ Documento Word personalizado descargable<br>✓ Simulacro oral con 12+ preguntas reales<br>✓ Correcciones ilimitadas · Práctica ilimitada</div>
 </div>
 <button class="btn-paypal" onclick="iniciarPago()">
 <span style="font-weight:800;font-style:italic"><span style="color:#003087">Pay</span><span style="color:#009cde">Pal</span></span>
@@ -329,8 +329,8 @@ function leerArchivo(file) {
 }
 
 async function generarDocumento() {
-  showScreen('screen-processing');
-  animarPasos();
+  document.getElementById('btnGenerar').textContent = 'Procesando...';
+  document.getElementById('btnGenerar').disabled = true;
   try {
     var textos = [];
     for (var i = 0; i < uploadedFiles.length; i++) {
@@ -338,14 +338,20 @@ async function generarDocumento() {
       textos.push(texto);
     }
     var textoCompleto = textos.join('\n\n');
+    // Limit text to first 3000 words to avoid timeout
+    var palabras = textoCompleto.split(' ');
+    if (palabras.length > 3000) {
+      textoCompleto = palabras.slice(0, 3000).join(' ');
+    }
     var preguntas = await llamarAPI(textoCompleto, false);
     generatedQuestions = preguntas;
     wordBlob = generarWord(preguntas);
-    setTimeout(function() { showScreen('screen-result'); }, 500);
+    showScreen('screen-result');
   } catch(e) {
     console.error(e);
     alert('Error al procesar los documentos. Verifica tu conexión e intenta de nuevo.');
-    showScreen('screen-upload');
+    document.getElementById('btnGenerar').textContent = '⚡ Generar mi simulacro personalizado';
+    document.getElementById('btnGenerar').disabled = false;
   }
 }
 
@@ -430,10 +436,12 @@ async function regenerar() {
   animarPasos();
   try {
     var texto = await leerArchivo(correctionFile);
+    var palabras = texto.split(' ');
+    if (palabras.length > 3000) { texto = palabras.slice(0, 3000).join(' '); }
     var preguntas = await llamarAPI(texto, true);
     generatedQuestions = preguntas;
     wordBlob = generarWord(preguntas);
-    setTimeout(function() { showScreen('screen-result'); }, 500);
+    showScreen('screen-result');
   } catch(e) {
     console.error(e);
     alert('Error al procesar las correcciones.');
