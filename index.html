@@ -56,7 +56,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
 .btn-secondary{width:100%;padding:14px;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--text);font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:12px;transition:all 0.2s}
 .btn-secondary:hover{border-color:var(--navy);color:var(--navy)}
-#screen-processing{background:var(--navy);display:flex;align-items:center;justify-content:center}
+#screen-processing{background:var(--navy)}
+#screen-processing.active{display:flex;align-items:center;justify-content:center}
 .processing-inner{text-align:center;padding:48px 24px;max-width:480px}
 .processing-spinner{width:64px;height:64px;border:3px solid rgba(201,168,76,0.2);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 32px}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -95,9 +96,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 .progress-pills{display:flex;gap:4px;flex-wrap:wrap}
 .pill{width:20px;height:6px;border-radius:3px;background:rgba(255,255,255,0.15);transition:all 0.3s}
 .pill.done{background:var(--gold)}.pill.current{background:rgba(201,168,76,0.6)}
-.phase-tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:0.8px;padding:4px 12px;border-radius:100px;margin-bottom:8px;text-transform:uppercase}
-.tag-juez{background:#DBEAFE;color:#1E40AF}.tag-gobierno{background:#FEE2E2;color:#991B1B}
-.tag-credibilidad{background:#FEF3C7;color:#92400E}.tag-abogado{background:#D1FAE5;color:#065F46}
 .question-card{background:#fff;border-radius:16px;padding:24px;box-shadow:var(--shadow);margin-bottom:16px}
 .question-text{font-size:16px;font-weight:500;color:var(--navy);line-height:1.6;margin-bottom:16px;font-style:italic}
 .listen-btn{display:flex;align-items:center;gap:8px;background:#EFF6FF;border:1px solid #BFDBFE;color:#1D4ED8;font-size:13px;font-weight:500;padding:7px 14px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-bottom:16px;transition:all 0.2s}
@@ -235,11 +233,10 @@ Pagar $50 con PayPal — Acceso inmediato
 <div id="screen-practice" class="screen">
 <div class="practice-inner">
 <div class="practice-header">
-<div><h2>Simulacro de Audiencia</h2><p id="pracLabel">Pregunta 1 de 8</p></div>
+<div><h2>Simulacro de Audiencia</h2><p id="pracLabel">Pregunta 1 de 4</p></div>
 <div class="progress-pills" id="pills"></div>
 </div>
 <div class="question-card">
-<div class="phase-tag" id="phaseTag">Fase</div>
 <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px" id="phaseTitle"></div>
 <div class="question-text" id="qText"></div>
 <button class="listen-btn" onclick="leerPregunta()">🔊 Escuchar en voz alta</button>
@@ -328,6 +325,7 @@ function leerArchivo(file) {
   });
 }
 
+// ─── FIX 1: eliminado showScreen('screen-processing') de generarDocumento ───
 async function generarDocumento() {
   document.getElementById('btnGenerar').textContent = 'Procesando...';
   document.getElementById('btnGenerar').disabled = true;
@@ -338,7 +336,6 @@ async function generarDocumento() {
       textos.push(texto);
     }
     var textoCompleto = textos.join('\n\n');
-    // Limit text to first 1500 words to avoid timeout
     var palabras = textoCompleto.split(' ');
     if (palabras.length > 1500) {
       textoCompleto = palabras.slice(0, 1500).join(' ');
@@ -392,8 +389,9 @@ function generarWord(preguntas) {
   html += '<h1>PREPARACION PARA AUDIENCIA DE ASILO</h1>';
   html += '<p>Documento generado · ' + new Date().toLocaleDateString('es-US') + '</p><hr>';
   
+  // ─── FIX 2 (parte Word): título limpio sin currentQ ───
   preguntas.forEach(function(p, i) {
-    html += '<h2>Pregunta ' + (i+1) + ' — ' + 'Pregunta ' + (currentQ + 1)
+    html += '<h2>Pregunta ' + (i + 1) + '</h2>';
     html += '<div class="pregunta">"' + p.texto + '"</div>';
     if (p.estrategia) {
       html += '<div class="estrategia"><div class="label">Estrategia</div>' + p.estrategia + '</div>';
@@ -431,8 +429,8 @@ function handleCorrection(input) {
   }
 }
 
+// ─── FIX 1: eliminado showScreen('screen-processing') de regenerar ───
 async function regenerar() {
-    animarPasos();
   try {
     var texto = await leerArchivo(correctionFile);
     var palabras = texto.split(' ');
@@ -490,13 +488,12 @@ function actualizarPills() {
   });
 }
 
+// ─── FIX 2: eliminado p.fase / p.faseTag / p.titulo — usa solo índice ───
 function mostrarPregunta() {
   var p = generatedQuestions[currentQ];
-  var tag = document.getElementById('phaseTag');
-  tag.textContent = p.fase; tag.className = 'phase-tag ' + p.faseTag;
-  document.getElementById('phaseTitle').textContent = p.titulo;
+  document.getElementById('phaseTitle').textContent = 'Pregunta ' + (currentQ + 1) + ' de ' + generatedQuestions.length;
   document.getElementById('qText').textContent = '\u275d ' + p.texto + ' \u275e';
-  document.getElementById('stratText').textContent = p.estrategia;
+  document.getElementById('stratText').textContent = p.estrategia || '';
   document.getElementById('pracLabel').textContent = 'Pregunta ' + (currentQ+1) + ' de ' + generatedQuestions.length;
   document.getElementById('micBtn').className = 'mic-button';
   document.getElementById('micBtn').textContent = '\uD83C\uDF99\uFE0F';
