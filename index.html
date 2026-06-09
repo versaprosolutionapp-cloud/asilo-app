@@ -358,7 +358,7 @@ async function generarDocumento() {
 async function llamarAPI(texto, esCorreccion) {
   var promptTexto = esCorreccion
     ? 'Eres experto en asilo EEUU. El cliente corrigió el documento. Lee las correcciones y regenera el JSON con el mismo formato pero con las correcciones aplicadas.\n\nDOCUMENTO CORREGIDO:\n' + texto + '\n\nRegresa SOLO el JSON, sin texto adicional.'
-    : 'Eres experto abogado de inmigracion en EEUU especializado en asilo (INA 208). Analiza esta declaracion y genera 12 preguntas de practica para la audiencia. Preguntas DIRIGIDAS AL SOLICITANTE. Usa nombres y fechas REALES. Incluye respuesta modelo COMPLETA. Regresa SOLO JSON valido.\n\nDOCUMENTO:\n' + texto + '\n\nFormato: {"preguntas":[{"fase":"Juez de Inmigracion","faseTag":"tag-juez","titulo":"titulo","texto":"pregunta","estrategia":"estrategia","respuesta":"respuesta completa","claves":["clave1","clave2","clave3"]}]}\n\nDistribuye: 3 tag-juez, 4 tag-gobierno, 3 tag-credibilidad, 2 tag-abogado.';
+    : 'Eres experto abogado de inmigracion en EEUU especializado en asilo (INA 208). Analiza esta declaracion y genera 12 preguntas de practica. IMPORTANTE: Responde UNICAMENTE con el objeto JSON, sin backticks, sin markdown, sin texto antes o despues. Preguntas DIRIGIDAS AL SOLICITANTE. Usa nombres y fechas REALES del documento. Respuesta modelo COMPLETA en cada pregunta.\n\nDOCUMENTO:\n' + texto + '\n\n{"preguntas":[{"fase":"Juez de Inmigracion","faseTag":"tag-juez","titulo":"titulo","texto":"pregunta","estrategia":"estrategia","respuesta":"respuesta modelo completa","claves":["clave1","clave2"]}]}\n\nDistribuye: 3 tag-juez, 4 tag-gobierno, 3 tag-credibilidad, 2 tag-abogado.';
 
   var response = await fetch('/api/chat', {
     method: 'POST',
