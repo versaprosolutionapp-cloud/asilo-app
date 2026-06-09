@@ -358,7 +358,7 @@ async function generarDocumento() {
 async function llamarAPI(texto, esCorreccion) {
   var promptTexto = esCorreccion
     ? 'Eres experto en asilo EEUU. El cliente corrigió el documento. Lee las correcciones y regenera el JSON con el mismo formato pero con las correcciones aplicadas.\n\nDOCUMENTO CORREGIDO:\n' + texto + '\n\nRegresa SOLO el JSON, sin texto adicional.'
-    : 'Eres experto abogado de inmigracion en EEUU especializado en asilo (INA 208). Analiza esta declaracion y genera 8 preguntas de practica para la audiencia de asilo. Preguntas dirigidas al solicitante. Usa nombres y fechas reales del documento. Respuesta modelo completa en cada pregunta. IMPORTANTE: Responde UNICAMENTE con JSON valido sin backticks.\n\nDOCUMENTO:\n' + texto + '\n\n{"preguntas":[{"texto":"pregunta","estrategia":"estrategia","respuesta":"respuesta modelo completa","claves":["clave1","clave2"]}]}'
+    : 'Eres experto abogado de inmigracion en EEUU especializado en asilo (INA 208). Analiza esta declaracion y genera 4 preguntas de practica para la audiencia de asilo. Preguntas dirigidas al solicitante. Usa nombres y fechas reales del documento. Respuesta modelo completa en cada pregunta. IMPORTANTE: Responde UNICAMENTE con JSON valido sin backticks.\n\nDOCUMENTO:\n' + texto + '\n\n{"preguntas":[{"texto":"pregunta","estrategia":"estrategia","respuesta":"respuesta modelo completa","claves":["clave1","clave2"]}]}'
 
   var response = await fetch('/api/chat', {
     method: 'POST',
@@ -432,8 +432,7 @@ function handleCorrection(input) {
 }
 
 async function regenerar() {
-  showScreen('screen-processing');
-  animarPasos();
+    animarPasos();
   try {
     var texto = await leerArchivo(correctionFile);
     var palabras = texto.split(' ');
