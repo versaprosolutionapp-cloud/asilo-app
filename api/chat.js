@@ -6,7 +6,7 @@ module.exports = async function handler(req, res) {
   try {
     const body = {
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 5000,
+      max_tokens: 2000,
       messages: req.body.messages
     };
 
