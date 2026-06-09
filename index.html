@@ -338,10 +338,10 @@ async function generarDocumento() {
       textos.push(texto);
     }
     var textoCompleto = textos.join('\n\n');
-    // Limit text to first 3000 words to avoid timeout
+    // Limit text to first 1500 words to avoid timeout
     var palabras = textoCompleto.split(' ');
-    if (palabras.length > 3000) {
-      textoCompleto = palabras.slice(0, 3000).join(' ');
+    if (palabras.length > 1500) {
+      textoCompleto = palabras.slice(0, 1500).join(' ');
     }
     var preguntas = await llamarAPI(textoCompleto, false);
     generatedQuestions = preguntas;
