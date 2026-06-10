@@ -23,4 +23,6 @@ module.exports = async function handler(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
- 
+```
+
+Una sola `{` después de `handler(req, res)`. Guarda y haz commit.
