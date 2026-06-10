@@ -188,7 +188,7 @@ Pagar $50 con PayPal — Acceso inmediato
 <div class="proc-step"><div class="proc-dot active" id="dot0"></div><div class="proc-text active" id="step0">Leyendo tu historia...</div></div>
 <div class="proc-step"><div class="proc-dot" id="dot1"></div><div class="proc-text" id="step1">Generando preguntas 1–4...</div></div>
 <div class="proc-step"><div class="proc-dot" id="dot2"></div><div class="proc-text" id="step2">Generando preguntas 5–8...</div></div>
-<div class="proc-step"><div class="proc-dot" id="dot3"></div><div class="proc-text" id="step3">Generando preguntas 9–12...</div></div>
+<div class="proc-step"><div class="proc-dot" id="dot3"></div><div class="proc-text" id="step3">Preparando documento final...</div></div>
 <div class="proc-step"><div class="proc-dot" id="dot4"></div><div class="proc-text" id="step4">Creando documento Word...</div></div>
 </div>
 </div>
@@ -336,13 +336,25 @@ function marcarPaso(i) {
 }
 
 async function llamarLote(texto, lote) {
-  var temas = [
-    'por qué saliste de tu país: las amenazas recibidas, quién te persiguió, su identidad y motivación política, y cómo empezó la persecución',
-    'los eventos específicos de persecución: fechas exactas, lugares, lo que ocurrió, cómo te afectó físicamente y emocionalmente, y por qué el gobierno no te protegió',
-    'por qué no puedes regresar: el temor fundado de persecución futura, lo que pasaría si regresas, la incapacidad del estado de protegerte, y tu pertenencia a grupo social particular'
+  var categorias = [
+    [
+      'ANTECEDENTES POLITICOS: pregunta sobre las actividades políticas específicas del solicitante, su rol en partidos u organizaciones de oposición, y cómo manifestaba públicamente su postura contra el gobierno',
+      'PERSECUCION PASADA: pregunta sobre el incidente más grave de persecución — fecha exacta, quiénes agredieron, qué dijeron específicamente, consecuencias físicas y psicológicas',
+      'NEXO LEGAL - OPINION POLITICA: pregunta que desafía al solicitante a demostrar que los ataques fueron por su opinión política y no por delincuencia común — qué evidencia tiene de ese nexo específico',
+      'PROTECCION DEL ESTADO: pregunta sobre si presentó denuncias formales ante autoridades venezolanas y por qué esa protección era inútil o peligrosa'
+    ],
+    [
+      'REUBICACION INTERNA: pregunta sobre por qué no pudo mudarse a otra ciudad o estado de Venezuela para escapar de sus perseguidores antes de huir a EEUU',
+      'TEMOR DE RETORNO: pregunta sobre qué ocurriría específicamente si regresara a Venezuela hoy — en qué hechos y evidencias recientes fundamenta ese temor',
+      'AMENAZAS DIRECTAS: pregunta sobre amenazas o citaciones de colectivos armados, SEBIN u otras fuerzas del gobierno — contenido exacto de las amenazas y cómo identificaron su postura política',
+      'CRONOLOGIA DE SALIDA: pregunta sobre el tiempo transcurrido entre el último incidente grave y la fecha de salida del país — por qué no salió inmediatamente'
+    ]
   ];
-  var instruccion = 'Eres un abogado experto en asilo de EEUU con 20 años de experiencia, especializado en INA 208, el Refugee Act, el estándar de temor bien fundado (well-founded fear), los 5 motivos de persecución (raza, religion, nacionalidad, opinion politica, grupo social particular), la incapacidad del estado de proteger, y la jurisprudencia federal de asilo. Analiza el documento y genera EXACTAMENTE 4 preguntas de practica de audiencia de asilo sobre: ' + temas[lote] + '. REGLA ABSOLUTA: USA EXCLUSIVAMENTE información, nombres, fechas, lugares y hechos que aparezcan TEXTUALMENTE en el documento. PROHIBIDO TERMINANTEMENTE inventar, asumir, inferir o agregar cualquier detalle que no esté escrito en el documento. Si un dato no está en el documento, NO lo uses. INSTRUCCIONES CRITICAS: (1) La pregunta debe ser exactamente como la haría un juez o abogado en corte basándose en los hechos del documento. (2) La estrategia explica en 1 oración qué elemento legal del INA 208 cubre esta pregunta. (3) La respuesta modelo en PRIMERA PERSONA usa SOLO nombres, fechas, lugares y hechos que están en el documento — como un testimonio real de 4-6 oraciones. Si no hay suficiente detalle en el documento para una respuesta completa, indica entre corchetes [completar con tu información real]. (4) Las claves son los 3 elementos legales obligatorios que esta respuesta debe cubrir. IMPORTANTE: Responde UNICAMENTE con JSON valido sin backticks ni texto extra.\n\nDOCUMENTO:\n';
-  var prompt = instruccion + texto + '\n\n{"preguntas":[{"texto":"pregunta como la haría el juez","estrategia":"elemento legal que cubre en 1 oración","respuesta":"Mi nombre es... [testimonio en primera persona con hechos reales, fechas, nombres, 4-6 oraciones completas]","claves":["elemento legal 1","elemento legal 2","elemento legal 3"]}]}';
+
+  var cats = categorias[lote];
+  var instruccion = 'Eres un oficial de asilo de USCIS con 20 años de experiencia evaluando casos bajo INA 208 y el Refugee Act. Tu trabajo es generar EXACTAMENTE 4 preguntas de práctica para audiencia de asilo, UNA por cada categoría indicada. REGLAS ABSOLUTAS: (1) USA EXCLUSIVAMENTE nombres, fechas, lugares, eventos y hechos que aparezcan LITERALMENTE en el documento. (2) PROHIBIDO inventar, asumir o agregar cualquier detalle que no esté en el documento. (3) Si un dato específico no aparece en el documento, escribe [información no disponible en el documento] en su lugar. (4) La PREGUNTA debe ser exactamente como la haría un oficial de USCIS en una entrevista real — formal, directa, citando detalles del caso. (5) La ESTRATEGIA explica en 1 oración qué elemento legal del INA 208 evalúa esta pregunta. (6) La RESPUESTA MODELO debe estar en PRIMERA PERSONA del solicitante, usando SOLO hechos del documento, con nombres reales, fechas reales, lugares reales — como un testimonio convincente de 5-7 oraciones que cubra todos los elementos legales. Si falta información en el documento, agrega [completar con tu experiencia real]. (7) Las CLAVES son los 3 elementos legales que esta respuesta debe demostrar obligatoriamente.\n\nCATEGORIAS para este lote:\n' + cats.map(function(c,i){return (i+1)+'. '+c;}).join('\n') + '\n\nDOCUMENTO DEL SOLICITANTE:\n';
+
+  var prompt = instruccion + texto + '\n\nResponde UNICAMENTE con este JSON valido sin backticks:\n{"preguntas":[{"texto":"pregunta formal del oficial","estrategia":"elemento legal en 1 oración","respuesta":"Yo [testimonio primera persona con hechos reales del documento]","claves":["elemento legal 1","elemento legal 2","elemento legal 3"]}]}';
 
   var response = await fetch('/api/chat', {
     method: 'POST',
@@ -376,11 +388,10 @@ async function generarDocumento() {
     marcarPaso(1);
     var lote2 = await llamarLote(textoCompleto, 1);
     marcarPaso(2);
-    var lote3 = await llamarLote(textoCompleto, 2);
-    marcarPaso(3);
 
-    var todasLasPreguntas = lote1.concat(lote2).concat(lote3);
+    var todasLasPreguntas = lote1.concat(lote2);
     generatedQuestions = todasLasPreguntas;
+    marcarPaso(3);
     wordBlob = generarWord(todasLasPreguntas);
     marcarPaso(4);
     setTimeout(function() { showScreen('screen-result'); }, 800);
@@ -474,10 +485,9 @@ async function regenerar() {
     marcarPaso(1);
     var lote2 = await llamarLote(texto, 1);
     marcarPaso(2);
-    var lote3 = await llamarLote(texto, 2);
-    marcarPaso(3);
-    var todasLasPreguntas = lote1.concat(lote2).concat(lote3);
+    var todasLasPreguntas = lote1.concat(lote2);
     generatedQuestions = todasLasPreguntas;
+    marcarPaso(3);
     wordBlob = generarWord(todasLasPreguntas);
     marcarPaso(4);
     setTimeout(function() { showScreen('screen-result'); }, 800);
