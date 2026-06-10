@@ -337,11 +337,12 @@ function marcarPaso(i) {
 
 async function llamarLote(texto, lote) {
   var temas = [
-    'razones por las que saliste de tu país, las amenazas que recibiste y quién te persiguió',
-    'los eventos específicos de persecución, fechas, lugares y personas involucradas',
-    'por qué no puedes regresar a tu país, tu situación actual y tu temor fundado'
+    'por qué saliste de tu país: las amenazas recibidas, quién te persiguió, su identidad y motivación política, y cómo empezó la persecución',
+    'los eventos específicos de persecución: fechas exactas, lugares, lo que ocurrió, cómo te afectó físicamente y emocionalmente, y por qué el gobierno no te protegió',
+    'por qué no puedes regresar: el temor fundado de persecución futura, lo que pasaría si regresas, la incapacidad del estado de protegerte, y tu pertenencia a grupo social particular'
   ];
-  var prompt = 'Eres experto en asilo EEUU (INA 208). Analiza esta declaracion y genera EXACTAMENTE 4 preguntas de practica sobre: ' + temas[lote] + '. Preguntas dirigidas al solicitante. Usa nombres y fechas reales del documento. IMPORTANTE: Responde UNICAMENTE con JSON valido sin backticks ni texto extra.\n\nDOCUMENTO:\n' + texto + '\n\n{"preguntas":[{"texto":"pregunta","estrategia":"estrategia en 1 oracion","respuesta":"respuesta modelo en 2-3 oraciones","claves":["clave1","clave2","clave3"]}]}';
+  var instruccion = 'Eres un abogado experto en asilo de EEUU con 20 años de experiencia, conocedor profundo de INA 208, el Refugee Act, el estándar de temor bien fundado (well-founded fear), los 5 motivos de persecución (raza, religion, nacionalidad, opinion politica, grupo social particular), la incapacidad o falta de voluntad del estado de proteger, y la jurisprudencia de los circuitos de apelaciones. Analiza el documento y genera EXACTAMENTE 4 preguntas de practica de audiencia de asilo sobre: ' + temas[lote] + '. INSTRUCCIONES CRITICAS: (1) La pregunta debe ser exactamente como la haría un juez o abogado en corte. (2) La estrategia debe explicar en 1 oración qué elemento legal cubre esta pregunta y qué debe demostrar el solicitante. (3) La respuesta modelo debe estar en PRIMERA PERSONA, como si el solicitante estuviera hablando en corte, usando nombres reales, fechas reales, lugares reales y hechos reales del documento — debe sonar como un testimonio real completo y convincente de 4-6 oraciones que cubra todos los elementos legales necesarios para el asilo. (4) Las claves son los 3 elementos legales que esta respuesta debe cubrir obligatoriamente. IMPORTANTE: Responde UNICAMENTE con JSON valido sin backticks ni texto extra.\n\nDOCUMENTO:\n';
+  var prompt = instruccion + texto + '\n\n{"preguntas":[{"texto":"pregunta como la haría el juez","estrategia":"elemento legal que cubre en 1 oración","respuesta":"Mi nombre es... [testimonio en primera persona con hechos reales, fechas, nombres, 4-6 oraciones completas]","claves":["elemento legal 1","elemento legal 2","elemento legal 3"]}]}';
 
   var response = await fetch('/api/chat', {
     method: 'POST',
