@@ -39,18 +39,27 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 .step-badge{display:inline-flex;align-items:center;gap:6px;background:var(--navy);color:var(--gold);font-size:11px;font-weight:600;letter-spacing:1px;padding:5px 14px;border-radius:100px;text-transform:uppercase;margin-bottom:16px}
 .step-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--navy);margin-bottom:8px}
 .step-sub{font-size:14px;color:var(--text-muted);line-height:1.6;margin-bottom:24px}
-.upload-card{background:#fff;border:1.5px dashed var(--border);border-radius:16px;padding:32px;text-align:center;margin-bottom:16px;cursor:pointer;transition:all 0.2s;position:relative}
+.upload-section-label{font-size:13px;font-weight:700;color:var(--navy);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.upload-section-label span.required{background:var(--gold);color:var(--navy);font-size:10px;padding:2px 7px;border-radius:100px}
+.upload-section-label span.optional{background:#E5E7EB;color:#6B7280;font-size:10px;padding:2px 7px;border-radius:100px}
+.upload-card{background:#fff;border:1.5px dashed var(--border);border-radius:16px;padding:28px;text-align:center;margin-bottom:8px;cursor:pointer;transition:all 0.2s;position:relative}
 .upload-card:hover{border-color:var(--navy)}
 .upload-card.has-files{border-color:var(--success);border-style:solid;background:var(--success-bg)}
+.upload-card.testigos-card{border-color:#C4B5FD}
+.upload-card.testigos-card.has-files{border-color:#7C3AED;background:#F5F3FF}
 .upload-card input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.upload-icon{font-size:36px;margin-bottom:12px}
-.upload-title{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:6px}
-.upload-hint{font-size:13px;color:var(--text-muted)}
-.file-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--success);padding:4px 0}
-.info-box{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:12px;padding:16px;margin-bottom:24px}
+.upload-icon{font-size:32px;margin-bottom:10px}
+.upload-title{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:4px}
+.upload-hint{font-size:12px;color:var(--text-muted)}
+.file-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--success);padding:3px 0}
+.file-item.testigo-item{color:#7C3AED}
+.info-box{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:12px;padding:16px;margin-bottom:20px}
 .info-box p{font-size:13px;color:#1D4ED8;line-height:1.6}
+.info-testigos{background:#F5F3FF;border:1px solid #C4B5FD}
+.info-testigos p{color:#5B21B6}
 .info-warn{background:#FFF7F0;border:1px solid #FDBA74}
 .info-warn p{color:#C2410C}
+.divider{border:none;border-top:1px solid var(--border);margin:20px 0}
 .btn-primary{width:100%;padding:16px;border-radius:12px;border:none;cursor:pointer;background:var(--navy);color:#fff;font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px}
 .btn-primary:hover:not(:disabled){background:var(--navy-light);transform:translateY(-1px)}
 .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
@@ -80,8 +89,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 .action-num{font-size:11px;font-weight:700;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
 .action-title{font-size:16px;font-weight:600;color:var(--navy);margin-bottom:6px}
 .action-desc{font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:16px}
-.btn-download{width:100%;padding:13px;border-radius:10px;border:none;cursor:pointer;background:var(--navy);color:#fff;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-download{width:100%;padding:13px;border-radius:10px;border:none;cursor:pointer;background:var(--navy);color:#fff;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px}
 .btn-download:hover{background:var(--navy-light)}
+.btn-download.purple{background:#7C3AED}
+.btn-download.purple:hover{background:#6D28D9}
 .btn-gold{width:100%;padding:13px;border-radius:10px;border:none;cursor:pointer;background:var(--gold);color:var(--navy);font-size:14px;font-weight:700;font-family:'DM Sans',sans-serif;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px}
 .btn-gold:hover{background:var(--gold-light)}
 .correction-upload{background:#fff;border-radius:12px;padding:20px;border:1.5px dashed var(--border);margin-bottom:12px;text-align:center;position:relative;cursor:pointer;transition:all 0.2s}
@@ -137,13 +148,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 <div class="features">
 <div class="feature"><div class="feature-icon">📄</div><div><div class="feature-title">Personalizado a tu caso</div><div class="feature-desc">La IA lee tu historia y genera preguntas basadas en tus propios hechos.</div></div></div>
 <div class="feature"><div class="feature-icon">🎙️</div><div><div class="feature-title">Práctica oral real</div><div class="feature-desc">El oficial pregunta en voz alta. Tú respondes hablando. La app evalúa tu respuesta al instante.</div></div></div>
-<div class="feature"><div class="feature-icon">♾️</div><div><div class="feature-title">Sin límites de práctica</div><div class="feature-desc">Practica cuantas veces necesites. Corrige errores y regenera el documento sin costo adicional.</div></div></div>
+<div class="feature"><div class="feature-icon">👥</div><div><div class="feature-title">Testigos incluidos</div><div class="feature-desc">Sube las declaraciones de tus testigos. La IA genera preguntas cruzadas como las haría USCIS en una entrevista real.</div></div></div>
 <div class="feature"><div class="feature-icon">⚖️</div><div><div class="feature-title">Estrategia legal incluida</div><div class="feature-desc">Cada pregunta incluye estrategia recomendada, respuesta modelo y elementos clave del derecho de asilo.</div></div></div>
 </div>
 <div class="price-box">
 <div class="price-amount">$50</div>
 <div class="price-label">PAGO ÚNICO · SIN SUSCRIPCIÓN</div>
-<div class="price-includes">✓ Documento Word personalizado descargable<br>✓ Simulacro oral con 12+ preguntas reales<br>✓ Correcciones ilimitadas · Práctica ilimitada</div>
+<div class="price-includes">✓ Documento Word con 8 preguntas personalizadas<br>✓ Preguntas cruzadas con declaraciones de testigos<br>✓ Simulacro oral · Correcciones ilimitadas</div>
 </div>
 <button class="btn-paypal" onclick="iniciarPago()">
 <span style="font-weight:800;font-style:italic"><span style="color:#003087">Pay</span><span style="color:#009cde">Pal</span></span>
@@ -162,16 +173,35 @@ Pagar $50 con PayPal — Acceso inmediato
 <div id="screen-upload" class="screen">
 <div class="upload-inner">
 <div class="step-badge">✓ Paso 1 de 2</div>
-<h2 class="step-title">Sube tu historia</h2>
-<p class="step-sub">Sube tu historia de caso. La IA la analizará y generará tu simulacro personalizado.</p>
-<div class="info-box"><p><strong>¿Qué documento necesitas?</strong><br>Tu historia principal del caso. Formatos: Word (.docx) o PDF.</p></div>
+<h2 class="step-title">Sube tus documentos</h2>
+<p class="step-sub">Sube tu historia principal y, si los tienes, las declaraciones de tus testigos. La IA los analiza juntos para un simulacro más completo.</p>
+
+<!-- Historia principal -->
+<div class="upload-section-label">📄 Historia principal del caso <span class="required">Obligatorio</span></div>
+<div class="info-box"><p>Tu declaración principal de asilo (I-589 o historia escrita). Formatos: Word (.docx) o PDF.</p></div>
 <div class="upload-card" id="uploadCard">
-<input type="file" id="fileInput" multiple accept=".docx,.pdf" onchange="handleFiles(this)">
+<input type="file" id="fileInput" accept=".docx,.pdf" onchange="handleHistoria(this)">
 <div class="upload-icon">📁</div>
-<div class="upload-title">Haz clic para seleccionar tu archivo</div>
-<div class="upload-hint">O arrastra y suelta aquí · .docx o .pdf</div>
-<div id="fileList" style="margin-top:12px;text-align:left"></div>
+<div class="upload-title">Seleccionar historia principal</div>
+<div class="upload-hint">.docx o .pdf</div>
+<div id="fileList" style="margin-top:10px;text-align:left"></div>
 </div>
+
+<hr class="divider">
+
+<!-- Declaraciones de testigos -->
+<div class="upload-section-label">👥 Declaraciones de testigos <span class="optional">Opcional</span></div>
+<div class="info-box info-testigos"><p>Si tienes declaraciones escritas de testigos, súbelas aquí. La app generará preguntas de corroboración como las hace USCIS — cruzando tu historia con lo que dijeron tus testigos.</p></div>
+<div class="upload-card testigos-card" id="uploadCardTestigos">
+<input type="file" id="fileInputTestigos" multiple accept=".docx,.pdf" onchange="handleTestigos(this)">
+<div class="upload-icon">👥</div>
+<div class="upload-title">Seleccionar declaraciones de testigos</div>
+<div class="upload-hint">Uno o varios archivos · .docx o .pdf</div>
+<div id="fileListTestigos" style="margin-top:10px;text-align:left"></div>
+</div>
+
+<hr class="divider">
+
 <div class="info-box info-warn"><p><strong>Importante:</strong> Después de recibir tu Word, revísalo con tu declaración original. Si hay errores, corrígelos y sube el Word corregido para regenerar.</p></div>
 <button class="btn-primary" id="btnGenerar" onclick="generarDocumento()" disabled>⚡ Generar mi simulacro personalizado</button>
 <button class="btn-secondary" onclick="showScreen('screen-landing')">← Volver</button>
@@ -185,7 +215,7 @@ Pagar $50 con PayPal — Acceso inmediato
 <h2 class="processing-title">Analizando tu caso...</h2>
 <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:32px">Aproximadamente 30–60 segundos</p>
 <div id="procSteps">
-<div class="proc-step"><div class="proc-dot active" id="dot0"></div><div class="proc-text active" id="step0">Leyendo tu historia...</div></div>
+<div class="proc-step"><div class="proc-dot active" id="dot0"></div><div class="proc-text active" id="step0">Leyendo documentos...</div></div>
 <div class="proc-step"><div class="proc-dot" id="dot1"></div><div class="proc-text" id="step1">Generando preguntas 1–4...</div></div>
 <div class="proc-step"><div class="proc-dot" id="dot2"></div><div class="proc-text" id="step2">Generando preguntas 5–8...</div></div>
 <div class="proc-step"><div class="proc-dot" id="dot3"></div><div class="proc-text" id="step3">Preparando documento final...</div></div>
@@ -200,18 +230,18 @@ Pagar $50 con PayPal — Acceso inmediato
 <div class="result-success">
 <div class="result-icon">✅</div>
 <h2 class="result-title">¡Tu simulacro está listo!</h2>
-<p class="result-sub">Tu documento Word personalizado y práctica oral están listos. Sigue los pasos a continuación.</p>
+<p class="result-sub" id="resultSub">Tu documento Word personalizado y práctica oral están listos.</p>
 </div>
 <div class="action-card">
 <div class="action-num">Paso 1</div>
 <div class="action-title">📄 Descarga y revisa tu documento Word</div>
 <div class="action-desc">Lee todas las preguntas y respuestas. Compáralas con tu declaración original. Si hay errores, corrígelos en el Word.</div>
-<button class="btn-download" id="btnDescargar" onclick="descargarWord()">⬇ Descargar documento Word</button>
+<button class="btn-download" id="btnDescargar" onclick="descargarWord()">⬇ Descargar simulacro completo</button>
 </div>
 <div class="action-card">
 <div class="action-num">Paso 2 — Solo si hay errores</div>
 <div class="action-title">🔄 Sube el Word corregido</div>
-<div class="action-desc">Si encontraste errores, corrígelos y sube el Word aquí. La app borrará el anterior y generará uno nuevo.</div>
+<div class="action-desc">Si encontraste errores, corrígelos y sube el Word aquí. La app generará uno nuevo con tus correcciones.</div>
 <div class="correction-upload" id="corrUpload">
 <input type="file" id="corrFile" accept=".docx" onchange="handleCorrection(this)">
 <div style="font-size:24px;margin-bottom:8px">📤</div>
@@ -233,7 +263,7 @@ Pagar $50 con PayPal — Acceso inmediato
 <div id="screen-practice" class="screen">
 <div class="practice-inner">
 <div class="practice-header">
-<div><h2>Simulacro de Audiencia</h2><p id="pracLabel">Pregunta 1 de 4</p></div>
+<div><h2>Simulacro de Audiencia</h2><p id="pracLabel">Pregunta 1 de 8</p></div>
 <div class="progress-pills" id="pills"></div>
 </div>
 <div class="question-card">
@@ -275,7 +305,8 @@ let timerInterval = null;
 let timerSec = 0;
 let generatedQuestions = [];
 let wordBlob = null;
-let uploadedFiles = [];
+let historiaFile = null;
+let testigosFiles = [];
 let correctionFile = null;
 let respuestaActual = '';
 
@@ -297,14 +328,24 @@ function iniciarPago() {
   }, 3000);
 }
 
-function handleFiles(input) {
-  uploadedFiles = Array.from(input.files);
-  var card = document.getElementById('uploadCard');
-  var list = document.getElementById('fileList');
-  if (uploadedFiles.length > 0) {
-    card.classList.add('has-files');
-    list.innerHTML = uploadedFiles.map(function(f) { return '<div class="file-item">✓ ' + f.name + '</div>'; }).join('');
+function handleHistoria(input) {
+  historiaFile = input.files[0];
+  if (historiaFile) {
+    document.getElementById('uploadCard').classList.add('has-files');
+    document.getElementById('fileList').innerHTML = '<div class="file-item">✓ ' + historiaFile.name + '</div>';
     document.getElementById('btnGenerar').disabled = false;
+  }
+}
+
+function handleTestigos(input) {
+  testigosFiles = Array.from(input.files);
+  var card = document.getElementById('uploadCardTestigos');
+  var list = document.getElementById('fileListTestigos');
+  if (testigosFiles.length > 0) {
+    card.classList.add('has-files');
+    list.innerHTML = testigosFiles.map(function(f) {
+      return '<div class="file-item testigo-item">👤 ' + f.name + '</div>';
+    }).join('');
   }
 }
 
@@ -317,15 +358,14 @@ function leerArchivo(file) {
           .then(function(result) { resolve('=== ' + file.name + ' ===\n' + result.value); })
           .catch(function() { resolve('=== ' + file.name + ' === (error leyendo)'); });
       } else {
-        resolve('=== ' + file.name + ' === (PDF - texto no extraible automaticamente)');
+        resolve('=== ' + file.name + ' === (PDF)');
       }
     };
-    reader.onerror = function() { reject(new Error('Error leyendo archivo')); };
+    reader.onerror = function() { reject(new Error('Error leyendo ' + file.name)); };
     reader.readAsArrayBuffer(file);
   });
 }
 
-// ─── LOTES: 3 llamadas de 4 preguntas cada una = 12 en total ───
 function marcarPaso(i) {
   if (i > 0) {
     document.getElementById('dot'+(i-1)).className = 'proc-dot done';
@@ -335,7 +375,7 @@ function marcarPaso(i) {
   document.getElementById('step'+i).className = 'proc-text active';
 }
 
-async function llamarLote(texto, lote) {
+async function llamarLote(textoHistoria, textoTestigos, lote) {
   var categorias = [
     [
       'ANTECEDENTES POLITICOS: pregunta sobre las actividades políticas específicas del solicitante, su rol en partidos u organizaciones de oposición, y cómo manifestaba públicamente su postura contra el gobierno',
@@ -344,17 +384,21 @@ async function llamarLote(texto, lote) {
       'PROTECCION DEL ESTADO: pregunta sobre si presentó denuncias formales ante autoridades venezolanas y por qué esa protección era inútil o peligrosa'
     ],
     [
-      'REUBICACION INTERNA: pregunta sobre por qué no pudo mudarse a otra ciudad o estado de Venezuela para escapar de sus perseguidores antes de huir a EEUU',
-      'TEMOR DE RETORNO: pregunta sobre qué ocurriría específicamente si regresara a Venezuela hoy — en qué hechos y evidencias recientes fundamenta ese temor',
-      'AMENAZAS DIRECTAS: pregunta sobre amenazas o citaciones de colectivos armados, SEBIN u otras fuerzas del gobierno — contenido exacto de las amenazas y cómo identificaron su postura política',
+      'REUBICACION INTERNA: pregunta sobre por qué no pudo mudarse a otra ciudad o estado del país para escapar de sus perseguidores antes de huir a EEUU',
+      'TEMOR DE RETORNO: pregunta sobre qué ocurriría específicamente si regresara hoy — en qué hechos y evidencias recientes fundamenta ese temor',
+      'CORROBORACION DE TESTIGOS: pregunta que cruza la historia del solicitante con lo declarado por los testigos — señalando un hecho específico del testigo y pidiendo al solicitante que lo confirme o amplíe. Si no hay testigos, pregunta sobre amenazas directas de colectivos armados o fuerzas del gobierno',
       'CRONOLOGIA DE SALIDA: pregunta sobre el tiempo transcurrido entre el último incidente grave y la fecha de salida del país — por qué no salió inmediatamente'
     ]
   ];
 
   var cats = categorias[lote];
-  var instruccion = 'Eres un oficial de asilo de USCIS con 20 años de experiencia evaluando casos bajo INA 208 y el Refugee Act. Tu trabajo es generar EXACTAMENTE 4 preguntas de práctica para audiencia de asilo, UNA por cada categoría indicada. REGLAS ABSOLUTAS: (1) USA EXCLUSIVAMENTE nombres, fechas, lugares, eventos y hechos que aparezcan LITERALMENTE en el documento. (2) PROHIBIDO inventar, asumir o agregar cualquier detalle que no esté en el documento. (3) Si un dato específico no aparece en el documento, escribe [información no disponible en el documento] en su lugar. (4) La PREGUNTA debe ser exactamente como la haría un oficial de USCIS en una entrevista real — formal, directa, citando detalles del caso. (5) La ESTRATEGIA explica en 1 oración qué elemento legal del INA 208 evalúa esta pregunta. (6) La RESPUESTA MODELO debe estar en PRIMERA PERSONA del solicitante, usando SOLO hechos del documento, con nombres reales, fechas reales, lugares reales — como un testimonio convincente de 5-7 oraciones que cubra todos los elementos legales. Si falta información en el documento, agrega [completar con tu experiencia real]. (7) Las CLAVES son los 3 elementos legales que esta respuesta debe demostrar obligatoriamente.\n\nCATEGORIAS para este lote:\n' + cats.map(function(c,i){return (i+1)+'. '+c;}).join('\n') + '\n\nDOCUMENTO DEL SOLICITANTE:\n';
+  var seccionTestigos = textoTestigos
+    ? '\n\nDECLARACIONES DE TESTIGOS (usa estos hechos para la pregunta de CORROBORACION):\n' + textoTestigos
+    : '\n\n(No se proporcionaron declaraciones de testigos — para CORROBORACION usa amenazas directas de la historia)';
 
-  var prompt = instruccion + texto + '\n\nResponde UNICAMENTE con este JSON valido sin backticks:\n{"preguntas":[{"texto":"pregunta formal del oficial","estrategia":"elemento legal en 1 oración","respuesta":"Yo [testimonio primera persona con hechos reales del documento]","claves":["elemento legal 1","elemento legal 2","elemento legal 3"]}]}';
+  var instruccion = 'Eres un oficial de asilo de USCIS con 20 años de experiencia evaluando casos bajo INA 208 y el Refugee Act. Tu trabajo es generar EXACTAMENTE 4 preguntas de práctica para audiencia de asilo, UNA por cada categoría indicada. REGLAS ABSOLUTAS: (1) USA EXCLUSIVAMENTE nombres, fechas, lugares, eventos y hechos que aparezcan LITERALMENTE en los documentos. (2) PROHIBIDO inventar, asumir o agregar cualquier detalle que no esté en los documentos. (3) Si un dato específico no aparece, escribe [información no disponible] en su lugar. (4) La PREGUNTA debe ser exactamente como la haría un oficial de USCIS — formal, directa, citando detalles reales del caso. (5) La ESTRATEGIA explica en 1 oración qué elemento legal del INA 208 evalúa esta pregunta. (6) La RESPUESTA MODELO en PRIMERA PERSONA usa SOLO hechos de los documentos — testimonio de 5-7 oraciones convincente. Si falta información, agrega [completar con tu experiencia real]. (7) Las CLAVES son los 3 elementos legales obligatorios.\n\nCATEGORIAS:\n' + cats.map(function(c,i){return (i+1)+'. '+c;}).join('\n') + '\n\nHISTORIA PRINCIPAL DEL SOLICITANTE:\n';
+
+  var prompt = instruccion + textoHistoria + seccionTestigos + '\n\nResponde UNICAMENTE con JSON valido sin backticks:\n{"preguntas":[{"texto":"pregunta formal del oficial","estrategia":"elemento legal en 1 oración","respuesta":"Yo [testimonio primera persona con hechos reales]","claves":["elemento legal 1","elemento legal 2","elemento legal 3"]}]}';
 
   var response = await fetch('/api/chat', {
     method: 'POST',
@@ -374,26 +418,41 @@ async function generarDocumento() {
   document.getElementById('btnGenerar').disabled = true;
   showScreen('screen-processing');
   try {
-    var textos = [];
-    for (var i = 0; i < uploadedFiles.length; i++) {
-      var texto = await leerArchivo(uploadedFiles[i]);
-      textos.push(texto);
+    // Leer historia principal
+    var textoHistoria = await leerArchivo(historiaFile);
+    var palabras = textoHistoria.split(' ');
+    if (palabras.length > 1200) { textoHistoria = palabras.slice(0, 1200).join(' '); }
+
+    // Leer testigos si existen
+    var textoTestigos = '';
+    if (testigosFiles.length > 0) {
+      var textosTestigos = [];
+      for (var i = 0; i < testigosFiles.length; i++) {
+        var t = await leerArchivo(testigosFiles[i]);
+        textosTestigos.push(t);
+      }
+      textoTestigos = textosTestigos.join('\n\n');
+      var palabrasT = textoTestigos.split(' ');
+      if (palabrasT.length > 800) { textoTestigos = palabrasT.slice(0, 800).join(' '); }
     }
-    var textoCompleto = textos.join('\n\n');
-    var palabras = textoCompleto.split(' ');
-    if (palabras.length > 1500) { textoCompleto = palabras.slice(0, 1500).join(' '); }
 
     marcarPaso(0);
-    var lote1 = await llamarLote(textoCompleto, 0);
+    var lote1 = await llamarLote(textoHistoria, textoTestigos, 0);
     marcarPaso(1);
-    var lote2 = await llamarLote(textoCompleto, 1);
+    var lote2 = await llamarLote(textoHistoria, textoTestigos, 1);
     marcarPaso(2);
 
     var todasLasPreguntas = lote1.concat(lote2);
     generatedQuestions = todasLasPreguntas;
     marcarPaso(3);
-    wordBlob = generarWord(todasLasPreguntas);
+    wordBlob = generarWord(todasLasPreguntas, testigosFiles.length > 0);
     marcarPaso(4);
+
+    // Actualizar mensaje resultado
+    if (testigosFiles.length > 0) {
+      document.getElementById('resultSub').textContent = 'Tu simulacro incluye preguntas cruzadas con las declaraciones de ' + testigosFiles.length + ' testigo(s). Listo para practicar.';
+    }
+
     setTimeout(function() { showScreen('screen-result'); }, 800);
   } catch(e) {
     console.error(e);
@@ -404,22 +463,7 @@ async function generarDocumento() {
   }
 }
 
-async function llamarAPI(texto, esCorreccion) {
-  var prompt = 'Eres experto en asilo EEUU. El cliente corrigió el documento. Regenera EXACTAMENTE 12 preguntas con el mismo formato pero con las correcciones aplicadas.\n\nDOCUMENTO CORREGIDO:\n' + texto + '\n\nRegresa SOLO JSON sin backticks: {"preguntas":[{"texto":"...","estrategia":"...","respuesta":"...","claves":["..."]}]}';
-  var response = await fetch('/api/chat', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({ messages: [{role: 'user', content: prompt}] })
-  });
-  var data = await response.json();
-  if (data.error) throw new Error(JSON.stringify(data.error));
-  var text = data.content[0].text;
-  text = text.replace(/```json/g, '').replace(/```/g, '').trim();
-  var parsed = JSON.parse(text);
-  return parsed.preguntas;
-}
-
-function generarWord(preguntas) {
+function generarWord(preguntas, tieneTestigos) {
   var html = '<html><head><meta charset="UTF-8"><style>';
   html += 'body{font-family:Arial;margin:40px}';
   html += 'h1{color:#1F3864;font-size:20pt;margin-bottom:8px}';
@@ -430,28 +474,31 @@ function generarWord(preguntas) {
   html += '.claves{background:#E3F2FD;padding:10px;margin:8px 0;font-size:11pt}';
   html += '.label{font-weight:bold;font-size:10pt;text-transform:uppercase;margin-bottom:4px;color:#444}';
   html += '.linea{border-bottom:1px solid #ccc;margin:10px 0;height:20px}';
+  html += '.testigo-badge{background:#EDE9FE;color:#5B21B6;font-size:9pt;padding:2px 8px;border-radius:4px;margin-left:8px}';
   html += '</style></head><body>';
   html += '<h1>PREPARACION PARA AUDIENCIA DE ASILO</h1>';
-  html += '<p>Documento generado · ' + new Date().toLocaleDateString('es-US') + '</p><hr>';
-  
-  // ─── FIX 2 (parte Word): título limpio sin currentQ ───
+  html += '<p>Documento generado · ' + new Date().toLocaleDateString('es-US');
+  if (tieneTestigos) html += ' · <strong>Incluye preguntas de corroboración con testigos</strong>';
+  html += '</p><hr>';
+
   preguntas.forEach(function(p, i) {
-    html += '<h2>Pregunta ' + (i + 1) + '</h2>';
+    var esTestigo = p.texto && (p.texto.toLowerCase().includes('testigo') || p.texto.toLowerCase().includes('declaró') || p.texto.toLowerCase().includes('declaracion'));
+    html += '<h2>Pregunta ' + (i + 1) + (esTestigo ? ' <span class="testigo-badge">👥 Testigo</span>' : '') + '</h2>';
     html += '<div class="pregunta">"' + p.texto + '"</div>';
     if (p.estrategia) {
-      html += '<div class="estrategia"><div class="label">Estrategia</div>' + p.estrategia + '</div>';
+      html += '<div class="estrategia"><div class="label">Estrategia Legal</div>' + p.estrategia + '</div>';
     }
     if (p.respuesta) {
-      html += '<div class="respuesta"><div class="label">Respuesta Modelo</div>' + p.respuesta + '</div>';
+      html += '<div class="respuesta"><div class="label">Respuesta Modelo (en tus propias palabras)</div>' + p.respuesta + '</div>';
     }
     if (p.claves && p.claves.length) {
-      html += '<div class="claves"><div class="label">Elementos clave</div><ul>';
+      html += '<div class="claves"><div class="label">Elementos Legales a Cubrir</div><ul>';
       p.claves.forEach(function(c) { html += '<li>' + c + '</li>'; });
       html += '</ul></div>';
     }
     html += '<div><div class="label">Mi respuesta:</div><div class="linea"></div><div class="linea"></div><div class="linea"></div></div>';
   });
-  
+
   html += '<p style="margin-top:40px;font-size:10pt;color:#888">Herramienta educativa. No reemplaza asesoria legal. VersaPro Solution TX.</p>';
   html += '</body></html>';
   return new Blob([html], {type: 'application/vnd.ms-word'});
@@ -479,16 +526,16 @@ async function regenerar() {
   try {
     var texto = await leerArchivo(correctionFile);
     var palabras = texto.split(' ');
-    if (palabras.length > 1500) { texto = palabras.slice(0, 1500).join(' '); }
+    if (palabras.length > 1200) { texto = palabras.slice(0, 1200).join(' '); }
     marcarPaso(0);
-    var lote1 = await llamarLote(texto, 0);
+    var lote1 = await llamarLote(texto, '', 0);
     marcarPaso(1);
-    var lote2 = await llamarLote(texto, 1);
+    var lote2 = await llamarLote(texto, '', 1);
     marcarPaso(2);
     var todasLasPreguntas = lote1.concat(lote2);
     generatedQuestions = todasLasPreguntas;
     marcarPaso(3);
-    wordBlob = generarWord(todasLasPreguntas);
+    wordBlob = generarWord(todasLasPreguntas, false);
     marcarPaso(4);
     setTimeout(function() { showScreen('screen-result'); }, 800);
   } catch(e) {
@@ -496,24 +543,6 @@ async function regenerar() {
     alert('Error al procesar las correcciones: ' + e.message);
     showScreen('screen-result');
   }
-}
-
-function animarPasos() {
-  var delays = [0, 1200, 2800, 4200, 5500];
-  delays.forEach(function(delay, i) {
-    setTimeout(function() {
-      if (i > 0) {
-        document.getElementById('dot'+(i-1)).className = 'proc-dot done';
-        document.getElementById('step'+(i-1)).className = 'proc-text done';
-      }
-      document.getElementById('dot'+i).className = 'proc-dot active';
-      document.getElementById('step'+i).className = 'proc-text active';
-    }, delay);
-  });
-  setTimeout(function() {
-    document.getElementById('dot4').className = 'proc-dot done';
-    document.getElementById('step4').className = 'proc-text done';
-  }, 6500);
 }
 
 function irAPractica() {
@@ -540,7 +569,6 @@ function actualizarPills() {
   });
 }
 
-// ─── FIX 2: eliminado p.fase / p.faseTag / p.titulo — usa solo índice ───
 function mostrarPregunta() {
   var p = generatedQuestions[currentQ];
   document.getElementById('phaseTitle').textContent = 'Pregunta ' + (currentQ + 1) + ' de ' + generatedQuestions.length;
@@ -638,7 +666,6 @@ function repetirQ() { respuestas[currentQ]={transcripcion:'',evaluado:false,bien
 
 if(window.location.search.includes('paid=1')) showScreen('screen-upload');
 </script>
-
 <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
 </body>
 </html>
