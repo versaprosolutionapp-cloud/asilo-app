@@ -186,9 +186,9 @@ Pagar $50 con PayPal — Acceso inmediato
 <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:32px">Aproximadamente 30–60 segundos</p>
 <div id="procSteps">
 <div class="proc-step"><div class="proc-dot active" id="dot0"></div><div class="proc-text active" id="step0">Leyendo tu historia...</div></div>
-<div class="proc-step"><div class="proc-dot" id="dot1"></div><div class="proc-text" id="step1">Identificando hechos clave del caso...</div></div>
-<div class="proc-step"><div class="proc-dot" id="dot2"></div><div class="proc-text" id="step2">Generando preguntas por fase...</div></div>
-<div class="proc-step"><div class="proc-dot" id="dot3"></div><div class="proc-text" id="step3">Preparando estrategias y respuestas...</div></div>
+<div class="proc-step"><div class="proc-dot" id="dot1"></div><div class="proc-text" id="step1">Generando preguntas 1–4...</div></div>
+<div class="proc-step"><div class="proc-dot" id="dot2"></div><div class="proc-text" id="step2">Generando preguntas 5–8...</div></div>
+<div class="proc-step"><div class="proc-dot" id="dot3"></div><div class="proc-text" id="step3">Generando preguntas 9–12...</div></div>
 <div class="proc-step"><div class="proc-dot" id="dot4"></div><div class="proc-text" id="step4">Creando documento Word...</div></div>
 </div>
 </div>
@@ -325,10 +325,41 @@ function leerArchivo(file) {
   });
 }
 
-// ─── FIX 1: eliminado showScreen('screen-processing') de generarDocumento ───
+// ─── LOTES: 3 llamadas de 4 preguntas cada una = 12 en total ───
+function marcarPaso(i) {
+  if (i > 0) {
+    document.getElementById('dot'+(i-1)).className = 'proc-dot done';
+    document.getElementById('step'+(i-1)).className = 'proc-text done';
+  }
+  document.getElementById('dot'+i).className = 'proc-dot active';
+  document.getElementById('step'+i).className = 'proc-text active';
+}
+
+async function llamarLote(texto, lote) {
+  var temas = [
+    'razones por las que saliste de tu país, las amenazas que recibiste y quién te persiguió',
+    'los eventos específicos de persecución, fechas, lugares y personas involucradas',
+    'por qué no puedes regresar a tu país, tu situación actual y tu temor fundado'
+  ];
+  var prompt = 'Eres experto en asilo EEUU (INA 208). Analiza esta declaracion y genera EXACTAMENTE 4 preguntas de practica sobre: ' + temas[lote] + '. Preguntas dirigidas al solicitante. Usa nombres y fechas reales del documento. IMPORTANTE: Responde UNICAMENTE con JSON valido sin backticks ni texto extra.\n\nDOCUMENTO:\n' + texto + '\n\n{"preguntas":[{"texto":"pregunta","estrategia":"estrategia en 1 oracion","respuesta":"respuesta modelo en 2-3 oraciones","claves":["clave1","clave2","clave3"]}]}';
+
+  var response = await fetch('/api/chat', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ messages: [{role: 'user', content: prompt}] })
+  });
+  var data = await response.json();
+  if (data.error) throw new Error(JSON.stringify(data.error));
+  var text = data.content[0].text;
+  text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+  var parsed = JSON.parse(text);
+  return parsed.preguntas;
+}
+
 async function generarDocumento() {
   document.getElementById('btnGenerar').textContent = 'Procesando...';
   document.getElementById('btnGenerar').disabled = true;
+  showScreen('screen-processing');
   try {
     var textos = [];
     for (var i = 0; i < uploadedFiles.length; i++) {
@@ -337,37 +368,39 @@ async function generarDocumento() {
     }
     var textoCompleto = textos.join('\n\n');
     var palabras = textoCompleto.split(' ');
-    if (palabras.length > 1500) {
-      textoCompleto = palabras.slice(0, 1500).join(' ');
-    }
-    var preguntas = await llamarAPI(textoCompleto, false);
-    generatedQuestions = preguntas;
-    wordBlob = generarWord(preguntas);
-    showScreen('screen-result');
+    if (palabras.length > 1500) { textoCompleto = palabras.slice(0, 1500).join(' '); }
+
+    marcarPaso(0);
+    var lote1 = await llamarLote(textoCompleto, 0);
+    marcarPaso(1);
+    var lote2 = await llamarLote(textoCompleto, 1);
+    marcarPaso(2);
+    var lote3 = await llamarLote(textoCompleto, 2);
+    marcarPaso(3);
+
+    var todasLasPreguntas = lote1.concat(lote2).concat(lote3);
+    generatedQuestions = todasLasPreguntas;
+    wordBlob = generarWord(todasLasPreguntas);
+    marcarPaso(4);
+    setTimeout(function() { showScreen('screen-result'); }, 800);
   } catch(e) {
     console.error(e);
-    alert('Error al procesar los documentos. Verifica tu conexión e intenta de nuevo.');
+    alert('Error al procesar los documentos: ' + e.message);
+    showScreen('screen-upload');
     document.getElementById('btnGenerar').textContent = '⚡ Generar mi simulacro personalizado';
     document.getElementById('btnGenerar').disabled = false;
   }
 }
 
 async function llamarAPI(texto, esCorreccion) {
-  var promptTexto = esCorreccion
-    ? 'Eres experto en asilo EEUU. El cliente corrigió el documento. Lee las correcciones y regenera el JSON con el mismo formato pero con las correcciones aplicadas.\n\nDOCUMENTO CORREGIDO:\n' + texto + '\n\nRegresa SOLO el JSON, sin texto adicional.'
-    : 'Eres experto abogado de inmigracion en EEUU especializado en asilo (INA 208). Analiza esta declaracion y genera 4 preguntas de practica para la audiencia de asilo. Preguntas dirigidas al solicitante. Usa nombres y fechas reales del documento. Respuesta modelo completa en cada pregunta. IMPORTANTE: Responde UNICAMENTE con JSON valido sin backticks.\n\nDOCUMENTO:\n' + texto + '\n\n{"preguntas":[{"texto":"pregunta","estrategia":"estrategia","respuesta":"respuesta modelo completa","claves":["clave1","clave2"]}]}'
-
+  var prompt = 'Eres experto en asilo EEUU. El cliente corrigió el documento. Regenera EXACTAMENTE 12 preguntas con el mismo formato pero con las correcciones aplicadas.\n\nDOCUMENTO CORREGIDO:\n' + texto + '\n\nRegresa SOLO JSON sin backticks: {"preguntas":[{"texto":"...","estrategia":"...","respuesta":"...","claves":["..."]}]}';
   var response = await fetch('/api/chat', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      messages: [{role: 'user', content: promptTexto}]
-    })
+    body: JSON.stringify({ messages: [{role: 'user', content: prompt}] })
   });
-
   var data = await response.json();
   if (data.error) throw new Error(JSON.stringify(data.error));
-  
   var text = data.content[0].text;
   text = text.replace(/```json/g, '').replace(/```/g, '').trim();
   var parsed = JSON.parse(text);
@@ -429,19 +462,27 @@ function handleCorrection(input) {
   }
 }
 
-// ─── FIX 1: eliminado showScreen('screen-processing') de regenerar ───
 async function regenerar() {
+  showScreen('screen-processing');
   try {
     var texto = await leerArchivo(correctionFile);
     var palabras = texto.split(' ');
-    if (palabras.length > 3000) { texto = palabras.slice(0, 3000).join(' '); }
-    var preguntas = await llamarAPI(texto, true);
-    generatedQuestions = preguntas;
-    wordBlob = generarWord(preguntas);
-    showScreen('screen-result');
+    if (palabras.length > 1500) { texto = palabras.slice(0, 1500).join(' '); }
+    marcarPaso(0);
+    var lote1 = await llamarLote(texto, 0);
+    marcarPaso(1);
+    var lote2 = await llamarLote(texto, 1);
+    marcarPaso(2);
+    var lote3 = await llamarLote(texto, 2);
+    marcarPaso(3);
+    var todasLasPreguntas = lote1.concat(lote2).concat(lote3);
+    generatedQuestions = todasLasPreguntas;
+    wordBlob = generarWord(todasLasPreguntas);
+    marcarPaso(4);
+    setTimeout(function() { showScreen('screen-result'); }, 800);
   } catch(e) {
     console.error(e);
-    alert('Error al procesar las correcciones.');
+    alert('Error al procesar las correcciones: ' + e.message);
     showScreen('screen-result');
   }
 }
