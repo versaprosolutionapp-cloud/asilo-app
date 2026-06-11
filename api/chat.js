@@ -6,7 +6,8 @@ module.exports = async function handler(req, res) {
     const body = {
       model: 'claude-haiku-4-5-20251001',
       max_tokens: 4000,
-      messages: req.body.messages
+      messages: req.body.messages,
+      system: req.body.system || undefined
     };
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
