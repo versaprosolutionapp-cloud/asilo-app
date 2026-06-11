@@ -216,9 +216,9 @@ Pagar $50 con PayPal — Acceso inmediato
 <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:32px">Aproximadamente 30–60 segundos</p>
 <div id="procSteps">
 <div class="proc-step"><div class="proc-dot active" id="dot0"></div><div class="proc-text active" id="step0">Leyendo documentos...</div></div>
-<div class="proc-step"><div class="proc-dot" id="dot1"></div><div class="proc-text" id="step1">Generando preguntas 1–4...</div></div>
-<div class="proc-step"><div class="proc-dot" id="dot2"></div><div class="proc-text" id="step2">Generando preguntas 5–8...</div></div>
-<div class="proc-step"><div class="proc-dot" id="dot3"></div><div class="proc-text" id="step3">Preparando documento final...</div></div>
+<div class="proc-step"><div class="proc-dot" id="dot1"></div><div class="proc-text" id="step1">Identificando fechas y eventos clave...</div></div>
+<div class="proc-step"><div class="proc-dot" id="dot2"></div><div class="proc-text" id="step2">Generando preguntas 1–4...</div></div>
+<div class="proc-step"><div class="proc-dot" id="dot3"></div><div class="proc-text" id="step3">Generando preguntas 5–8...</div></div>
 <div class="proc-step"><div class="proc-dot" id="dot4"></div><div class="proc-text" id="step4">Creando documento Word...</div></div>
 </div>
 </div>
@@ -297,6 +297,22 @@ Pagar $50 con PayPal — Acceso inmediato
 const PAYPAL_EMAIL = 'versaprosolutionapp@gmail.com';
 const PAYPAL_PRICE = '50.00';
 
+// ─── SYSTEM PROMPT FIJO ──────────────────────────────────────────────────────
+// Va separado del mensaje user — esto garantiza que Haiku lo trate como regla
+// inquebrantable, no como texto del documento.
+const SYSTEM_PROMPT = `Eres un oficial senior de asilo de USCIS con 20 años de experiencia evaluando casos bajo INA 208 y el Refugee Act de 1980.
+
+IDIOMA: Respondes EXCLUSIVAMENTE en español. Preguntas, estrategias, respuestas modelo, claves legales — TODO en español sin excepción. Si algo en el documento está en inglés, lo procesas pero tu output es 100% español.
+
+IDENTIDAD DE ROL: Formulas preguntas exactamente como lo haría un oficial de USCIS en una entrevista de asilo real — tono formal, directo, sin ambigüedad.
+
+REGLA DE FECHAS: Cuando el documento mencione una fecha (ejemplo: "mayo 2015", "11 de noviembre de 2016", "8 de diciembre de 2016"), la copias LITERALMENTE tal como aparece escrita. PROHIBIDO convertir, reformatear o reordenar fechas.
+
+REGLA DE HECHOS: Solo usas nombres, lugares y eventos que aparezcan explícitamente en el documento. PROHIBIDO inventar, asumir o completar información que no esté en el texto.
+
+OUTPUT: Respondes ÚNICAMENTE con JSON válido, sin backticks, sin texto antes ni después del JSON.`;
+
+// ─── ESTADO GLOBAL ────────────────────────────────────────────────────────────
 let currentQ = 0;
 let respuestas = [];
 let grabando = false;
@@ -309,6 +325,8 @@ let historiaFile = null;
 let testigosFiles = [];
 let correctionFile = null;
 let respuestaActual = '';
+// fechasClave se extrae en paso previo y se inyecta en los lotes
+let fechasClave = '';
 
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
@@ -358,7 +376,7 @@ function leerArchivo(file) {
           .then(function(result) { resolve('=== ' + file.name + ' ===\n' + result.value); })
           .catch(function() { resolve('=== ' + file.name + ' === (error leyendo)'); });
       } else {
-        resolve('=== ' + file.name + ' === (PDF)');
+        resolve('=== ' + file.name + ' === (PDF - texto no disponible)');
       }
     };
     reader.onerror = function() { reject(new Error('Error leyendo ' + file.name)); };
@@ -375,55 +393,115 @@ function marcarPaso(i) {
   document.getElementById('step'+i).className = 'proc-text active';
 }
 
-async function llamarLote(textoHistoria, textoTestigos, lote) {
-  var categorias = [
-    [
-      'ANTECEDENTES POLITICOS: pregunta sobre las actividades políticas específicas del solicitante, su rol en partidos u organizaciones de oposición, y cómo manifestaba públicamente su postura contra el gobierno',
-      'PERSECUCION PASADA: pregunta sobre el incidente más grave de persecución — fecha exacta, quiénes agredieron, qué dijeron específicamente, consecuencias físicas y psicológicas',
-      'NEXO LEGAL - OPINION POLITICA: pregunta que desafía al solicitante a demostrar que los ataques fueron por su opinión política y no por delincuencia común — qué evidencia tiene de ese nexo específico',
-      'PROTECCION DEL ESTADO: pregunta sobre si presentó denuncias formales ante autoridades venezolanas y por qué esa protección era inútil o peligrosa'
-    ],
-    [
-      'REUBICACION INTERNA: pregunta sobre por qué no pudo mudarse a otra ciudad o estado del país para escapar de sus perseguidores antes de huir a EEUU',
-      'TEMOR DE RETORNO: pregunta sobre qué ocurriría específicamente si regresara hoy — en qué hechos y evidencias recientes fundamenta ese temor',
-      'CORROBORACION DE TESTIGOS: pregunta que cruza la historia del solicitante con lo declarado por los testigos — señalando un hecho específico del testigo y pidiendo al solicitante que lo confirme o amplíe. Si no hay testigos, pregunta sobre amenazas directas de colectivos armados o fuerzas del gobierno',
-      'CRONOLOGIA DE SALIDA: pregunta sobre el tiempo transcurrido entre el último incidente grave y la fecha de salida del país — por qué no salió inmediatamente'
-    ]
-  ];
-
-  var cats = categorias[lote];
-  var seccionTestigos = textoTestigos
-    ? '\n\nDECLARACIONES DE TESTIGOS (usa estos hechos para la pregunta de CORROBORACION):\n' + textoTestigos
-    : '\n\n(No se proporcionaron declaraciones de testigos — para CORROBORACION usa amenazas directas de la historia)';
-
-  var instruccion = 'IDIOMA OBLIGATORIO: Todo tu output debe estar en ESPAÑOL. Preguntas, estrategias, respuestas y claves — TODO en español. PROHIBIDO responder en inglés.\n\nEres un oficial de asilo de USCIS con 20 años de experiencia evaluando casos bajo INA 208 y el Refugee Act. Tu trabajo es generar EXACTAMENTE 4 preguntas de práctica para audiencia de asilo, UNA por cada categoría indicada.\n\nPASO PREVIO OBLIGATORIO: Antes de generar las preguntas, identifica en el documento: (a) los eventos de persecución más graves con sus fechas exactas tal como aparecen escritas, (b) la fecha de salida del país, (c) los nombres de personas involucradas. USA esas fechas y eventos en las preguntas y respuestas — son el núcleo del caso.\n\nREGLAS ABSOLUTAS: (1) USA EXCLUSIVAMENTE nombres, fechas, lugares y hechos que aparezcan LITERALMENTE en los documentos. (2) COPIA las fechas EXACTAMENTE como están escritas en el documento — no las conviertas ni reordenes. Si el documento dice \'mayo 2015\' escribe \'mayo 2015\'. Si dice \'11 de noviembre de 2016\' escribe \'11 de noviembre de 2016\'. (3) PROHIBIDO inventar, asumir o cambiar cualquier detalle. (4) La PREGUNTA en español, formal, como la haría un oficial de USCIS citando detalles reales. (5) La ESTRATEGIA en español, 1 oración, qué elemento legal evalúa. (6) La RESPUESTA MODELO en español, primera persona, SOLO hechos del documento, 5-7 oraciones. Donde falte información escribe [completar con tu experiencia real]. (7) Las CLAVES son los 3 elementos legales en español.\n\nCATEGORIAS:\n' + cats.map(function(c,i){return (i+1)+'. '+c;}).join('\n') + '\n\nHISTORIA PRINCIPAL DEL SOLICITANTE:\n';
-
-  var prompt = instruccion + textoHistoria + seccionTestigos + '\n\nResponde UNICAMENTE con JSON valido sin backticks:\n{"preguntas":[{"texto":"pregunta formal del oficial","estrategia":"elemento legal en 1 oración","respuesta":"Yo [testimonio primera persona con hechos reales]","claves":["elemento legal 1","elemento legal 2","elemento legal 3"]}]}';
+// ─── PASO PREVIO: EXTRACCIÓN DE FECHAS Y EVENTOS CLAVE ───────────────────────
+// Llamada separada antes de generar preguntas.
+// Propósito: que el modelo identifique las fechas exactas del documento
+// ANTES de construir las preguntas — evita que las ignore bajo presión de generar JSON.
+async function extraerFechasYEventos(textoHistoria) {
+  var prompt = 'Lee el siguiente documento de asilo y extrae ÚNICAMENTE:\n1. Todos los eventos de persecución con sus fechas exactas tal como están escritas en el documento\n2. La fecha de salida del país\n3. Nombres de personas involucradas en la persecución\n\nDevuelve SOLO JSON válido sin backticks:\n{"eventos":[{"fecha":"fecha exacta como aparece en el documento","descripcion":"descripción breve del evento"}],"salida":"fecha de salida","personas":["nombre1","nombre2"]}\n\nDOCUMENTO:\n' + textoHistoria;
 
   var response = await fetch('/api/chat', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({ messages: [{role: 'user', content: prompt}] })
+    body: JSON.stringify({
+      system: SYSTEM_PROMPT,
+      messages: [{role: 'user', content: prompt}]
+    })
   });
   var data = await response.json();
   if (data.error) throw new Error(JSON.stringify(data.error));
-  var text = data.content[0].text;
-  text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+  var text = data.content[0].text.replace(/```json/g,'').replace(/```/g,'').trim();
+  try {
+    var parsed = JSON.parse(text);
+    // Construir resumen de fechas para inyectar en los lotes
+    var lineas = [];
+    if (parsed.eventos && parsed.eventos.length) {
+      parsed.eventos.forEach(function(e) {
+        lineas.push('- EVENTO: ' + e.fecha + ' → ' + e.descripcion);
+      });
+    }
+    if (parsed.salida) lineas.push('- SALIDA DEL PAÍS: ' + parsed.salida);
+    if (parsed.personas && parsed.personas.length) {
+      lineas.push('- PERSONAS INVOLUCRADAS: ' + parsed.personas.join(', '));
+    }
+    return lineas.join('\n');
+  } catch(e) {
+    // Si falla el parse, devolvemos el texto crudo — mejor que nada
+    return text;
+  }
+}
+
+// ─── LLAMAR LOTE ─────────────────────────────────────────────────────────────
+// Cambios clave vs versión anterior:
+// 1. system prompt va SEPARADO en req.body.system
+// 2. fechasClave inyectadas al inicio del user message
+// 3. Instrucciones más cortas y directas — menos texto = menos confusión para Haiku
+// 4. Categorías en español completo desde el principio
+async function llamarLote(textoHistoria, textoTestigos, lote) {
+  var categorias = [
+    [
+      'ANTECEDENTES POLÍTICOS: pregunta sobre las actividades políticas específicas del solicitante — su rol en partidos u organizaciones de oposición, y cómo manifestaba públicamente su postura contra el gobierno',
+      'PERSECUCIÓN PASADA: pregunta sobre el incidente de persecución más grave — cita la fecha exacta del documento, quiénes agredieron, qué dijeron específicamente, consecuencias físicas y psicológicas',
+      'NEXO LEGAL — OPINIÓN POLÍTICA: pregunta que desafía al solicitante a demostrar que los ataques fueron por su opinión política y no por delincuencia común — qué evidencia concreta tiene de ese nexo',
+      'PROTECCIÓN DEL ESTADO: pregunta sobre si presentó denuncias formales ante autoridades venezolanas y por qué esa protección era inútil o peligrosa'
+    ],
+    [
+      'REUBICACIÓN INTERNA: pregunta sobre por qué no pudo mudarse a otra ciudad o estado del país para escapar de sus perseguidores antes de salir a EEUU',
+      'TEMOR DE RETORNO: pregunta sobre qué ocurriría específicamente si regresara hoy a Venezuela — en qué hechos y evidencias recientes fundamenta ese temor',
+      'CORROBORACIÓN DE TESTIGOS: pregunta que cruza la historia del solicitante con lo declarado por los testigos — señala un hecho específico del testigo y pide al solicitante que lo confirme o amplíe. Si no hay testigos, pregunta sobre amenazas directas de colectivos armados o fuerzas del gobierno',
+      'CRONOLOGÍA DE SALIDA: pregunta sobre el tiempo transcurrido entre el último incidente grave y la fecha de salida del país — por qué no salió inmediatamente después del incidente'
+    ]
+  ];
+
+  var cats = categorias[lote];
+
+  var seccionTestigos = textoTestigos
+    ? '\n\nDECLARACIONES DE TESTIGOS (usa estos hechos para la pregunta de CORROBORACIÓN):\n' + textoTestigos
+    : '\n\n(Sin testigos — para CORROBORACIÓN usa amenazas directas de la historia principal)';
+
+  // El user message empieza con las fechas ya extraídas — esto ancla el modelo
+  var userMessage =
+    'FECHAS Y EVENTOS CLAVE IDENTIFICADOS EN EL DOCUMENTO (úsalos obligatoriamente en las preguntas):\n' +
+    fechasClave +
+    '\n\n─────────────────────────────────────\n' +
+    'TAREA: Genera EXACTAMENTE 4 preguntas de audiencia de asilo, UNA por cada categoría.\n' +
+    'Cada pregunta DEBE citar las fechas y eventos listados arriba.\n\n' +
+    'CATEGORÍAS:\n' +
+    cats.map(function(c, i) { return (i+1) + '. ' + c; }).join('\n') +
+    '\n\nFORMATO DE RESPUESTA — JSON válido, sin backticks:\n' +
+    '{"preguntas":[{"texto":"pregunta formal del oficial citando fecha y hechos reales","estrategia":"elemento legal que evalúa esta pregunta en 1 oración","respuesta":"Yo [testimonio en primera persona con hechos y fechas reales del documento, 5-7 oraciones. Si falta información escribe [completar con tu experiencia real]]","claves":["elemento legal 1","elemento legal 2","elemento legal 3"]}]}\n\n' +
+    'HISTORIA PRINCIPAL:\n' + textoHistoria +
+    seccionTestigos;
+
+  var response = await fetch('/api/chat', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      system: SYSTEM_PROMPT,
+      messages: [{role: 'user', content: userMessage}]
+    })
+  });
+
+  var data = await response.json();
+  if (data.error) throw new Error(JSON.stringify(data.error));
+  var text = data.content[0].text.replace(/```json/g,'').replace(/```/g,'').trim();
   var parsed = JSON.parse(text);
   return parsed.preguntas;
 }
 
+// ─── GENERAR DOCUMENTO ────────────────────────────────────────────────────────
 async function generarDocumento() {
   document.getElementById('btnGenerar').textContent = 'Procesando...';
   document.getElementById('btnGenerar').disabled = true;
   showScreen('screen-processing');
+
   try {
-    // Leer historia principal
+    // PASO 0 — Leer archivos
+    marcarPaso(0);
     var textoHistoria = await leerArchivo(historiaFile);
     var palabras = textoHistoria.split(' ');
     if (palabras.length > 1200) { textoHistoria = palabras.slice(0, 1200).join(' '); }
 
-    // Leer testigos si existen
     var textoTestigos = '';
     if (testigosFiles.length > 0) {
       var textosTestigos = [];
@@ -436,24 +514,31 @@ async function generarDocumento() {
       if (palabrasT.length > 800) { textoTestigos = palabrasT.slice(0, 800).join(' '); }
     }
 
-    marcarPaso(0);
-    var lote1 = await llamarLote(textoHistoria, textoTestigos, 0);
+    // PASO 1 — Extraer fechas ANTES de generar preguntas (llamada separada)
     marcarPaso(1);
-    var lote2 = await llamarLote(textoHistoria, textoTestigos, 1);
+    fechasClave = await extraerFechasYEventos(textoHistoria);
+
+    // PASO 2 — Lote 1 (preguntas 1–4)
     marcarPaso(2);
+    var lote1 = await llamarLote(textoHistoria, textoTestigos, 0);
+
+    // PASO 3 — Lote 2 (preguntas 5–8)
+    marcarPaso(3);
+    var lote2 = await llamarLote(textoHistoria, textoTestigos, 1);
 
     var todasLasPreguntas = lote1.concat(lote2);
     generatedQuestions = todasLasPreguntas;
-    marcarPaso(3);
-    wordBlob = generarWord(todasLasPreguntas, testigosFiles.length > 0);
-    marcarPaso(4);
 
-    // Actualizar mensaje resultado
+    // PASO 4 — Word
+    marcarPaso(4);
+    wordBlob = generarWord(todasLasPreguntas, testigosFiles.length > 0);
+
     if (testigosFiles.length > 0) {
       document.getElementById('resultSub').textContent = 'Tu simulacro incluye preguntas cruzadas con las declaraciones de ' + testigosFiles.length + ' testigo(s). Listo para practicar.';
     }
 
     setTimeout(function() { showScreen('screen-result'); }, 800);
+
   } catch(e) {
     console.error(e);
     alert('Error al procesar los documentos: ' + e.message);
@@ -463,53 +548,71 @@ async function generarDocumento() {
   }
 }
 
+// ─── GENERAR WORD ─────────────────────────────────────────────────────────────
 function generarWord(preguntas, tieneTestigos) {
-  var html = '<html><head><meta charset="UTF-8"><style>';
-  html += 'body{font-family:Arial;margin:40px}';
-  html += 'h1{color:#1F3864;font-size:20pt;margin-bottom:8px}';
-  html += 'h2{color:#1F3864;font-size:13pt;background:#D6E4F7;padding:8px;margin-top:24px}';
-  html += '.pregunta{font-style:italic;font-size:12pt;margin:10px 0;color:#000}';
-  html += '.estrategia{background:#FFF8E1;padding:10px;margin:8px 0;font-size:11pt}';
-  html += '.respuesta{background:#E8F5E9;padding:10px;margin:8px 0;font-size:11pt}';
-  html += '.claves{background:#E3F2FD;padding:10px;margin:8px 0;font-size:11pt}';
-  html += '.label{font-weight:bold;font-size:10pt;text-transform:uppercase;margin-bottom:4px;color:#444}';
-  html += '.linea{border-bottom:1px solid #ccc;margin:10px 0;height:20px}';
-  html += '.testigo-badge{background:#EDE9FE;color:#5B21B6;font-size:9pt;padding:2px 8px;border-radius:4px;margin-left:8px}';
+  var d = new Date();
+  var fechaHoy = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+
+  var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><style>';
+  html += 'body{font-family:Arial,sans-serif;margin:48px;color:#1a1a1a;line-height:1.5}';
+  html += 'h1{color:#1F3864;font-size:18pt;margin-bottom:4px}';
+  html += '.subtitulo{font-size:10pt;color:#555;margin-bottom:24px}';
+  html += 'h2{color:#1F3864;font-size:12pt;background:#D6E4F7;padding:8px 12px;margin-top:28px;margin-bottom:12px;border-left:4px solid #1F3864}';
+  html += '.pregunta{font-style:italic;font-size:12pt;margin:10px 0 12px 0;color:#000;line-height:1.6}';
+  html += '.bloque{padding:10px 14px;margin:8px 0;font-size:11pt;border-radius:4px}';
+  html += '.estrategia{background:#FFF8E1;border-left:3px solid #F59E0B}';
+  html += '.respuesta{background:#E8F5E9;border-left:3px solid #22C55E}';
+  html += '.claves{background:#E3F2FD;border-left:3px solid #3B82F6}';
+  html += '.label{font-weight:bold;font-size:9pt;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;color:#444}';
+  html += '.linea-escr{border-bottom:1px solid #bbb;margin:8px 0;height:22px}';
+  html += '.testigo-badge{font-size:9pt;color:#5B21B6;margin-left:6px}';
+  html += '.pie{margin-top:40px;padding-top:16px;border-top:1px solid #ddd;font-size:9pt;color:#888;text-align:center}';
   html += '</style></head><body>';
-  html += '<h1>PREPARACION PARA AUDIENCIA DE ASILO</h1>';
-  html += '<p>Documento generado · ' + (function(){ var d = new Date(); return d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear(); })();
-  if (tieneTestigos) html += ' · <strong>Incluye preguntas de corroboración con testigos</strong>';
-  html += '</p><hr>';
+  html += '<h1>PREPARACIÓN PARA AUDIENCIA DE ASILO</h1>';
+  html += '<div class="subtitulo">Generado el ' + fechaHoy;
+  if (tieneTestigos) html += ' &nbsp;·&nbsp; <strong>Incluye preguntas de corroboración con testigos</strong>';
+  html += '</div>';
 
   preguntas.forEach(function(p, i) {
-    var esTestigo = p.texto && (p.texto.toLowerCase().includes('testigo') || p.texto.toLowerCase().includes('declaró') || p.texto.toLowerCase().includes('declaracion'));
-    html += '<h2>Pregunta ' + (i + 1) + (esTestigo ? ' <span class="testigo-badge">👥 Testigo</span>' : '') + '</h2>';
-    html += '<div class="pregunta">"' + p.texto + '"</div>';
+    var esTestigo = p.texto && (
+      p.texto.toLowerCase().includes('testigo') ||
+      p.texto.toLowerCase().includes('declaró') ||
+      p.texto.toLowerCase().includes('declaración')
+    );
+    html += '<h2>Pregunta ' + (i + 1);
+    if (esTestigo) html += ' <span class="testigo-badge">👥 Testigo</span>';
+    html += '</h2>';
+    html += '<div class="pregunta">&ldquo;' + (p.texto || '') + '&rdquo;</div>';
+
     if (p.estrategia) {
-      html += '<div class="estrategia"><div class="label">Estrategia Legal</div>' + p.estrategia + '</div>';
+      html += '<div class="bloque estrategia"><div class="label">Estrategia Legal</div>' + p.estrategia + '</div>';
     }
     if (p.respuesta) {
-      html += '<div class="respuesta"><div class="label">Respuesta Modelo (en tus propias palabras)</div>' + p.respuesta + '</div>';
+      html += '<div class="bloque respuesta"><div class="label">Respuesta Modelo (en tus propias palabras)</div>' + p.respuesta + '</div>';
     }
     if (p.claves && p.claves.length) {
-      html += '<div class="claves"><div class="label">Elementos Legales a Cubrir</div><ul>';
+      html += '<div class="bloque claves"><div class="label">Elementos Legales a Cubrir</div><ul style="margin:4px 0;padding-left:18px">';
       p.claves.forEach(function(c) { html += '<li>' + c + '</li>'; });
       html += '</ul></div>';
     }
-    html += '<div><div class="label">Mi respuesta:</div><div class="linea"></div><div class="linea"></div><div class="linea"></div></div>';
+    html += '<div style="margin-top:12px"><div class="label">Mi respuesta:</div>';
+    html += '<div class="linea-escr"></div><div class="linea-escr"></div><div class="linea-escr"></div></div>';
   });
 
-  html += '<p style="margin-top:40px;font-size:10pt;color:#888">Herramienta educativa. No reemplaza asesoria legal. VersaPro Solution TX.</p>';
+  html += '<div class="pie">Herramienta educativa de preparación. No reemplaza asesoría legal certificada. VersaPro Solution TX.</div>';
   html += '</body></html>';
-  return new Blob([html], {type: 'application/vnd.ms-word'});
+
+  return new Blob([html], {type: 'application/vnd.ms-word;charset=utf-8'});
 }
 
 function descargarWord() {
-  if (!wordBlob) { alert('El documento aun no esta listo.'); return; }
+  if (!wordBlob) { alert('El documento aún no está listo.'); return; }
   var url = URL.createObjectURL(wordBlob);
   var a = document.createElement('a');
-  a.href = url; a.download = 'Preparacion_Audiencia_Asilo.doc';
-  a.click(); URL.revokeObjectURL(url);
+  a.href = url;
+  a.download = 'Preparacion_Audiencia_Asilo.doc';
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 function handleCorrection(input) {
@@ -524,19 +627,26 @@ function handleCorrection(input) {
 async function regenerar() {
   showScreen('screen-processing');
   try {
+    marcarPaso(0);
     var texto = await leerArchivo(correctionFile);
     var palabras = texto.split(' ');
     if (palabras.length > 1200) { texto = palabras.slice(0, 1200).join(' '); }
-    marcarPaso(0);
-    var lote1 = await llamarLote(texto, '', 0);
+
     marcarPaso(1);
-    var lote2 = await llamarLote(texto, '', 1);
+    fechasClave = await extraerFechasYEventos(texto);
+
     marcarPaso(2);
+    var lote1 = await llamarLote(texto, '', 0);
+
+    marcarPaso(3);
+    var lote2 = await llamarLote(texto, '', 1);
+
     var todasLasPreguntas = lote1.concat(lote2);
     generatedQuestions = todasLasPreguntas;
-    marcarPaso(3);
-    wordBlob = generarWord(todasLasPreguntas, false);
+
     marcarPaso(4);
+    wordBlob = generarWord(todasLasPreguntas, false);
+
     setTimeout(function() { showScreen('screen-result'); }, 800);
   } catch(e) {
     console.error(e);
@@ -545,6 +655,7 @@ async function regenerar() {
   }
 }
 
+// ─── PRÁCTICA ORAL ────────────────────────────────────────────────────────────
 function irAPractica() {
   if (!generatedQuestions.length) { alert('Primero genera tu simulacro.'); return; }
   respuestas = generatedQuestions.map(function() { return {transcripcion:'',evaluado:false,bien:'',mejorar:''}; });
