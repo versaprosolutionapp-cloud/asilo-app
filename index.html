@@ -138,8 +138,31 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 </head>
 <body>
 
+<!-- ACCESO -->
+<div id="screen-acceso" class="screen active">
+<div style="background:var(--navy);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px">
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.3);border-radius:20px;padding:40px 32px;max-width:420px;width:100%;text-align:center">
+<div style="font-size:48px;margin-bottom:16px">⚖️</div>
+<h2 style="font-family:'Playfair Display',serif;color:#fff;font-size:24px;margin-bottom:8px">Simulacro de Audiencia de Asilo</h2>
+<p style="color:rgba(255,255,255,0.5);font-size:13px;margin-bottom:32px">VersaPro Solution TX</p>
+<div style="text-align:left;margin-bottom:16px">
+<label style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.6);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:8px">Código de acceso</label>
+<input type="text" id="inputCodigo" placeholder="Ej: ASILO-2024-001"
+  style="width:100%;padding:14px 16px;border-radius:10px;border:1.5px solid rgba(201,168,76,0.4);background:rgba(255,255,255,0.08);color:#fff;font-size:16px;font-family:'DM Sans',sans-serif;outline:none;letter-spacing:2px;text-transform:uppercase;text-align:center"
+  onkeydown="if(event.key==='Enter') verificarCodigo()">
+</div>
+<div id="accesoError" style="display:none;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:13px;color:#FCA5A5;text-align:left"></div>
+<button onclick="verificarCodigo()" id="btnAcceso"
+  style="width:100%;padding:16px;border-radius:12px;border:none;cursor:pointer;background:var(--gold);color:var(--navy);font-size:15px;font-weight:700;font-family:'DM Sans',sans-serif;transition:all 0.2s">
+  Ingresar →
+</button>
+<p style="margin-top:24px;font-size:12px;color:rgba(255,255,255,0.3)">¿No tienes código? Contacta a VersaPro Solution TX</p>
+</div>
+</div>
+</div>
+
 <!-- LANDING -->
-<div id="screen-landing" class="screen active">
+<div id="screen-landing" class="screen">
 <div class="landing-bg"></div>
 <div class="landing-inner">
 <div class="badge">🇺🇸 Preparación de Asilo · EEUU</div>
@@ -297,17 +320,76 @@ Pagar $50 con PayPal — Acceso inmediato
 const PAYPAL_EMAIL = 'versaprosolutionapp@gmail.com';
 const PAYPAL_PRICE = '50.00';
 
+// ─── CONTROL DE ACCESO ────────────────────────────────────────────────────────
+let clienteActivo = { codigo: '', nombre: '', tipo: '' };
+
+async function verificarCodigo() {
+  const codigo = document.getElementById('inputCodigo').value.trim();
+  const errorDiv = document.getElementById('accesoError');
+  const btn = document.getElementById('btnAcceso');
+  if (!codigo) {
+    errorDiv.style.display = 'block';
+    errorDiv.textContent = 'Por favor ingresa tu código de acceso.';
+    return;
+  }
+  btn.textContent = 'Verificando...';
+  btn.style.opacity = '0.7';
+  btn.disabled = true;
+  errorDiv.style.display = 'none';
+  try {
+    const res = await fetch('/api/registro', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ accion: 'verificar', codigo })
+    });
+    const data = await res.json();
+    if (data.valido) {
+      clienteActivo = { codigo: codigo.toUpperCase(), nombre: data.nombre, tipo: data.tipo };
+      showScreen('screen-landing');
+    } else {
+      errorDiv.style.display = 'block';
+      errorDiv.textContent = data.motivo || 'Código inválido.';
+      btn.textContent = 'Ingresar →';
+      btn.style.opacity = '1';
+      btn.disabled = false;
+    }
+  } catch(e) {
+    errorDiv.style.display = 'block';
+    errorDiv.textContent = 'Error de conexión. Intenta de nuevo.';
+    btn.textContent = 'Ingresar →';
+    btn.style.opacity = '1';
+    btn.disabled = false;
+  }
+}
+
+async function registrarActividad(detalle) {
+  if (!clienteActivo.codigo) return;
+  try {
+    await fetch('/api/registro', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ accion: 'registrar', codigo: clienteActivo.codigo, nombre: clienteActivo.nombre, detalle })
+    });
+  } catch(e) { /* silencioso */ }
+}
+
 // ─── SYSTEM PROMPT FIJO ──────────────────────────────────────────────────────
 // Va separado del mensaje user — esto garantiza que Haiku lo trate como regla
 // inquebrantable, no como texto del documento.
 const SYSTEM_PROMPT = `Eres un oficial senior de asilo de USCIS con 20 años de experiencia evaluando casos bajo INA 208 y el Refugee Act de 1980.
 
-IDIOMA: Respondes EXCLUSIVAMENTE en español. Preguntas, estrategias, respuestas modelo, claves legales — TODO en español sin excepción. Si algo en el documento está en inglés, lo procesas pero tu output es 100% español.
+IDIOMA: Respondes EXCLUSIVAMENTE en español. Preguntas, estrategias, respuestas modelo, claves legales — TODO en español sin excepción.
 
-IDENTIDAD DE ROL: Formulas preguntas exactamente como lo haría un oficial de USCIS en una entrevista de asilo real — tono formal, directo, sin ambigüedad.
+IDENTIDAD DE ROL: Formulas preguntas exactamente como lo haría un oficial de USCIS en una entrevista real — tono formal, directo, sin ambigüedad.
 
-REGLA DE FECHAS: Detecta el idioma del documento antes de interpretar fechas numericas. Si el documento esta en INGLES: El formato MM/DD/YYYY - Ejemplo 12/08/2016 significa December 8, 2016, traducela como "8 de diciembre del 2016". Si el documento esta en ESPANOL: el formato es DD/MM/YYYY - ejemplo 12/08/2016 significa 12 de agosto de 2016. Cuando la fecha este escrita en palabras ("11 de noviembre de 2016", "mayo 2015"), Copiala exactamente como aparece. Todas las fechas en output van en espanol escrito en palabras
-REGLA DE HECHOS: Solo usas nombres, lugares y eventos que aparezcan explícitamente en el documento. PROHIBIDO inventar, asumir o completar información que no esté en el texto.
+REGLA DE FECHAS: Copias las fechas LITERALMENTE como aparecen en el documento. PROHIBIDO convertir, reformatear o reordenar fechas.
+
+REGLA DE HECHOS — MÁS IMPORTANTE:
+1. Usa ÚNICAMENTE hechos que estén confirmados en el documento.
+2. PROHIBIDO inventar, asumir, embellecer o agregar detalles para hacer la respuesta más completa.
+3. Si un dato no aparece en el documento, escribe exactamente: [No aparece en el expediente]
+4. Las preguntas y respuestas deben ser CORTAS y DIRECTAS — máximo 3 oraciones cada una.
+5. La respuesta modelo debe reflejar SOLO lo que el documento confirma, nada más.
 
 OUTPUT: Respondes ÚNICAMENTE con JSON válido, sin backticks, sin texto antes ni después del JSON.`;
 
@@ -468,7 +550,7 @@ async function llamarLote(textoHistoria, textoTestigos, lote) {
     'CATEGORÍAS:\n' +
     cats.map(function(c, i) { return (i+1) + '. ' + c; }).join('\n') +
     '\n\nFORMATO DE RESPUESTA — JSON válido, sin backticks:\n' +
-    '{"preguntas":[{"texto":"pregunta formal del oficial citando fecha y hechos reales","estrategia":"elemento legal que evalúa esta pregunta en 1 oración","respuesta":"Yo [testimonio en primera persona con hechos y fechas reales del documento, 5-7 oraciones. Si falta información escribe [completar con tu experiencia real]]","claves":["elemento legal 1","elemento legal 2","elemento legal 3"]}]}\n\n' +
+    '{"preguntas":[{"texto":"pregunta formal del oficial, máximo 2 oraciones, citando fechas y hechos reales del documento","estrategia":"elemento legal que evalúa, 1 oración","respuesta":"Yo [máximo 3 oraciones. SOLO hechos confirmados en el documento. Si un dato no está en el documento escribe exactamente: [No aparece en el expediente]]","claves":["elemento legal 1","elemento legal 2","elemento legal 3"]}]}\n\n' +
     'HISTORIA PRINCIPAL:\n' + textoHistoria +
     seccionTestigos;
 
@@ -499,7 +581,7 @@ async function generarDocumento() {
     marcarPaso(0);
     var textoHistoria = await leerArchivo(historiaFile);
     var palabras = textoHistoria.split(' ');
-    if (palabras.length > 3500) { textoHistoria = palabras.slice(0, 3500).join(' '); }
+    if (palabras.length > 1200) { textoHistoria = palabras.slice(0, 1200).join(' '); }
 
     var textoTestigos = '';
     if (testigosFiles.length > 0) {
@@ -510,7 +592,7 @@ async function generarDocumento() {
       }
       textoTestigos = textosTestigos.join('\n\n');
       var palabrasT = textoTestigos.split(' ');
-      if (palabrasT.length > 2000) { textoTestigos = palabrasT.slice(0, 2000).join(' '); }
+      if (palabrasT.length > 800) { textoTestigos = palabrasT.slice(0, 800).join(' '); }
     }
 
     // PASO 1 — Extraer fechas ANTES de generar preguntas (llamada separada)
@@ -531,6 +613,7 @@ async function generarDocumento() {
     // PASO 4 — Word
     marcarPaso(4);
     wordBlob = generarWord(todasLasPreguntas, testigosFiles.length > 0);
+    registrarActividad('SIMULACRO GENERADO — ' + (testigosFiles.length > 0 ? 'Con testigos' : 'Sin testigos'));
 
     if (testigosFiles.length > 0) {
       document.getElementById('resultSub').textContent = 'Tu simulacro incluye preguntas cruzadas con las declaraciones de ' + testigosFiles.length + ' testigo(s). Listo para practicar.';
@@ -606,6 +689,7 @@ function generarWord(preguntas, tieneTestigos) {
 
 function descargarWord() {
   if (!wordBlob) { alert('El documento aún no está listo.'); return; }
+  registrarActividad('DESCARGÓ Word');
   var url = URL.createObjectURL(wordBlob);
   var a = document.createElement('a');
   a.href = url;
@@ -657,6 +741,7 @@ async function regenerar() {
 // ─── PRÁCTICA ORAL ────────────────────────────────────────────────────────────
 function irAPractica() {
   if (!generatedQuestions.length) { alert('Primero genera tu simulacro.'); return; }
+  registrarActividad('INICIÓ práctica oral');
   respuestas = generatedQuestions.map(function() { return {transcripcion:'',evaluado:false,bien:'',mejorar:''}; });
   currentQ = 0;
   initPills();
