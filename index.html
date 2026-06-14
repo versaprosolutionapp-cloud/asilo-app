@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simulacro de Audiencia de Asilo | VersaPro Solution TX</title>
+<title>Simulador de entervista de Asilo | A digital service by VersaPro Solution TX LLC</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--navy:#0D1B2A;--navy-light:#1A2F47;--gold:#C9A84C;--gold-light:#E8C97A;--cream:#F8F4ED;--white:#FFFFFF;--text:#1A1A2E;--text-muted:#6B7280;--success:#2D6A4F;--success-bg:#D8F3DC;--border:#D4C9B5;--shadow:0 4px 24px rgba(13,27,42,0.12)}
@@ -175,20 +175,20 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 <div class="feature"><div class="feature-icon">⚖️</div><div><div class="feature-title">Estrategia legal incluida</div><div class="feature-desc">Cada pregunta incluye estrategia recomendada, respuesta modelo y elementos clave del derecho de asilo.</div></div></div>
 </div>
 <div class="price-box">
-<div class="price-amount">$50</div>
+<div class="price-amount">$49</div>
 <div class="price-label">PAGO ÚNICO · SIN SUSCRIPCIÓN</div>
 <div class="price-includes">✓ Documento Word con 8 preguntas personalizadas<br>✓ Preguntas cruzadas con declaraciones de testigos<br>✓ Simulacro oral · Correcciones ilimitadas</div>
 </div>
 <button class="btn-paypal" onclick="iniciarPago()">
 <span style="font-weight:800;font-style:italic"><span style="color:#003087">Pay</span><span style="color:#009cde">Pal</span></span>
-Pagar $50 con PayPal — Acceso inmediato
+Pagar $49 con PayPal — Acceso inmediato
 </button>
 <div class="demo-link"><button onclick="showScreen('screen-upload')">Ver demostración gratuita →</button></div>
 <div class="testimonial">
-<div class="testimonial-text">"Practiqué más de 30 veces antes de mi audiencia. El juez me preguntó exactamente las mismas cosas. Me aprobaron el asilo."</div>
+<div class="testimonial-text">"Practiqué más de 30 veces antes de mi entrevista de asilo."</div>
 <div class="testimonial-author">— M.R., venezolana, aprobada en Texas · 2024</div>
 </div>
-<p class="disclaimer">Herramienta de preparación educativa. No reemplaza la asesoría de un abogado de inmigración certificado. VersaPro Solution TX.</p>
+<p class="disclaimer">Herramienta de preparación educativa. No reemplaza la asesoría de un abogado de inmigración certificado. A digital service by VersaPro Solution TX.</p>
 </div>
 </div>
 
@@ -214,7 +214,7 @@ Pagar $50 con PayPal — Acceso inmediato
 
 <!-- Declaraciones de testigos -->
 <div class="upload-section-label">👥 Declaraciones de testigos <span class="optional">Opcional</span></div>
-<div class="info-box info-testigos"><p>Si tienes declaraciones escritas de testigos, súbelas aquí. La app generará preguntas de corroboración como las hace USCIS — cruzando tu historia con lo que dijeron tus testigos.</p></div>
+<div class="info-box info-testigos"><p>Si tienes declaraciones escritas de testigos, súbelas aquí. La app generará preguntas de segumiento basadas en tu historia USCIS — cruzando tu historia con lo que dijeron tus testigos.</p></div>
 <div class="upload-card testigos-card" id="uploadCardTestigos">
 <input type="file" id="fileInputTestigos" multiple accept=".docx,.pdf" onchange="handleTestigos(this)">
 <div class="upload-icon">👥</div>
@@ -416,7 +416,7 @@ function showScreen(id) {
 }
 
 function iniciarPago() {
-  var desc = encodeURIComponent('Simulacro Audiencia Asilo - VersaPro Solution TX');
+  var desc = encodeURIComponent('Simulacro Audiencia Asilo - A digital service by Versapro VersaPro Solution TX LLC');
   var returnUrl = encodeURIComponent(window.location.href + '?paid=1');
   var url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=' + PAYPAL_EMAIL + '&amount=' + PAYPAL_PRICE + '&currency_code=USD&item_name=' + desc + '&return=' + returnUrl + '&no_shipping=1';
   window.open(url, '_blank');
@@ -667,10 +667,10 @@ function generarWord(preguntas, tieneTestigos) {
     html += '<div class="pregunta">&ldquo;' + (p.texto || '') + '&rdquo;</div>';
 
     if (p.estrategia) {
-      html += '<div class="bloque estrategia"><div class="label">Estrategia Legal</div>' + p.estrategia + '</div>';
+      html += '<div class="bloque estrategia"><div class="label">Practica guiada incluida</div>' + p.estrategia + '</div>';
     }
     if (p.respuesta) {
-      html += '<div class="bloque respuesta"><div class="label">Respuesta Modelo (en tus propias palabras)</div>' + p.respuesta + '</div>';
+      html += '<div class="bloque respuesta"><div class="label">Respuesta modelo (en tus propias palabras)</div>' + p.respuesta + '</div>';
     }
     if (p.claves && p.claves.length) {
       html += '<div class="bloque claves"><div class="label">Elementos Legales a Cubrir</div><ul style="margin:4px 0;padding-left:18px">';
@@ -681,7 +681,7 @@ function generarWord(preguntas, tieneTestigos) {
     html += '<div class="linea-escr"></div><div class="linea-escr"></div><div class="linea-escr"></div></div>';
   });
 
-  html += '<div class="pie">Herramienta educativa de preparación. No reemplaza asesoría legal certificada. VersaPro Solution TX.</div>';
+  html += '<div class="pie">Esta herramienta es educativa y de practica oral. No ofrece asesoria legal, no determina elegibilidad para asilo y no reemplaza a un abogado de inmigracion. A digital service by VersaPro Solution TX LLC.</div>';
   html += '</body></html>';
 
   return new Blob([html], {type: 'application/vnd.ms-word;charset=utf-8'});
@@ -693,7 +693,7 @@ function descargarWord() {
   var url = URL.createObjectURL(wordBlob);
   var a = document.createElement('a');
   a.href = url;
-  a.download = 'Preparacion_Audiencia_Asilo.doc';
+  a.download = 'Preparacion_Entrevista_Asilo.doc';
   a.click();
   URL.revokeObjectURL(url);
 }
