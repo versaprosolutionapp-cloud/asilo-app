@@ -713,7 +713,7 @@ async function regenerar() {
     marcarPaso(0);
     var texto = await leerArchivo(correctionFile);
     var palabras = texto.split(' ');
-    if (palabras.length > 1200) { texto = palabras.slice(0, 1200).join(' '); }
+    if (palabras.length > 3500) { texto = palabras.slice(0, 3500).join(' '); }
 
     marcarPaso(1);
     fechasClave = await extraerFechasYEventos(texto);
