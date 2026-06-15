@@ -275,8 +275,8 @@ Pagar $49 con PayPal — Acceso inmediato
 </div>
 <div class="action-card">
 <div class="action-num">Paso 3</div>
-<div class="action-title">🎙️ Practica tu audiencia oral</div>
-<div class="action-desc">Simula la audiencia completa con voz. Practica cuantas veces necesites.</div>
+<div class="action-title">🎙️ Practica tu entrevista oral</div>
+<div class="action-desc">Simula la entrevista completa con voz. Practica cuantas veces necesites.</div>
 <button class="btn-gold" onclick="irAPractica()">▶ Iniciar simulacro oral</button>
 </div>
 </div>
@@ -286,7 +286,7 @@ Pagar $49 con PayPal — Acceso inmediato
 <div id="screen-practice" class="screen">
 <div class="practice-inner">
 <div class="practice-header">
-<div><h2>Simulacro de Audiencia</h2><p id="pracLabel">Pregunta 1 de 8</p></div>
+<div><h2>Simulacro de Entrevista</h2><p id="pracLabel">Pregunta 1 de 8</p></div>
 <div class="progress-pills" id="pills"></div>
 </div>
 <div class="question-card">
@@ -416,7 +416,7 @@ function showScreen(id) {
 }
 
 function iniciarPago() {
-  var desc = encodeURIComponent('Simulacro Audiencia Asilo - A digital service by Versapro VersaPro Solution TX LLC');
+  var desc = encodeURIComponent('Simulacro de Entrevista de Asilo - A digital service by Versapro VersaPro Solution TX LLC');
   var returnUrl = encodeURIComponent(window.location.href + '?paid=1');
   var url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=' + PAYPAL_EMAIL + '&amount=' + PAYPAL_PRICE + '&currency_code=USD&item_name=' + desc + '&return=' + returnUrl + '&no_shipping=1';
   window.open(url, '_blank');
@@ -545,7 +545,7 @@ async function llamarLote(textoHistoria, textoTestigos, lote) {
     'FECHAS Y EVENTOS CLAVE IDENTIFICADOS EN EL DOCUMENTO (úsalos obligatoriamente en las preguntas):\n' +
     fechasClave +
     '\n\n─────────────────────────────────────\n' +
-    'TAREA: Genera EXACTAMENTE 4 preguntas de audiencia de asilo, UNA por cada categoría.\n' +
+    'TAREA: Genera EXACTAMENTE 4 preguntas de entrevista de asilo, UNA por cada categoría.\n' +
     'Cada pregunta DEBE citar las fechas y eventos listados arriba.\n\n' +
     'CATEGORÍAS:\n' +
     cats.map(function(c, i) { return (i+1) + '. ' + c; }).join('\n') +
@@ -650,7 +650,7 @@ function generarWord(preguntas, tieneTestigos) {
   html += '.testigo-badge{font-size:9pt;color:#5B21B6;margin-left:6px}';
   html += '.pie{margin-top:40px;padding-top:16px;border-top:1px solid #ddd;font-size:9pt;color:#888;text-align:center}';
   html += '</style></head><body>';
-  html += '<h1>PREPARACIÓN PARA AUDIENCIA DE ASILO</h1>';
+  html += '<h1>PREPARACIÓN PARA ENTREVISTA DE ASILO</h1>';
   html += '<div class="subtitulo">Generado el ' + fechaHoy;
   if (tieneTestigos) html += ' &nbsp;·&nbsp; <strong>Incluye preguntas de corroboración con testigos</strong>';
   html += '</div>';
