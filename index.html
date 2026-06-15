@@ -627,7 +627,7 @@ async function generarDocumento() {
     registrarActividad('SIMULACRO GENERADO — ' + (testigosFiles.length > 0 ? 'Con testigos' : 'Sin testigos'));
 
     if (testigosFiles.length > 0) {
-      document.getElementById('resultSub').textContent = 'Tu simulacro incluye preguntas cruzadas con las declaraciones de ' + testigosFiles.length + ' testigo(s). Listo para practicar.';
+      document.getElementById('resultSub').textContent = 'Tu simulacro incluye preguntas de seguimiento basadas en tu historia y en declaraciones de ' + testigosFiles.length + ' testigo(s). Listo para practicar.';
     }
 
     setTimeout(function() { showScreen('screen-result'); }, 800);
@@ -663,7 +663,7 @@ function generarWord(preguntas, tieneTestigos) {
   html += '</style></head><body>';
   html += '<h1>PREPARACIÓN PARA ENTREVISTA DE ASILO</h1>';
   html += '<div class="subtitulo">Generado el ' + fechaHoy;
-  if (tieneTestigos) html += ' &nbsp;·&nbsp; <strong>Incluye preguntas de corroboración con testigos</strong>';
+  if (tieneTestigos) html += ' &nbsp;·&nbsp; <strong>Incluye preguntas de seguimiento basadas en las declaraciones de tus testigos</strong>';
   html += '</div>';
 
   preguntas.forEach(function(p, i) {
@@ -692,7 +692,7 @@ function generarWord(preguntas, tieneTestigos) {
     html += '<div class="linea-escr"></div><div class="linea-escr"></div><div class="linea-escr"></div></div>';
   });
 
-  html += '<div class="pie">Herramienta educativa de preparación. No reemplaza asesoría legal certificada. VersaPro Solution TX.</div>';
+  html += '<div class="pie">Herramienta educativa de preparación. No reemplaza asesoría legal de inmigración o representante autorizado. A digital service by VersaPro Solution TX.</div>';
   html += '</body></html>';
 
   return new Blob([html], {type: 'application/vnd.ms-word;charset=utf-8'});
