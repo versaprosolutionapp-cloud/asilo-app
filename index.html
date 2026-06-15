@@ -214,7 +214,7 @@ Pagar $50 con PayPal — Acceso inmediato
 
 <!-- Declaraciones de testigos -->
 <div class="upload-section-label">👥 Declaraciones de testigos <span class="optional">Opcional</span></div>
-<div class="info-box info-testigos"><p>Si tienes declaraciones escritas de testigos, súbelas aquí. La app generará preguntas de corroboración como las hace USCIS — cruzando tu historia con lo que dijeron tus testigos.</p></div>
+<div class="info-box info-testigos"><p>Si tienes declaraciones escritas de testigos, súbelas aquí. La app generará preguntas de práctica basadas en tu historia y en sus declaraciones de testigos.</p></div>
 <div class="upload-card testigos-card" id="uploadCardTestigos">
 <input type="file" id="fileInputTestigos" multiple accept=".docx,.pdf" onchange="handleTestigos(this)">
 <div class="upload-icon">👥</div>
@@ -416,7 +416,7 @@ function showScreen(id) {
 }
 
 function iniciarPago() {
-  var desc = encodeURIComponent('Simulacro de Entrevista de Asilo - VersaPro Solution TX');
+  var desc = encodeURIComponent('Simulacro de Entrevista de Asilo - VersaPro Solution TX LLC');
   var returnUrl = encodeURIComponent(window.location.href + '?paid=1');
   var url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=' + PAYPAL_EMAIL + '&amount=' + PAYPAL_PRICE + '&currency_code=USD&item_name=' + desc + '&return=' + returnUrl + '&no_shipping=1';
   window.open(url, '_blank');
