@@ -197,11 +197,11 @@ Pagar $49 con PayPal — Acceso inmediato.
 <div class="upload-inner">
 <div class="step-badge">✓ Paso 1 de 2</div>
 <h2 class="step-title">Sube tus documentos</h2>
-<p class="step-sub">Sube tu historia principal y, si los tienes, las declaraciones de tus testigos. La IA los analiza juntos para un simulacro más completo.</p>
+<p class="step-sub">Sube tu historia principal y, si los tienes, las declaraciones de tus testigos. La App usará estos documentos para generar un simulacro personalizado de práctica.</p>
 
 <!-- Historia principal -->
 <div class="upload-section-label">📄 Historia principal del caso <span class="required">Obligatorio</span></div>
-<div class="info-box"><p>Tu declaración principal de asilo (I-589 o historia escrita). Formatos: Word (.docx) o PDF.</p></div>
+<div class="info-box"><p>Tu declaración principal de asilo, historia escrita. Formatos: Word (.docx) o PDF.</p></div>
 <div class="upload-card" id="uploadCard">
 <input type="file" id="fileInput" accept=".docx,.pdf" onchange="handleHistoria(this)">
 <div class="upload-icon">📁</div>
@@ -225,7 +225,7 @@ Pagar $49 con PayPal — Acceso inmediato.
 
 <hr class="divider">
 
-<div class="info-box info-warn"><p><strong>Importante:</strong> Después de recibir tu Word, revísalo con tu declaración original. Si hay errores, corrígelos y sube el Word corregido para regenerar.</p></div>
+<div class="info-box info-warn"><p><strong>Importante:</strong> Después de recibir tu Word, revísalo junto con tu declaración original. Si encuentras errores, corrígelos y vuelve a subir el documento corregido para regenerar una nueva versión.</p></div>
 <button class="btn-primary" id="btnGenerar" onclick="generarDocumento()" disabled>⚡ Generar mi simulacro personalizado</button>
 <button class="btn-secondary" onclick="showScreen('screen-landing')">← Volver</button>
 </div>
