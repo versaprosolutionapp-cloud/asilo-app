@@ -39,11 +39,11 @@ module.exports = async function handler(req, res) {
         if (codigoSheet === codigo.trim().toUpperCase()) {
           const activo = (fila[6] || '').toLowerCase();
           if (activo === 'no') {
-            return res.status(200).json({ valido: false, motivo: 'Código desactivado. Contacta a digital service by VersaPro Solution TX LLC.' });
+            return res.status(200).json({ valido: false, motivo: 'Código desactivado. Contacta a  VersaPro para solicitar acceso.' });
           }
           const fechaVence = fila[5] ? new Date(fila[5]) : null;
           if (fechaVence && hoy > fechaVence) {
-            return res.status(200).json({ valido: false, motivo: 'Tu acceso venció el ' + fila[5] + '. Contacta a digital service by VersaPro Solution TX LLC para renovar.' });
+            return res.status(200).json({ valido: false, motivo: 'Tu acceso venció el ' + fila[5] + '. Contacta a VersaPro para renovar.' });
           }
           const fechaHora = new Date().toLocaleString('es-US', { timeZone: 'America/Chicago' });
           await sheets.spreadsheets.values.append({
