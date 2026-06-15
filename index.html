@@ -402,7 +402,7 @@ Genera:
 14. Las preguntas y respuestas deben ser CORTAS y DIRECTAS — máximo 3 oraciones cada una.
 15. La respuesta modelo debe reflejar SOLO lo que el documento confirma, nada más.
 
-OUTPUT: Respondes ÚNICAMENTE con JSON válido, sin backticks, sin texto antes ni después del JSON.`;
+OUTPUT: Respondes ÚNICAMENTE con JSON válido, sin backticks, sin texto antes, sin texto después, sin explicaciones. El JSON debe cerrar correctamente con }} al final.Si el contenido es largo, acórtalo pero cierra el JSON correctamente.
 
 // ─── ESTADO GLOBAL ────────────────────────────────────────────────────────────
 let currentQ = 0;
