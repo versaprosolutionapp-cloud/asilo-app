@@ -598,16 +598,14 @@ async function generarDocumento() {
     var palabras = textoHistoria.split(' ');
     if (palabras.length > 3500) { textoHistoria = palabras.slice(0, 3500).join(' '); }
 
-    var textoTestigos = '';
+  var textoTestigos = '';
     if (testigosFiles.length > 0) {
-      var textosTestigos = [];
+      var textosTestigosRaw = [];
       for (var i = 0; i < testigosFiles.length; i++) {
         var t = await leerArchivo(testigosFiles[i]);
-        textosTestigos.push(t);
+        textosTestigosRaw.push(t);
       }
-      textoTestigos = textosTestigos.join('\n\n');
-      var palabrasT = textoTestigos.split(' ');
-      if (palabrasT.length > 2000) { textoTestigos = palabrasT.slice(0, 2000).join(' '); }
+      textoTestigos = await resumirTestigos(textosTestigosRaw);
     }
 
     // PASO 1 — Extraer fechas ANTES de generar preguntas (llamada separada)
