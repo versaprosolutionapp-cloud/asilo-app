@@ -726,7 +726,7 @@ async function regenerar() {
     marcarPaso(0);
     var texto = await leerArchivo(correctionFile);
     var palabras = texto.split(' ');
-    if (palabras.length > 3500) { texto = palabras.slice(0, 3500).join(' '); }
+    if (palabras.length > 5000) { texto = palabras.slice(0, 5000).join(' '); }
 
     marcarPaso(1);
     fechasClave = await extraerFechasYEventos(texto);
