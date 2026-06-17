@@ -565,7 +565,7 @@ async function llamarLote(textoHistoria, textoTestigos, lote) {
     'CATEGORÍAS:\n' +
     cats.map(function(c, i) { return (i+1) + '. ' + c; }).join('\n') +
     '\n\nFORMATO DE RESPUESTA — JSON válido, sin backticks:\n' +
-    '{"preguntas":[{"texto":"UNA sola pregunta directa, maximo 15 palabras, como la haria un oficial de USCIS en voz alta", "estrategia":"elemento legal que evalúa, 1 oración","respuesta":"Yo [máximo 3 oraciones. SOLO hechos confirmados en el documento. Si un dato no está en el documento escribe exactamente: [No aparece en el expediente]]","claves":["elemento legal 1","elemento legal 2","elemento legal 3"]}]}\n\n' +
+    '{"preguntas":[{"texto":"UNA sola pregunta directa, maximo 15 palabras, como la haria un oficial de USCIS en voz alta", "estrategia":"elemento legal que evalúa, 1 oración","respuesta":"Yo [4 a 6 oraciones. Cronologia con fechas excactas, nombres de testigos, lugares y frases especificas del documento. SOLO hechos confirmados en el documento. Si un dato no está en el documento escribe exactamente: [No aparece en el expediente]]","claves":["elemento legal 1","elemento legal 2","elemento legal 3"]}]}\n\n' +
     'HISTORIA PRINCIPAL:\n' + textoHistoria +
     seccionTestigos;
 
