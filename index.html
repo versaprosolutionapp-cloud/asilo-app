@@ -625,17 +625,18 @@ function generarWord(preguntas, tieneTestigos) {
   if (tieneTestigos) {
     secOffset = 2;
     html += '<h2>SECCIÓN 2: SUS TESTIGOS</h2>';
-    if (cronologiaData && cronologiaData.personas && cronologiaData.personas.length) {
+    if (resumenTestigosData && resumenTestigosData.length) {
       html += '<table><tr><th>Testigo</th><th>Relación</th><th>Qué corrobora</th><th>Evidencia</th></tr>';
-      cronologiaData.personas.forEach(function(nombre) {
-        html += '<tr><td>'+nombre+'</td><td>—</td><td>Testigo identificado en el expediente</td><td>Declaración jurada firmada</td></tr>';
+      resumenTestigosData.forEach(function(t) {
+        var queCorrobora = (t.hechos && t.hechos.length) ? t.hechos[0] : 'Testigo del caso';
+        if (t.hechos && t.hechos.length > 1) queCorrobora += '. ' + t.hechos[1];
+        html += '<tr><td>'+(t.nombre||'—')+'</td><td>'+(t.relacion||'—')+'</td><td>'+queCorrobora+'</td><td>Declaración jurada firmada</td></tr>';
       });
       html += '</table>';
     } else {
       html += '<p style="color:#888;font-size:11pt;padding:10px">Ver preguntas de corroboración para detalle de testigos.</p>';
     }
-  }
-
+    
   // ── SECCIÓN CRONOLOGÍA ───────────────────────────────────────────────────
   var secCron = 1 + secOffset;
   html += '<h2>SECCIÓN '+secCron+': CRONOLOGÍA DE FECHAS CLAVE</h2>';
