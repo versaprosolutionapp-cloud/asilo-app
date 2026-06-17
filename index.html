@@ -445,7 +445,7 @@ async function resumirTestigos(textosTestigos) {
       var data = await response.json();
       var t = data.content[0].text.replace(/```json/g,'').replace(/```/g,'').trim();
       var parsed = JSON.parse(t);
-      resumenTestigoData.push(parsed);
+      resumenTestigosData.push(parsed);
       var resumen = 'TESTIGO: '+(parsed.nombre||'Sin nombre');
       resumen += ' | RELACION: '+(parsed.relacion||'No especificada');
       if (parsed.hechos && parsed.hechos.length) resumen += ' | HECHOS: '+parsed.hechos.join('; ');
