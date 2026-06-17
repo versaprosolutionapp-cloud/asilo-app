@@ -435,6 +435,7 @@ async function extraerFechasYEventos(textoHistoria) {
 // ─── RESUMIR TESTIGOS ─────────────────────────────────────────────────────────
 async function resumirTestigos(textosTestigos) {
   var resumenFinal = [];
+  resumenTestigosData = [];
   for (var i = 0; i < textosTestigos.length; i++) {
     var texto = textosTestigos[i];
     var prompt = 'Lee esta declaracion de testigo y extrae UNICAMENTE: 1. Nombre del testigo. 2. Que presencio o sabe del caso. 3. Fechas o eventos especificos que menciona. 4. Su relacion con el solicitante. Devuelve SOLO JSON valido sin backticks: {"nombre":"nombre del testigo","relacion":"relacion con solicitante","hechos":["hecho 1","hecho 2"],"fechas":["fecha 1"]}\n\nDECLARACION:\n'+texto.slice(0,3000);
@@ -443,6 +444,7 @@ async function resumirTestigos(textosTestigos) {
       var data = await response.json();
       var t = data.content[0].text.replace(/```json/g,'').replace(/```/g,'').trim();
       var parsed = JSON.parse(t);
+      resumenTestigoData.push(parsed);
       var resumen = 'TESTIGO: '+(parsed.nombre||'Sin nombre');
       resumen += ' | RELACION: '+(parsed.relacion||'No especificada');
       if (parsed.hechos && parsed.hechos.length) resumen += ' | HECHOS: '+parsed.hechos.join('; ');
