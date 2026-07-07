@@ -4,8 +4,8 @@ module.exports = async function handler(req, res) {
   }
   try {
     const body = {
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 4000,
+      model: 'claude-sonnet-4-6',
+      max_tokens: 8000,
       messages: req.body.messages
     };
     if (req.body.system) {
