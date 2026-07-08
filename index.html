@@ -431,8 +431,32 @@ async function llamarAPI(prompt) {
 // ─── PASO 1: BARRIDO EXHAUSTIVO DE LA HISTORIA ────────────────────────────────
 // Lee la historia COMPLETA y extrae TODOS los hechos numerados, sin omitir ninguno.
 async function barridoHistoria(textoHistoria) {
-  var prompt = 'TAREA: Haz un barrido exhaustivo, linea por linea, de la siguiente historia de asilo USCIS. Extrae TODOS los hechos de persecucion y violencia sin omitir NINGUNO: amenazas verbales o armadas, ataques fisicos, agresiones, intimidaciones, persecuciones, seguimientos, panfletos amenazantes, allanamientos, detenciones, secuestros o intentos, retiro de contratos o trabajos por razones politicas, denuncias presentadas, respuestas o inaccion de las autoridades, perdidas economicas, y cualquier otro incidente de violencia o persecucion relevante para un caso de asilo. Tambien extrae el contexto politico del solicitante y la fecha de salida del pais.\n\nREGLAS CRITICAS DE FECHAS (lee con cuidado):\n1. Usa la fecha EXACTAMENTE como aparece en el documento. PROHIBIDO inventar o adivinar un mes que el documento no dice.\n2. Si el documento dice una referencia como "finales de 2015", "a fin de ano", "principios de 2014", "mediados de 2016": CONSERVA esa referencia literal en el campo fecha (ej: "finales de 2015"). NO la conviertas en un mes especifico inventado.\n3. Para fecha_orden (formato YYYY-MM, solo para ordenar): si el documento dice "finales de ano" usa MM=12, "principios de ano" usa MM=01, "mediados de ano" usa MM=06. Si solo hay ano sin pista, usa ANO-06. Si hay mes exacto, usalo.\n4. Cada fecha debe corresponder EXACTAMENTE al hecho que describe. No mezcles fechas entre hechos.\n\nREGLAS DE CONTENIDO:\n5. TODO el texto EN ESPANOL. Si el original esta en ingles, traduce todo incluyendo lugares, actores y frases textuales. Nunca dejes texto en ingles.\n6. La descripcion debe ser RESUMIDA pero EXPLICITA: UNA sola oracion concisa que capture lo esencial (que tipo de violencia o persecucion, quien la cometio, contra quien). Sin relleno, pero sin perder el hecho importante.\n7. Todos los campos son OBLIGATORIOS con contenido real (salvo frase_textual que puede ser vacia). Si un dato no aparece: lugar y actores usan "No especificado".\n8. NUNCA uses saltos de linea dentro de un campo.\n9. PROHIBIDO inventar hechos o datos que no esten en el documento.\n\nDevuelve SOLO JSON valido sin backticks:\n{"contexto_politico":"2-3 oraciones en espanol del perfil politico del solicitante","hechos":[{"id":"H1","fecha":"fecha o referencia temporal literal del documento, en espanol","fecha_orden":"YYYY-MM","lugar":"lugar o No especificado","actores":"quienes participaron o No especificado","descripcion":"UNA oracion concisa y explicita: tipo de violencia/persecucion, quien, contra quien","frase_textual":"cita corta traducida al espanol o cadena vacia"}],"salida_pais":"fecha de salida en palabras en espanol","personas_mencionadas":["Nombre Completo — rol en el caso"]}\n\nHISTORIA COMPLETA:\n' + textoHistoria;
+  var prompt = 'TAREA: Haz un barrido exhaustivo, linea por linea, de la siguiente historia de asilo USCIS. Extrae TODOS los hechos de persecucion y violencia sin omitir NINGUNO: amenazas verbales o armadas, ataques fisicos, agresiones, intimidaciones, persecuciones, seguimientos, panfletos amenazantes, allanamientos, detenciones, secuestros o intentos, retiro de contratos o trabajos por razones politicas, denuncias presentadas, respuestas o inaccion de las autoridades, perdidas economicas, y cualquier otro incidente de violencia o persecucion relevante para un caso de asilo. Tambien extrae el contexto politico del solicitante y la fecha de salida del pais.\n\n══ REGLAS DE FECHAS — MAXIMA PRIORIDAD, LEE CADA UNA ══\nA. Para CADA hecho, primero COPIA LITERALMENTE del documento la frase exacta que indica cuando ocurrio, en el campo "fecha_texto_original" (ej: "durante finales de noviembre de 2015", "el 11 de noviembre de 2016", "a mediados de mayo"). Copia palabra por palabra, sin cambiar nada.\nB. Luego, en el campo "fecha", reescribe esa misma fecha de forma legible EN ESPANOL, SIN alterar el mes ni el ano. Si el original dice noviembre, la fecha DICE noviembre. PROHIBIDO cambiar el mes.\nC. TABLA DE CONVERSION para fecha_orden (formato YYYY-MM, solo para ordenar cronologicamente). Aplica exactamente:\n   - Mes explicito (enero..diciembre o numero de mes) → usa ese mes. "noviembre de 2015" → 2015-11\n   - "finales de [mes]" o "a fin de [mes]" → ese mismo mes. "finales de noviembre 2015" → 2015-11\n   - "principios de [mes]" o "comienzos de [mes]" → ese mismo mes. "principios de mayo 2014" → 2014-05\n   - "mediados de [mes]" → ese mismo mes. "mediados de mayo" → mes 05\n   - "finales de [ano]" / "fin de ano" (SIN mes) → ANO-12\n   - "principios de [ano]" / "comienzos de [ano]" (SIN mes) → ANO-01\n   - "mediados de [ano]" (SIN mes) → ANO-06\n   - Fecha numerica DD/MM/AAAA o MM/DD/AAAA: si el documento esta en ingles el primer numero es MES; si esta en espanol el primer numero es DIA. Deduce el mes correcto.\n   - Solo ano sin ninguna pista → ANO-06\nD. La regla clave: el MES en "fecha" y el MES en "fecha_orden" SIEMPRE deben coincidir. Si escribes "noviembre" en fecha, fecha_orden termina en -11. NUNCA en -05.\nE. Cada fecha pertenece EXACTAMENTE al hecho que describe. No arrastres la fecha de un hecho a otro.\nF. Ningun evento de amenaza, violencia o persecucion puede quedar sin fecha. Si el documento no da fecha explicita para uno, infierela por el contexto de los hechos vecinos y en "fecha" escribe "aproximadamente [referencia]".\n\n══ REGLAS DE CONTENIDO ══\n1. TODO el texto EN ESPANOL. Si el original esta en ingles, traduce todo. Nunca dejes texto en ingles.\n2. La descripcion: UNA sola oracion concisa y explicita (que tipo de violencia/persecucion, quien la cometio, contra quien). Sin relleno.\n3. Campos obligatorios con contenido real (salvo frase_textual, que puede ser vacia). lugar y actores usan "No especificado" si no aparecen.\n4. NUNCA saltos de linea dentro de un campo. PROHIBIDO inventar hechos.\n\nDevuelve SOLO JSON valido sin backticks:\n{"contexto_politico":"2-3 oraciones en espanol","hechos":[{"id":"H1","fecha_texto_original":"frase EXACTA del documento sobre cuando ocurrio","fecha":"misma fecha legible en espanol, mismo mes y ano","fecha_orden":"YYYY-MM","lugar":"lugar o No especificado","actores":"quienes o No especificado","descripcion":"UNA oracion concisa: tipo de violencia, quien, contra quien","frase_textual":"cita corta traducida o cadena vacia"}],"salida_pais":"fecha de salida en palabras en espanol","personas_mencionadas":["Nombre Completo — rol"]}\n\nHISTORIA COMPLETA:\n' + textoHistoria;
   return await llamarAPI(prompt);
+}
+
+// ─── PASO 1B: VERIFICACION DEDICADA DE FECHAS ─────────────────────────────────
+// Segundo paso que SOLO revisa fechas: compara fecha vs fecha_texto_original y corrige.
+async function verificarFechas(hechos) {
+  if (!hechos || !hechos.length) return hechos;
+  var lista = hechos.map(function(h){
+    return h.id+' | texto original: "'+(h.fecha_texto_original||'')+'" | fecha asignada: "'+(h.fecha||'')+'" | orden asignado: '+(h.fecha_orden||'');
+  }).join('\n');
+  var prompt = 'Eres un verificador ESTRICTO de fechas. Abajo hay hechos con la frase de fecha ORIGINAL del documento, la fecha que se le asigno, y el codigo de orden YYYY-MM. Tu unica tarea: revisar cada uno y CORREGIR cualquier inconsistencia.\n\nREGLAS:\n1. La "fecha" y el "fecha_orden" deben reflejar EXACTAMENTE el mes y ano de la frase original. Si el original dice "finales de noviembre de 2015", la fecha correcta es "finales de noviembre de 2015" y el orden es 2015-11. Si hay discrepancia (ej. dice noviembre pero pusieron 2015-05), CORRIGELO a 2015-11.\n2. Conversion: "finales/principios/mediados de [MES]" mantiene ese mes. "finales de [ANO]" sin mes = ANO-12; "principios de [ANO]" = ANO-01; "mediados de [ANO]" = ANO-06.\n3. El mes en "fecha" y el mes en "fecha_orden" SIEMPRE coinciden.\n4. Si el texto original esta vacio, deja la fecha como esta.\n5. Todo en espanol.\n\nDevuelve SOLO JSON valido sin backticks, con TODOS los hechos (corregidos o iguales):\n{"correcciones":[{"id":"H1","fecha":"fecha correcta en espanol","fecha_orden":"YYYY-MM"}]}\n\nHECHOS A VERIFICAR:\n'+lista;
+  try {
+    var out = await llamarAPI(prompt);
+    if (out && out.correcciones) {
+      var mapa = {};
+      out.correcciones.forEach(function(c){ mapa[c.id] = c; });
+      hechos.forEach(function(h){
+        if (mapa[h.id]) {
+          if (mapa[h.id].fecha) h.fecha = mapa[h.id].fecha;
+          if (mapa[h.id].fecha_orden) h.fecha_orden = mapa[h.id].fecha_orden;
+        }
+      });
+    }
+  } catch(e) { console.error('Verificacion de fechas:', e); }
+  return hechos;
 }
 
 // ─── PASO 2: BARRIDO DE CADA TESTIGO + CRUCE CON LA HISTORIA ──────────────────
@@ -550,6 +574,10 @@ async function generarDocumento() {
     // PASO 1 — Barrido exhaustivo de la historia
     marcarPaso(1);
     expedienteData = await barridoHistoria(textoHistoria);
+    // PASO 1B — Verificacion dedicada de fechas (corrige inconsistencias)
+    if (expedienteData && expedienteData.hechos) {
+      expedienteData.hechos = await verificarFechas(expedienteData.hechos);
+    }
 
     // PASO 2 — Barrido de cada testigo + cruce con la historia
     marcarPaso(2);
@@ -759,6 +787,9 @@ async function regenerar() {
     if (palabras.length > 15000) { texto = palabras.slice(0,15000).join(' '); }
     marcarPaso(1);
     expedienteData = await barridoHistoria(texto);
+    if (expedienteData && expedienteData.hechos) {
+      expedienteData.hechos = await verificarFechas(expedienteData.hechos);
+    }
     marcarPaso(2);
     testigosData = [];
     marcarPaso(3);
