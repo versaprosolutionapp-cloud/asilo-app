@@ -176,7 +176,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 <div class="price-box">
 <div class="price-amount">$49</div>
 <div class="price-label">Pago único · Sin suscripción</div>
-<div class="price-includes">✓ 8 preguntas con historia sola — 10 preguntas con testigos<br>✓ Análisis legal INA §208 y cronología completa de hechos<br>✓ Simulacro oral y ajustes durante el periodo de acceso</div>
+<div class="price-includes">✓ 8 preguntas personalizadas de su historia<br>✓ Análisis legal INA §208 y cronología completa de hechos<br>✓ Simulacro oral y ajustes durante el periodo de acceso</div>
 </div>
 <button class="btn-paypal" onclick="iniciarPago()">
 <span style="font-weight:800;font-style:italic"><span style="color:#003087">Pay</span><span style="color:#009cde">Pal</span></span>
@@ -208,7 +208,7 @@ Pagar $49 con PayPal — Acceso inmediato.
 </div>
 <hr class="divider">
 <div class="upload-section-label">👥 Declaraciones de testigos <span class="optional">Opcional</span></div>
-<div class="info-box info-testigos"><p>Si tienes declaraciones escritas de testigos, súbelas aquí. Con testigos recibirás <strong>10 preguntas</strong> (2 adicionales de corroboración cruzada). Sin testigos: <strong>8 preguntas</strong>.</p></div>
+<div class="info-box info-testigos"><p>Si tienes declaraciones escritas de testigos, súbelas aquí. Se usan como respaldo cruzado con tu historia — el documento siempre tiene <strong>8 preguntas</strong> basadas en tu historia principal.</p></div>
 <div class="upload-card testigos-card" id="uploadCardTestigos">
 <input type="file" id="fileInputTestigos" multiple accept=".docx,.pdf" onchange="handleTestigos(this)">
 <div class="upload-icon">👥</div>
@@ -234,7 +234,7 @@ Pagar $49 con PayPal — Acceso inmediato.
 <div class="proc-step"><div class="proc-dot" id="dot1"></div><div class="proc-text" id="step1">Barrido exhaustivo de la historia, hecho por hecho...</div></div>
 <div class="proc-step"><div class="proc-dot" id="dot2"></div><div class="proc-text" id="step2">Analizando testigos y cruzando con la historia...</div></div>
 <div class="proc-step"><div class="proc-dot" id="dot3"></div><div class="proc-text" id="step3">Generando preguntas 1–4...</div></div>
-<div class="proc-step"><div class="proc-dot" id="dot4"></div><div class="proc-text" id="step4">Generando preguntas 5–8 y corroboración...</div></div>
+<div class="proc-step"><div class="proc-dot" id="dot4"></div><div class="proc-text" id="step4">Generando preguntas 5–8...</div></div>
 <div class="proc-step"><div class="proc-dot" id="dot5"></div><div class="proc-text" id="step5">Análisis legal, cronología y documento Word...</div></div>
 </div>
 </div>
@@ -343,7 +343,7 @@ async function registrarActividad(detalle) {
 }
 
 // ─── SYSTEM PROMPT (reglas estrictas anti-invencion) ──────────────────────────
-var SYSTEM_PROMPT = 'Eres un oficial senior de asilo de USCIS y un analista legal experto en INA 208. IDIOMA: Respondes EXCLUSIVAMENTE en espanol. TRADUCCION TOTAL: Aunque el expediente original este en ingles, TODO tu output va en espanol perfecto. Traduce absolutamente todo: descripciones, lugares, nombres de instituciones, cargos y frases textuales. JAMAS dejes una sola palabra, linea o frase en ingles en tu respuesta. Si citas una frase textual que estaba en ingles, tradúcela al espanol. REGLA DE ORO ANTI-INVENCION: Trabajas UNICAMENTE con los hechos del expediente que se te proporciona. PROHIBIDO absolutamente inventar, suponer, agregar o embellecer cualquier dato, fecha, nombre, lugar o evento que no este textualmente en el material proporcionado. Si un dato no aparece, escribes exactamente: [No aparece en el expediente]. REGLA DE FECHAS: El documento puede estar en ingles o espanol. Fechas escritas en palabras en ingles como November 11 2016: traducelas como 11 de noviembre de 2016. Fechas numericas como 12/08/2016: si el documento esta en ingles el primer numero es el MES (8 de diciembre de 2016); si esta en espanol el primer numero es el DIA. En el output SIEMPRE escribe las fechas en palabras en espanol, nunca en formato numerico. REGLA DE CALIDAD: Preguntas cortas, formales y precisas como las haria un oficial de USCIS real en voz alta. Respuestas modelo en primera persona, de 5 a 8 oraciones, profesionales, claras, concisas, en orden cronologico, citando fechas exactas, nombres completos, lugares y frases textuales del expediente. OUTPUT: Responde UNICAMENTE con JSON valido, sin backticks, sin texto antes ni despues.';
+var SYSTEM_PROMPT = 'Eres un oficial senior de asilo de USCIS y un analista legal experto en INA 208. IDIOMA: Respondes EXCLUSIVAMENTE en espanol. TRADUCCION TOTAL: Aunque el expediente original este en ingles, TODO tu output va en espanol perfecto. Traduce absolutamente todo: descripciones, lugares, nombres de instituciones, cargos y frases textuales. JAMAS dejes una sola palabra, linea o frase en ingles en tu respuesta. Si citas una frase textual que estaba en ingles, tradúcela al espanol. REGLA DE ORO ANTI-INVENCION: Trabajas UNICAMENTE con los hechos del expediente que se te proporciona. PROHIBIDO absolutamente inventar, suponer, agregar o embellecer cualquier dato, fecha, nombre, lugar o evento que no este textualmente en el material proporcionado. Si un dato no aparece, escribes exactamente: [No aparece en el expediente]. REGLA DE FECHAS: El documento puede estar en ingles o espanol. Fechas escritas en palabras en ingles como November 11 2016: traducelas como 11 de noviembre de 2016. Fechas numericas como 12/08/2016: si el documento esta en ingles el primer numero es el MES (8 de diciembre de 2016); si esta en espanol el primer numero es el DIA. En el output SIEMPRE escribe las fechas en palabras en espanol, nunca en formato numerico. REGLA DE CALIDAD Y CONVICCION: Preguntas cortas, formales y precisas como las haria un oficial de USCIS real en voz alta. Respuestas modelo en primera persona, de 5 a 8 oraciones, profesionales, claras, concisas, en orden cronologico, citando fechas exactas, nombres completos, lugares y frases textuales del expediente. Las respuestas deben demostrar MIEDO CREIBLE de forma DIRECTA Y ASERTIVA EN TODAS LAS PREGUNTAS SIN EXCEPCION, ya sea que la pregunta trate del pasado, del presente o del futuro — el miedo creible es el estandar legal central que un oficial evalua durante TODA la entrevista, no solo al preguntar sobre un regreso hipotetico. declara explicitamente el miedo o la consecuencia (ej. "temo que me maten, me persigan, me torturen o me encarcelen") en vez de lenguaje dudoso o evasivo. PROHIBIDO usar frases que suenen inseguras o de relleno como "consideré la posibilidad de", "no pude reubicarme", "quizas", "tal vez", "es posible que". En su lugar usa afirmaciones directas y respaldadas en hechos: "no me reubique porque [razon concreta del expediente]", "temo que [consecuencia especifica] porque [hecho concreto del expediente]". OUTPUT: Responde UNICAMENTE con JSON valido, sin backticks, sin texto antes ni despues.';
 
 // ─── ESTADO GLOBAL ────────────────────────────────────────────────────────────
 var currentQ = 0;
@@ -360,7 +360,7 @@ var correctionFile = null;
 var respuestaActual = '';
 // Datos estructurados del expediente (llenados por el barrido)
 var expedienteData = null;   // {contexto_politico, hechos:[{id,fecha,fecha_orden,lugar,actores,descripcion,frase_textual}], salida_pais, personas_mencionadas}
-var testigosData = [];       // [{nombre, relacion, hechos_declarados:[{descripcion,fecha,corrobora}]}]
+var testigosData = [];       // [{nombre, relacion, hechos_declarados:[{descripcion,fecha,fecha_orden,corrobora}]}]
 
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
@@ -439,10 +439,23 @@ async function barridoHistoria(textoHistoria) {
 // Lee cada declaracion COMPLETA y cruza cada hecho declarado con los hechos H1..Hn de la historia.
 async function barridoTestigo(textoTestigo) {
   var listaHechos = (expedienteData && expedienteData.hechos ? expedienteData.hechos : []).map(function(h){
-    return h.id+' ['+h.fecha+'] '+h.descripcion;
+    return h.id+' ['+h.fecha+' | orden:'+(h.fecha_orden||'')+'] '+h.descripcion;
   }).join('\n');
-  var prompt = 'TAREA: Haz un barrido exhaustivo, linea por linea, de esta declaracion jurada de testigo. Extrae: nombre completo del testigo, su relacion con el solicitante, y TODOS los hechos IMPORTANTES que declara haber presenciado o conocer, sin omitir ninguno relevante para el caso de asilo (ataques, amenazas, persecuciones, fechas, lugares, personas).\n\nPASO CLAVE — CRUCE CON LA HISTORIA: Para cada hecho que declara el testigo, compara con la LISTA DE HECHOS DE LA HISTORIA PRINCIPAL y determina cual hecho (H1, H2...) corrobora. Prioriza encontrar coincidencias reales por fecha, lugar o tipo de evento. Solo escribe "ninguno" si de verdad no coincide con ningun hecho de la lista.\n\nREGLAS CRITICAS:\n1. TODO el texto de salida EN ESPANOL. Si la declaracion esta en ingles, traduce todo.\n2. En cada descripcion, se especifico: que vio el testigo exactamente, cuando y donde. No generalices.\n3. NUNCA uses saltos de linea dentro de un campo.\n\nDevuelve SOLO JSON valido sin backticks:\n{"nombre":"nombre completo del testigo","relacion":"relacion con el solicitante segun la declaracion","hechos_declarados":[{"descripcion":"que presencio el testigo exactamente, en espanol, especifico","fecha":"fecha en palabras en espanol o cadena vacia","corrobora":"H3 o ninguno"}]}\n\nLISTA DE HECHOS DE LA HISTORIA PRINCIPAL (para cruzar):\n' + listaHechos + '\n\nDECLARACION COMPLETA DEL TESTIGO:\n' + textoTestigo;
-  return await llamarAPI(prompt);
+  var prompt = 'TAREA: Haz un barrido exhaustivo, linea por linea, de esta declaracion jurada de testigo. Extrae: nombre completo del testigo, su relacion con el solicitante, y TODOS los hechos IMPORTANTES que declara haber presenciado o conocer, sin omitir ninguno relevante para el caso de asilo (ataques, amenazas, persecuciones, fechas, lugares, personas).\n\nPASO CLAVE — CRUCE CON LA HISTORIA: Para cada hecho que declara el testigo, compara con la LISTA DE HECHOS DE LA HISTORIA PRINCIPAL (que incluye su fecha y su codigo de orden) y determina cual hecho (H1, H2...) corrobora. Prioriza encontrar coincidencias reales por fecha, lugar o tipo de evento. Solo escribe "ninguno" si de verdad no coincide con ningun hecho de la lista.\n\nREGLAS CRITICAS:\n1. TODO el texto de salida EN ESPANOL. Si la declaracion esta en ingles, traduce todo.\n2. En cada descripcion, se especifico: que vio el testigo exactamente, cuando y donde. No generalices.\n3. Incluye la fecha que menciona el testigo (en palabras, en espanol) y su fecha_orden en formato YYYY-MM (usa el mismo formato y la misma logica que la historia principal). Si el testigo no da fecha, usa cadena vacia en fecha y fecha_orden.\n4. NUNCA uses saltos de linea dentro de un campo.\n\nDevuelve SOLO JSON valido sin backticks:\n{"nombre":"nombre completo del testigo","relacion":"relacion con el solicitante segun la declaracion","hechos_declarados":[{"descripcion":"que presencio el testigo exactamente, en espanol, especifico","fecha":"fecha en palabras en espanol o cadena vacia","fecha_orden":"YYYY-MM o cadena vacia","corrobora":"H3 o ninguno"}]}\n\nLISTA DE HECHOS DE LA HISTORIA PRINCIPAL (para cruzar):\n' + listaHechos + '\n\nDECLARACION COMPLETA DEL TESTIGO:\n' + textoTestigo;
+  var resultado = await llamarAPI(prompt);
+  // ── Consistencia de fechas: si el testigo corrobora un hecho Hx, la fecha oficial
+  // es la de la historia (fuente unica de verdad), evitando discrepancias entre documentos.
+  if (resultado && resultado.hechos_declarados && expedienteData && expedienteData.hechos) {
+    var mapaHechos = {};
+    expedienteData.hechos.forEach(function(h){ mapaHechos[h.id] = h; });
+    resultado.hechos_declarados.forEach(function(hd){
+      if (hd.corrobora && hd.corrobora !== 'ninguno' && mapaHechos[hd.corrobora]) {
+        hd.fecha = mapaHechos[hd.corrobora].fecha;
+        hd.fecha_orden = mapaHechos[hd.corrobora].fecha_orden;
+      }
+    });
+  }
+  return resultado;
 }
 
 // ─── INVENTARIO: unica fuente de verdad para generar preguntas ────────────────
@@ -478,8 +491,8 @@ async function generarPreguntasLote(lote, preguntasPrevias) {
       'PROTECCION DEL ESTADO: pregunta sobre las denuncias formales ante autoridades y por que esa proteccion fue inutil o peligrosa segun el inventario'
     ],
     [
-      'REUBICACION INTERNA: pregunta sobre por que no pudo mudarse a otra ciudad o estado del pais antes de salir a EEUU',
-      'TEMOR DE RETORNO: pregunta sobre que ocurriria si regresara hoy — fundamentado en los hechos del inventario',
+      'REUBICACION INTERNA: pregunta sobre por que no pudo mudarse a otra ciudad o estado del pais antes de salir a EEUU. La respuesta modelo DEBE ser directa y firme, con una razon concreta del inventario (ej. el perseguidor tenia alcance nacional, redes de colectivos en varias ciudades, o el mismo grupo lo localizo en mas de un lugar) — PROHIBIDO respuestas dubitativas como "considere la posibilidad" o "no pude reubicarme" sin razon concreta',
+      'TEMOR DE RETORNO: pregunta sobre que ocurriria si regresara hoy. La respuesta modelo DEBE declarar el miedo de forma EXPLICITA Y DIRECTA en la primera oracion (ej. "Temo que me maten, me secuestren, me torturen o me encarcelen si regreso") y luego sustentarlo con los hechos y actores concretos del inventario que lo comprueban',
       'ESCALADA DEL PELIGRO: pregunta sobre como la persecucion fue escalando en el tiempo, del primer incidente al mas grave, con las fechas del inventario',
       'CRONOLOGIA DE SALIDA: pregunta sobre el tiempo entre el ultimo incidente grave y la fecha de salida del pais'
     ]
@@ -491,22 +504,10 @@ async function generarPreguntasLote(lote, preguntasPrevias) {
   }
   var prompt = 'INVENTARIO COMPLETO DEL EXPEDIENTE — esta es la UNICA fuente de informacion permitida. PROHIBIDO usar cualquier dato que no este aqui:\n' + construirInventario() +
     seccionPrevias +
-    '\n\n─────────────────────────────────────\nTAREA: Genera EXACTAMENTE 4 preguntas de entrevista de asilo, UNA por cada categoria listada abajo.\n\nREGLAS OBLIGATORIAS:\n1. Cada pregunta y cada respuesta modelo usa UNICAMENTE hechos del inventario, con sus fechas, lugares, actores y frases textuales tal como aparecen\n2. TODO el texto EN ESPANOL, sin ninguna palabra en ingles\n3. Respuesta modelo: primera persona, 5 a 8 oraciones, profesional, clara, concisa, en orden cronologico\n4. Incluye "hechos_usados" con los ids del inventario que usa cada respuesta\n5. Cada pregunta trata un hecho o tema DIFERENTE — no repitas hechos entre preguntas ni con las ya generadas\n\nCATEGORIAS:\n' + cats.map(function(c,i){ return (i+1)+'. '+c; }).join('\n') +
-    '\n\nFORMATO — JSON valido, sin backticks:\n{"preguntas":[{"texto":"UNA sola pregunta directa, maximo 18 palabras, como la haria un oficial de USCIS en voz alta","estrategia":"elemento legal que evalua, 1 oracion","respuesta":"Yo... [5 a 8 oraciones cronologicas con fechas exactas, nombres, lugares y frases textuales del inventario]","claves":["elemento legal 1","elemento legal 2","elemento legal 3"],"hechos_usados":["H1","H3"]}]}';
+    '\n\n─────────────────────────────────────\nTAREA: Genera EXACTAMENTE 4 preguntas de entrevista de asilo, UNA por cada categoria listada abajo.\n\nREGLAS OBLIGATORIAS:\n1. Cada pregunta y cada respuesta modelo usa UNICAMENTE hechos del inventario, con sus fechas, lugares, actores y frases textuales tal como aparecen\n2. TODO el texto EN ESPANOL, sin ninguna palabra en ingles\n3. Respuesta modelo: primera persona, 5 a 8 oraciones, profesional, clara, concisa, en orden cronologico\n4. MIEDO CREIBLE EN TODAS LAS RESPUESTAS, SIN EXCEPCION: el miedo creible es el estandar legal central que el oficial evalua en TODA la entrevista, no solo en preguntas sobre el futuro. En CADA una de las 4 respuestas —ya sea que hable del pasado, del Estado, o de la escalada— la conviccion y el miedo deben sentirse en el tono. TONO DIRECTO Y ASERTIVO siempre: declara los hechos y sus consecuencias con firmeza. PROHIBIDO en cualquier respuesta frases dudosas como "considere la posibilidad de", "no pude", "quizas", "tal vez", "es posible que", "yo creo que". En su lugar usa afirmaciones directas respaldadas en hechos concretos del inventario\n5. Incluye "hechos_usados" con los ids del inventario que usa cada respuesta\n6. Cada pregunta trata un hecho o tema DIFERENTE — no repitas hechos entre preguntas ni con las ya generadas\n\nCATEGORIAS:\n' + cats.map(function(c,i){ return (i+1)+'. '+c; }).join('\n') +
+    '\n\nFORMATO — JSON valido, sin backticks:\n{"preguntas":[{"texto":"UNA sola pregunta directa, maximo 18 palabras, como la haria un oficial de USCIS en voz alta","estrategia":"elemento legal que evalua, 1 oracion","respuesta":"Yo... [5 a 8 oraciones cronologicas, directas y asertivas, con fechas exactas, nombres, lugares y frases textuales del inventario]","claves":["elemento legal 1","elemento legal 2","elemento legal 3"],"hechos_usados":["H1","H3"]}]}';
   var out = await llamarAPI(prompt);
   return out.preguntas;
-}
-
-// ─── PREGUNTAS EXTRA DESDE LA HISTORIA (0 a 2, solo si el caso da) ─────────────
-// Genera preguntas adicionales que REFUERZAN la historia (nunca de testigos).
-// Solo si quedan hechos de persecucion importantes sin cubrir por las 8 base.
-async function generarPreguntasExtra(preguntasPrevias) {
-  var seccionPrevias = preguntasPrevias.map(function(p,i){ return (i+1)+'. '+p.texto; }).join('\n');
-  var prompt = 'INVENTARIO COMPLETO DEL EXPEDIENTE — UNICA fuente permitida:\n' + construirInventario() +
-    '\n\nPREGUNTAS YA GENERADAS (8) — PROHIBIDO repetir su tema o su hecho principal:\n' + seccionPrevias +
-    '\n\n─────────────────────────────────────\nTAREA: Revisa si en el inventario quedan HECHOS DE PERSECUCION IMPORTANTES de la historia que NO fueron cubiertos por las 8 preguntas anteriores. \n\n- Si quedan hechos importantes sin cubrir: genera 1 o 2 preguntas ADICIONALES que un oficial de USCIS haria sobre esos hechos, para reforzar la historia. Cada pregunta sobre un hecho DIFERENTE a los ya cubiertos.\n- Si NO quedan hechos importantes sin cubrir (las 8 ya agotaron el caso): devuelve una lista vacia.\n\nREGLAS:\n1. Las preguntas salen UNICAMENTE de la historia del solicitante (hechos H del inventario), NUNCA de declaraciones de testigos\n2. TODO EN ESPANOL\n3. Respuesta modelo: primera persona, 5 a 8 oraciones, cronologica, con fechas y lugares del inventario\n\nFORMATO — JSON valido, sin backticks (lista vacia si no aplica):\n{"preguntas":[{"texto":"pregunta directa maximo 18 palabras","estrategia":"elemento legal que evalua, 1 oracion","respuesta":"Yo... [5 a 8 oraciones con fechas y hechos del inventario]","claves":["elemento 1","elemento 2","elemento 3"],"hechos_usados":["H5"]}]}';
-  var out = await llamarAPI(prompt);
-  return out.preguntas || [];
 }
 
 // ─── ANALISIS LEGAL INA §208 (desde el inventario) ────────────────────────────
@@ -565,16 +566,10 @@ async function generarDocumento() {
     marcarPaso(3);
     var lote1 = await generarPreguntasLote(0, []);
 
-    // PASO 4 — Preguntas 5–8 (anti-repeticion) + 0-2 preguntas extra DESDE LA HISTORIA
+    // PASO 4 — Preguntas 5–8 (anti-repeticion)
     marcarPaso(4);
     var lote2 = await generarPreguntasLote(1, lote1);
-    var todasLasPreguntas = lote1.concat(lote2);
-    // Preguntas extra que refuerzan la historia (nunca de testigos). 0, 1 o 2 segun el caso.
-    try {
-      var extra = await generarPreguntasExtra(todasLasPreguntas);
-      if (extra && extra.length) todasLasPreguntas = todasLasPreguntas.concat(extra.slice(0,2));
-    } catch(e) { console.error('Preguntas extra:', e); }
-    todasLasPreguntas = filtrarDuplicados(todasLasPreguntas);
+    var todasLasPreguntas = filtrarDuplicados(lote1.concat(lote2));
     generatedQuestions = todasLasPreguntas;
 
     // PASO 5 — Analisis legal + Word
@@ -659,20 +654,21 @@ function generarWord(preguntas, tieneTestigos, analisisLegalData) {
   if (tieneTestigos && testigosData.length) {
     secOffset = 2;
     html += '<h2>SECCIÓN 2: SUS TESTIGOS (respaldo — cruce con su historia)</h2>';
-    html += '<p style="font-size:10pt;color:#555;margin-bottom:10px">Esta tabla es su respaldo: muestra qué hecho de su historia corrobora cada testigo. El oficial no revisa estas declaraciones, pero puede pedirle prueba de un hecho — téngalas a mano.</p>';
+    html += '<p style="font-size:10pt;color:#555;margin-bottom:10px">Esta tabla es su respaldo: muestra qué hecho de su historia corrobora cada testigo, con la misma fecha oficial de su expediente para evitar discrepancias. El oficial no revisa estas declaraciones, pero puede pedirle prueba de un hecho — téngalas a mano.</p>';
     html += '<table style="table-layout:fixed;width:100%">';
-    html += '<colgroup><col style="width:20%"><col style="width:18%"><col style="width:47%"><col style="width:15%"></colgroup>';
-    html += '<tr><th>Testigo</th><th>Relación</th><th>Qué corrobora de su historia</th><th>Evidencia</th></tr>';
+    html += '<colgroup><col style="width:20%"><col style="width:15%"><col style="width:15%"><col style="width:35%"><col style="width:15%"></colgroup>';
+    html += '<tr><th>Testigo</th><th>Relación</th><th>Fecha</th><th>Qué corrobora de su historia</th><th>Evidencia</th></tr>';
     testigosData.forEach(function(t) {
       var hechos = (t.hechos_declarados||[]);
+      var primeraFecha = '';
       var queCorrobora = hechos.slice(0,3).map(function(h){
+        if (!primeraFecha && celda(h.fecha,'')) primeraFecha = celda(h.fecha,'');
         var s = celda(h.descripcion,'');
-        if (celda(h.fecha,'')) s += ' ('+celda(h.fecha,'')+')';
         if (h.corrobora && h.corrobora !== 'ninguno') s += ' [corrobora '+celda(h.corrobora,'')+']';
         return s;
       }).filter(function(x){return x;}).join('. ');
       if (!queCorrobora) queCorrobora = 'Testigo del caso';
-      html += '<tr><td>'+celda(t.nombre,'—')+'</td><td>'+celda(t.relacion,'—')+'</td><td>'+queCorrobora+'</td><td>Declaración jurada firmada</td></tr>';
+      html += '<tr><td>'+celda(t.nombre,'—')+'</td><td>'+celda(t.relacion,'—')+'</td><td>'+celda(primeraFecha,'—')+'</td><td>'+queCorrobora+'</td><td>Declaración jurada firmada</td></tr>';
     });
     html += '</table>';
   }
@@ -709,10 +705,7 @@ function generarWord(preguntas, tieneTestigos, analisisLegalData) {
   var secPreg = secCron + 1;
   html += '<h2>SECCIÓN '+secPreg+': PREGUNTAS DE PRÁCTICA ('+preguntas.length+' preguntas)</h2>';
   preguntas.forEach(function(p, i) {
-    var esExtra = i >= 8;
-    html += '<h3>Pregunta '+(i+1);
-    if (esExtra) html += ' <span class="testigo-badge">➕ Refuerzo adicional de su historia</span>';
-    html += '</h3>';
+    html += '<h3>Pregunta '+(i+1)+'</h3>';
     html += '<div class="pregunta">&ldquo;'+(p.texto||'')+'&rdquo;</div>';
     if (p.estrategia) html += '<div class="bloque estrategia"><div class="label">Estrategia Legal</div>'+p.estrategia+'</div>';
     if (p.respuesta) html += '<div class="bloque respuesta"><div class="label">Respuesta Modelo (en tus propias palabras)</div>'+p.respuesta+'</div>';
@@ -765,12 +758,7 @@ async function regenerar() {
     var lote1 = await generarPreguntasLote(0, []);
     marcarPaso(4);
     var lote2 = await generarPreguntasLote(1, lote1);
-    var todasLasPreguntas = lote1.concat(lote2);
-    try {
-      var extra = await generarPreguntasExtra(todasLasPreguntas);
-      if (extra && extra.length) todasLasPreguntas = todasLasPreguntas.concat(extra.slice(0,2));
-    } catch(e) { console.error('Preguntas extra:', e); }
-    todasLasPreguntas = filtrarDuplicados(todasLasPreguntas);
+    var todasLasPreguntas = filtrarDuplicados(lote1.concat(lote2));
     generatedQuestions = todasLasPreguntas;
     marcarPaso(5);
     var analisisLegalData = await generarAnalisisLegal();
